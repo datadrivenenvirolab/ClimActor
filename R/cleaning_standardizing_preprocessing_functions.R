@@ -128,10 +128,10 @@ standardize_type <- function(dataset) {
 #'
 #' @param dataset Dataset to match the ISO code for
 #' @param country.dict Country dictionary to match the get the ISO code from
-#' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code
+#' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
 #' @return Dataset with ISO code attached
 #' @example match_iso(df, country_dict, 3)
-match_iso <- function(dataset, country.dict, iso) {
+match_iso <- function(dataset, country.dict, iso = 3) {
   if (iso != 2 & iso != 3){
     stop("Please input either 2 or 3 for the \"iso\" argument.")
   }
@@ -148,4 +148,38 @@ match_iso <- function(dataset, country.dict, iso) {
   return(dataset)
 }
 
+#' Remove extraneous words from actors' names
+#' @description Removes extraneous words such as "council", "district", etc. from the
+#' @description names of actors. See vignette for the full list of "extraneous" words
+#'
+#' @param dataset Dataset containing actors' names
+#' @return Dataset with extraneous words removed from actors' names
+remove_extra <- function(dataset){
+  # Find all row numbers that match name, iso, and entity type
+  # Do this by pasting name, iso and entity type together and then matching on those
 
+  all3_matching_rows <- which((paste0(dataset$name, dataset$iso,
+                                      dataset$entity.type) %in%
+                                 paste0(key.dict$right, key.dict$iso,
+                                        key.dict$entity.type)))
+  # creating the vector of indices (in the dataset) of the names that need to be cleaned
+  if (length(all3_matching_rows) != 0) {
+    indices <- 1:nrow(dataset)
+    indices <- indices[-all3_matching_rows]
+  } else {
+    indices <- 1:nrow(dataset)
+  }
+  # cleaning names by getting rid of extraneous words
+  # this list of words can be updated in the future
+  words <- c("council|adjuntament|corporation|government|urban|district|mayor|
+           the|of|city|autonomous|state|province|provincial|county|municipality|
+           municipalidad de|municipalidad|municipio|kommune|municipal|prefecture|
+           prefectural|metropolitana|metropolis|m??tropole|metropolitan|metropole|town|
+           community|communat|communat??|Ayuntamiento|Gemeente|Comune di|Comune|Kommune|
+           Republic")
+  dataset$name[indices] <- stringr::str_replace_all(dataset$name[indices],
+                                                    stringr::regex(words, ignore_case = T), "")
+
+  dataset$name[indices] <- trimws(dataset$name[indices])
+  return(dataset)
+}

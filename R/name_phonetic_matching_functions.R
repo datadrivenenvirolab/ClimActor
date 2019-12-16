@@ -15,39 +15,90 @@
 #' @example clean_name(df, key_dict)
 clean_name <- function(dataset, key.dict) {
 
-  # creating a vector of indices (in the dataset) of the names that need to be cleaned
+  # First find actors that have the correct names and iso but not the correct entity type
+  # Subset data for those that have correct names and iso first
+  name_iso_right <- which(paste0(dataset$name, dataset$iso) %in% paste0(key.dict$right, key.dict$iso))
+  # Coerce NA entity types to random character
+  dataset$entity.type[intersect(which(is.na(dataset$entity.type)), name_iso_right)] <- ","
+  # Check for wrong entity types in those that have correct names and iso
+  dict_ind <- na.omit(match(paste0(dataset$name[name_iso_right], dataset$iso[name_iso_right]),
+                            paste0(key.dict$right, key.dict$iso)))
+  ent_ind <- name_iso_right[dataset$entity.type[name_iso_right] != key.dict$entity.type[dict_ind]]
+  # Let users decide which entity type conflicts they want to resolve
+  if (length(ent_ind) != 0){
+    # Print number of conflicts
+    cat(paste0("We found ", length(ent_ind), " number of entries with the same actor name",
+               "and iso but conflicting entity types. Would you like to resolve all",
+               " conflicts by accepting the key dictionary's entity type? (Y/N/Skip)"))
+    ans <- readline(prompt = "Answer: ")
+    # Make sure user enters valid response
+    # Allow users to 1) accept all key dict's entity types 2) resolve conflicts 1 by 1
+    # or 3) not resolve conflicts
+    while (ans != "Y"|"N"|"Skip"){
+      cat("Please enter a valid input (Y/N/Skip)")
+      ans <- readline(prompt = "Answer: ")
+    }
+    if (ans == "Y"){
+      # Resolve conflicts by taking all key dict's entity types
+      dataset$entity.type[ent_ind] <- key.dict$entity.type[dict.ind]
+    } else if (ans == "N"){
+      # Resolve conflicts 1 by 1
+      cat("Proceeding to resolve conflict of entity types actor by actor")
+      for (k in seq_along(ent_ind)){
+        # Iterate through conlficts 1 by 1 to let user select which entity type they want
+        # to keep
+        cat(paste0("For actor ", dataset$name[ent_ind[k]], ", ", dataset$iso[ent_ind[k]],
+                   " you had an entity type of ", dataset$entity.type[ent_ind[k]],
+                   " while our key dictionary had entity type of ",
+                   key.dict$entity.type[dict.ind[k]], ". Which entity type would you like to keep?",
+                   "\n\n 1. Dataset \n 2. Key Dictionary \n S. Stop resolving conflicts"))
+        ans2 <- readline(prompt = "Please input either 1/2/S: ")
+        # Allow users to take the key dict's entity type, keep their own, or skip
+        while (ans2 != "1"|"2"|"S"){
+          cat("Please enter a valid input (1/2/S)")
+          ans2 <- readline(prompt = "Answer: ")
+        }
+        if (ans2 == "1"){
+          dataset$entity.type[ent_ind[k]] <- key.dict$entity.type[dict.ind[k]]
+        } else if (ans2 == "2"){
+          next
+        } else if (ans2 == "S"){
+          cat("Stop resolving conflicts in entity types.")
+          break
+        }
+      }
+      else if (ans == "Skip"){
+        cat("Entity types will not be changed for now.")
+      }
+    }
+  }
+  # Clean database by doing an exact match with the key dictionary
+  # Find indices within key dict where there is a match with the "wrong" column of the key dictionary
+  match_keydict <- na.omit(match(paste0(dataset$name, dataset$iso, dataset$entity.type),
+                                 paste0(key.dict$wrong, key.dict$iso, key.dict$entity.type)))
+  # Find the corresponding indices within the dataset
+  match_df <- which(!is.na(match(paste0(dataset$name, dataset$iso, dataset$entity.type),
+                                 paste0(key.dict$wrong, key.dict$iso, key.dict$entity.type))))
+  # Replace the dataset name with the right name in key dict
+  if (length(match_keydict) != 0) {
+    dataset$name[match_df] <- key.dict$right[match_keydict]
+  }
 
-  # Find all row numbers that match name, iso, and entity type
+  # Now find all row numbers that match name, iso, and entity type
   # Do this by pasting name, iso and entity type together and then matching on those
-
   all3_matching_rows <- which((paste0(dataset$name, dataset$iso,
                                       dataset$entity.type) %in%
                                  paste0(key.dict$right, key.dict$iso,
                                         key.dict$entity.type)))
-  # ## finding all the row numbers in which the dataset matches the key dictionary
-  # ## finding the row numbers in which all of the dataset's name, iso, and entity type match
-  # ## any row in the key dictionary's name, iso, and entity type
 
-  ## creating the vector of indices (in the dataset) of the names that need to be cleaned
+
+  # creating the vector of indices (in the dataset) of the names that need to be cleaned
   if (length(all3_matching_rows) != 0) {
-    indices <- 1:nrow(dataset)
-    indices <- indices[-all3_matching_rows]
+    indices <<- 1:nrow(dataset)
+    indices <<- indices[-all3_matching_rows]
   } else {
-    indices <- 1:nrow(dataset)
+    indices <<- 1:nrow(dataset)
   }
-
-  # cleaning names by getting rid of extraneous words
-  # this list of words can be updated in the future
-  words <- c("council|adjuntament|corporation|government|urban|district|mayor|
-           the|of|city|autonomous|state|province|provincial|county|municipality|
-           municipalidad de|municipalidad|municipio|kommune|municipal|prefecture|
-           prefectural|metropolitana|metropolis|m??tropole|metropolitan|metropole|town|
-           community|communat|communat??|Ayuntamiento|Gemeente|Comune di|Comune|Kommune|
-           Republic")
-  dataset$name[indices] <- stringr::str_replace_all(dataset$name[indices],
-                                                    stringr::regex(words, ignore_case = T), "")
-
-  dataset$name[indices] <- trimws(dataset$name[indices])
 
   return(dataset)
 }
@@ -426,7 +477,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
                         soundex = phonics::soundex(custom$name[!match_rows], clean = FALSE),
                         soundex.refined = phonics::refinedSoundex(custom$name[!match_rows], clean = FALSE),
                         statcan = phonics::statcan(custom$name[!match_rows], clean = FALSE))
-# Bind rows to key.dict
-key.dict <- rbind(key.dict, newrows)
-return(key.dict)
+  # Bind rows to key.dict
+  key.dict <- rbind(key.dict, newrows)
+  return(key.dict)
 }
