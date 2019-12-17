@@ -6,14 +6,14 @@
 \title{Matches the actors' country to its corresponding ISO code. Input 2 or 3 to
 to select for either the 2 letter or 3 letter ISO code}
 \usage{
-match_iso(dataset, country.dict, iso)
+match_iso(dataset, country.dict, iso = 3)
 }
 \arguments{
 \item{dataset}{Dataset to match the ISO code for}
 
 \item{country.dict}{Country dictionary to match the get the ISO code from}
 
-\item{iso}{Input either 2 or 3 to select for 2 or 3 letter ISO code}
+\item{iso}{Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3}
 }
 \value{
 Dataset with ISO code attached
