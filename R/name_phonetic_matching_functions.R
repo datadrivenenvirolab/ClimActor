@@ -249,61 +249,61 @@ Would you like the function to proceed with this vector anyways (future edits ma
     ## calculating scores using the caverphone phonetic algorithm
     ## quantification of scores is based on 9 edit distance methods
 
-    kd.filtered <- kd.filtered %>% mutate(metaphone.score = rowMeans(cbind(stringdist::stringsim(ds.phon.codes$metaphone[i],
-                                                                                                 kd.filtered$metaphone, method = "dl"),
-                                                                           stringdist::stringsim(ds.phon.codes$metaphone[i],
-                                                                                                 kd.filtered$metaphone, method = "qgram"),
-                                                                           stringdist::stringsim(ds.phon.codes$metaphone[i],
-                                                                                                 kd.filtered$metaphone, method = "cosine"),
-                                                                           stringdist::stringsim(ds.phon.codes$metaphone[i],
-                                                                                                 kd.filtered$metaphone, method = "jaccard"),
-                                                                           stringdist::stringsim(ds.phon.codes$metaphone[i],
-                                                                                                 kd.filtered$metaphone, method = "jw")),
-                                                                     na.rm = T),
-                                          nysiis.modified.score = rowMeans(cbind(stringdist::stringsim(ds.phon.codes$nysiis.modified[i],
-                                                                                                       kd.filtered$nysiis.modified, method = "dl"),
-                                                                                 stringdist::stringsim(ds.phon.codes$nysiis.modified[i],
-                                                                                                       kd.filtered$nysiis.modified, method = "qgram"),
-                                                                                 stringdist::stringsim(ds.phon.codes$nysiis.modified[i],
-                                                                                                       kd.filtered$nysiis.modified, method = "cosine"),
-                                                                                 stringdist::stringsim(ds.phon.codes$nysiis.modified[i],
-                                                                                                       kd.filtered$nysiis.modified, method = "jaccard"),
-                                                                                 stringdist::stringsim(ds.phon.codes$nysiis.modified[i],
-                                                                                                       kd.filtered$nysiis.modified, method = "jw")),
-                                                                           na.rm = T),
-                                          onca.modified.refined.score = rowMeans(cbind(stringdist::stringsim(ds.phon.codes$onca.modified.refined[i],
-                                                                                                             kd.filtered$onca.modified.refined, method = "dl"),
-                                                                                       stringdist::stringsim(ds.phon.codes$onca.modified.refined[i],
-                                                                                                             kd.filtered$onca.modified.refined, method = "qgram"),
-                                                                                       stringdist::stringsim(ds.phon.codes$onca.modified.refined[i],
-                                                                                                             kd.filtered$onca.modified.refined, method = "cosine"),
-                                                                                       stringdist::stringsim(ds.phon.codes$onca.modified.refined[i],
-                                                                                                             kd.filtered$onca.modified.refined, method = "jaccard"),
-                                                                                       stringdist::stringsim(ds.phon.codes$onca.modified.refined[i],
-                                                                                                             kd.filtered$onca.modified.refined, method = "jw")),
-                                                                                 na.rm = T),
-                                          phonex.score = rowMeans(cbind(stringdist::stringsim(ds.phon.codes$phonex[i],
-                                                                                              kd.filtered$phonex, method = "dl"),
-                                                                        stringdist::stringsim(ds.phon.codes$phonex[i],
-                                                                                              kd.filtered$phonex, method = "qgram"),
-                                                                        stringdist::stringsim(ds.phon.codes$phonex[i],
-                                                                                              kd.filtered$phonex, method = "cosine"),
-                                                                        stringdist::stringsim(ds.phon.codes$phonex[i],
-                                                                                              kd.filtered$phonex, method = "jaccard"),
-                                                                        stringdist::stringsim(ds.phon.codes$phonex[i],
-                                                                                              kd.filtered$phonex, method = "jw")),
-                                                                  na.rm = T),
-                                          rogerroot.score = rowMeans(cbind(stringdist::stringsim(ds.phon.codes$rogerroot[i],
-                                                                                                 kd.filtered$rogerroot, method = "dl"),
-                                                                           stringdist::stringsim(ds.phon.codes$rogerroot[i],
-                                                                                                 kd.filtered$rogerroot, method = "qgram"),
-                                                                           stringdist::stringsim(ds.phon.codes$rogerroot[i],
-                                                                                                 kd.filtered$rogerroot, method = "cosine"),
-                                                                           stringdist::stringsim(ds.phon.codes$rogerroot[i],
-                                                                                                 kd.filtered$rogerroot, method = "jaccard"),
-                                                                           stringdist::stringsim(ds.phon.codes$rogerroot[i],
-                                                                                                 kd.filtered$rogerroot, method = "jw")),
-                                                                     na.rm = T))
+    kd.filtered <- kd.filtered %>% dplyr::mutate(metaphone.score = rowMeans(cbind(stringdist::stringsim(ds.phon.codes$metaphone[i],
+                                                                                                        kd.filtered$metaphone, method = "dl"),
+                                                                                  stringdist::stringsim(ds.phon.codes$metaphone[i],
+                                                                                                        kd.filtered$metaphone, method = "qgram"),
+                                                                                  stringdist::stringsim(ds.phon.codes$metaphone[i],
+                                                                                                        kd.filtered$metaphone, method = "cosine"),
+                                                                                  stringdist::stringsim(ds.phon.codes$metaphone[i],
+                                                                                                        kd.filtered$metaphone, method = "jaccard"),
+                                                                                  stringdist::stringsim(ds.phon.codes$metaphone[i],
+                                                                                                        kd.filtered$metaphone, method = "jw")),
+                                                                            na.rm = T),
+                                                 nysiis.modified.score = rowMeans(cbind(stringdist::stringsim(ds.phon.codes$nysiis.modified[i],
+                                                                                                              kd.filtered$nysiis.modified, method = "dl"),
+                                                                                        stringdist::stringsim(ds.phon.codes$nysiis.modified[i],
+                                                                                                              kd.filtered$nysiis.modified, method = "qgram"),
+                                                                                        stringdist::stringsim(ds.phon.codes$nysiis.modified[i],
+                                                                                                              kd.filtered$nysiis.modified, method = "cosine"),
+                                                                                        stringdist::stringsim(ds.phon.codes$nysiis.modified[i],
+                                                                                                              kd.filtered$nysiis.modified, method = "jaccard"),
+                                                                                        stringdist::stringsim(ds.phon.codes$nysiis.modified[i],
+                                                                                                              kd.filtered$nysiis.modified, method = "jw")),
+                                                                                  na.rm = T),
+                                                 onca.modified.refined.score = rowMeans(cbind(stringdist::stringsim(ds.phon.codes$onca.modified.refined[i],
+                                                                                                                    kd.filtered$onca.modified.refined, method = "dl"),
+                                                                                              stringdist::stringsim(ds.phon.codes$onca.modified.refined[i],
+                                                                                                                    kd.filtered$onca.modified.refined, method = "qgram"),
+                                                                                              stringdist::stringsim(ds.phon.codes$onca.modified.refined[i],
+                                                                                                                    kd.filtered$onca.modified.refined, method = "cosine"),
+                                                                                              stringdist::stringsim(ds.phon.codes$onca.modified.refined[i],
+                                                                                                                    kd.filtered$onca.modified.refined, method = "jaccard"),
+                                                                                              stringdist::stringsim(ds.phon.codes$onca.modified.refined[i],
+                                                                                                                    kd.filtered$onca.modified.refined, method = "jw")),
+                                                                                        na.rm = T),
+                                                 phonex.score = rowMeans(cbind(stringdist::stringsim(ds.phon.codes$phonex[i],
+                                                                                                     kd.filtered$phonex, method = "dl"),
+                                                                               stringdist::stringsim(ds.phon.codes$phonex[i],
+                                                                                                     kd.filtered$phonex, method = "qgram"),
+                                                                               stringdist::stringsim(ds.phon.codes$phonex[i],
+                                                                                                     kd.filtered$phonex, method = "cosine"),
+                                                                               stringdist::stringsim(ds.phon.codes$phonex[i],
+                                                                                                     kd.filtered$phonex, method = "jaccard"),
+                                                                               stringdist::stringsim(ds.phon.codes$phonex[i],
+                                                                                                     kd.filtered$phonex, method = "jw")),
+                                                                         na.rm = T),
+                                                 rogerroot.score = rowMeans(cbind(stringdist::stringsim(ds.phon.codes$rogerroot[i],
+                                                                                                        kd.filtered$rogerroot, method = "dl"),
+                                                                                  stringdist::stringsim(ds.phon.codes$rogerroot[i],
+                                                                                                        kd.filtered$rogerroot, method = "qgram"),
+                                                                                  stringdist::stringsim(ds.phon.codes$rogerroot[i],
+                                                                                                        kd.filtered$rogerroot, method = "cosine"),
+                                                                                  stringdist::stringsim(ds.phon.codes$rogerroot[i],
+                                                                                                        kd.filtered$rogerroot, method = "jaccard"),
+                                                                                  stringdist::stringsim(ds.phon.codes$rogerroot[i],
+                                                                                                        kd.filtered$rogerroot, method = "jw")),
+                                                                            na.rm = T))
 
 
     # #calculating the total score based on phonetic algorithms
@@ -326,7 +326,7 @@ Would you like the function to proceed with this vector anyways (future edits ma
 
 
     # arranging by total score in descending order so we can list the top matches (based on those scores)
-    kd.filtered <- kd.filtered %>% dplyr::arrange(desc(tot.phon.score))
+    kd.filtered <- kd.filtered %>% dplyr::arrange(dplyr::desc(tot.phon.score))
 
     # listing the top 15 best-scoring fuzzy-matched names
     print(paste0("The original name is ", dataset$name[ind]))
@@ -493,7 +493,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
 #' Defaults to taking all the contextual information.
 #' @return Dataset with contextuals merged
 #' @example contextualize_data(df, contextuals_df, c("pop", "region", "lat", "lng"))
-contextualize_data <- function(dataset, contextual_df, contextuals = c("region", "pop",
+contextualize_data <- function(dataset, contextual_df, contextuals = c("region", "population",
                                                                        "lat", "lng", "area",
                                                                        "elevation",
                                                                        "initiatives_committed")){
@@ -503,9 +503,10 @@ contextualize_data <- function(dataset, contextual_df, contextuals = c("region",
     stop("The contextuals argument needs to match the column names in the contextual
          dataframe. See ?contextualize_data for a list of applicable column names.")
   }
+  contextuals <- c(contextuals, "name", "iso", "entity.type")
   # Merge and keep all of the original dataset's data
   merge_df <- merge(dataset, contextual_df[ , contextuals],
                     by = c("name", "iso", "entity.type"), all.x = T)
-  return(dataset)
+  return(merge_df)
 
 }
