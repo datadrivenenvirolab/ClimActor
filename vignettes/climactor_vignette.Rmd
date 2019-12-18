@@ -1,0 +1,18 @@
+---
+title: "The climactor guide"
+author: "Data-Driven Lab"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The climactor guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(phonics)
+library(stringdist)
+library(stringr)
+```
+
