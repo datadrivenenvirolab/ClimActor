@@ -1,21 +1,35 @@
 # Data-Driven Lab
 # Functions used for adding columns in the pre-processing of data for fuzzy matching
 
-#' Renames the "name", "country", and "entity_type" columns to the correct column name
+#' @title Renames the columns within the dataset
+#' @description Checks the dataset for the correct names necessary for further data
+#' @description processing. If the requisite data names are not in the dataset, then prompts
+#' @description the user for the columns to be renamed to the requisite names.
 #'
 #' @param dataset Dataset to rename columns for
-#' @param raw_name_col Current column name for "name"
-#' @param raw_country_col Current column name for "country"
-#' @param raw_type_col Current column name for "entity_type"
 #' @return The dataset with the appropriately named columns
-#' @example rename_col(df, "actor", "Country", "type")
-rename_col <- function(dataset, raw_name_col, raw_country_col, raw_type_col) {
-  # Function that takes in the raw name, country, and entity.type columns and returns
-  # standardized names for further analysis
-  names(dataset)[names(dataset) == raw_name_col] <- "name"
-  names(dataset)[names(dataset) == raw_country_col] <- "country"
-  names(dataset)[names(dataset) == raw_type_col] <- "entity.type"
+#' @example rename_col(df)
+rename_col <- function(dataset) {
+  if (!("name" %in% names(dataset))){
+    cat("Please input the column name that contains the actors' names.")
+    ans <- readline(prompt = "Input (Case-Sensitive):")
+    names(dataset)[names(dataset) == ans] <- "name"
+  }
+  if(!("country" %in% names(dataset))){
+    cat("Please input the column name that contains the countries.")
+    ans <- readline(prompt = "Input (Case-Sensitive):")
+    names(dataset[names(dataset) == ans]) <- "country"
+  }
+  if (!("entity_type" %in% names(dataset))){
+    cat("Please input the column name that contains the actors' entity types.")
+    ans <- readline(prompt = "Input (Case-Sensitive):")
+    names(dataset[names(dataset) == ans]) <- "entity_type"
+  }
+  if (all(c("name", "country", "entity_type") %in% names(dataset))) {
+    cat("It seems like you have all the requisite column names in your dataset")
+  }
   return(dataset)
+
 }
 
 #' Adds country column to the dataset
