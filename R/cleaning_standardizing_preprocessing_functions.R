@@ -56,15 +56,31 @@ coerce_location_names <- function(locations) {
   return(locations)
 }
 
-#' Cleans the dataset's country name to the package's country dictionaries' name
+#' Cleans the dataset's country names and adds iso.
+#' @description Cleans the dataset actors' countries based on the package's country
+#' @description dictionary and adds the corresponding iso to the dataset.
 #'
 #' @param dataset Dataset to clean the country names for
 #' @param country.dict Country dictionary to clean the dataset against
+#' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
 #' @return The original dataset with the country names cleaned
-#' @example clean_country(df, country_dict)
-clean_country <- function(dataset, country.dict) {
+#' @example clean_country_iso(df, country_dict, iso = 3)
+clean_country_iso <- function(dataset, country.dict, iso = 3) {
   dataset$country <- country.dict$right[match(toupper(dataset$country),
                                               toupper(country.dict$wrong))]
+  if (iso != 2 & iso != 3){
+    stop("Please input either 2 or 3 for the \"iso\" argument.")
+  }
+  if (!("iso" %in% names(dataset))){
+    dataset$iso <- NA
+  }
+  if (iso == 2){
+    dataset$iso <- country.dict$iso2[match(toupper(dataset$country),
+                                           toupper(country.dict$right))]
+  } else if (iso == 3){
+    dataset$iso <- country.dict$iso[match(toupper(dataset$country),
+                                          toupper(country.dict$right))]
+  }
   return(dataset)
 }
 
@@ -120,31 +136,6 @@ standardize_type <- function(dataset) {
                            dataset$entity.type, ignore.case = TRUE)] <- "City"
   dataset$entity.type[grep("Prov|Region|Government|State|Pref",
                            dataset$entity.type, ignore.case = TRUE)] <- "Region"
-  return(dataset)
-}
-
-#' Matches the actors' country to its corresponding ISO code. Input 2 or 3 to
-#' to select for either the 2 letter or 3 letter ISO code
-#'
-#' @param dataset Dataset to match the ISO code for
-#' @param country.dict Country dictionary to match the get the ISO code from
-#' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
-#' @return Dataset with ISO code attached
-#' @example match_iso(df, country_dict, 3)
-match_iso <- function(dataset, country.dict, iso = 3) {
-  if (iso != 2 & iso != 3){
-    stop("Please input either 2 or 3 for the \"iso\" argument.")
-  }
-  if (!("iso" %in% names(dataset))){
-    dataset$iso <- NA
-  }
-  if (iso == 2){
-    dataset$iso <- country.dict$iso2[match(toupper(dataset$country),
-                                           toupper(country.dict$right))]
-  } else if (iso == 3){
-    dataset$iso <- country.dict$iso[match(toupper(dataset$country),
-                                          toupper(country.dict$right))]
-  }
   return(dataset)
 }
 
