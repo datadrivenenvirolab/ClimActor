@@ -104,7 +104,7 @@ clean_name <- function(dataset, key.dict) {
 
 
 #' Cleans name using phonetic matching
-#' @description \code{fuzzify_names} searches for actors' names which are not standardized
+#' @description \code{phonetify_names} searches for actors' names which are not standardized
 #' and standardizes them according to the key dictionary. Users get to choose which name
 #' is correct based on a selection narrowed down by using phonetic matching. Users can
 #' choose to input custom names should the names not be in the key dictionary.
@@ -113,7 +113,7 @@ clean_name <- function(dataset, key.dict) {
 #' @return Cleaned dataset with actors names standardized against the key dictionary.
 #' @return 2 vectors of indices will also be created to store the indices of those names
 #' @return that needs to be matched.
-fuzzify_names <- function(dataset, key.dict) {
+phonetify_names <- function(dataset, key.dict) {
 
   # creating a vector of indices (in the dataset) of the names that need to be fuzzy matched
   dataset.tmp <- dataset[!duplicated(paste0(dataset$name,
