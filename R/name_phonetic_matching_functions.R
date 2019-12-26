@@ -11,9 +11,17 @@
 #'
 #' @param dataset Dataset to clean the actors' names for
 #' @param key.dict Key dictionary to use to clean the actors' names
+#' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
 #' @return Returns a dataset with actors names' cleaned using exact string matching
 #' @example clean_name(df, key_dict)
 clean_name <- function(dataset, key.dict) {
+  if (!is.logical(utf)){
+    stop("utf argument requires a logical (True/False) input.")
+  }
+  # If not sure if data is clean, check and convert to try to convert it to UTF-8
+  if (!utf){
+    .check_and_convert(dataset$name)
+  }
 
   # First find actors that have the correct names and iso but not the correct entity type
   # Subset data for those that have correct names and iso first
@@ -110,11 +118,18 @@ clean_name <- function(dataset, key.dict) {
 #' choose to input custom names should the names not be in the key dictionary.
 #' @param dataset Dataset containing actors by user
 #' @param key.dict Key dictionary to clean actors' names against
+#' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
 #' @return Cleaned dataset with actors names standardized against the key dictionary.
 #' @return 2 vectors of indices will also be created to store the indices of those names
 #' @return that needs to be matched.
 phonetify_names <- function(dataset, key.dict) {
-
+  # If not sure if data is clean, check and convert to try to convert it to UTF-8
+  if (!is.logical(utf)){
+    stop("utf argument requires a logical (True/False) input.")
+  }
+  if (!utf){
+    .check_and_convert(dataset$name)
+  }
   # creating a vector of indices (in the dataset) of the names that need to be fuzzy matched
   dataset.tmp <- dataset[!duplicated(paste0(dataset$name,
                                             dataset$iso, dataset$entity.type)), ]

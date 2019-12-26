@@ -9,7 +9,7 @@
 #' @return A vector of locations names with the special character replaced with
 #' closest equivalent
 #' @example coerce_locations_names(df$name)
-coerce_location_names <- function(locations) {
+.coerce_location_names <- function(locations) {
   locations <- gsub("[ÀÁÂÃÄÅÆĀĂĄǍǞǠǢǺǼȀȂẤẦẨẶȦḀẠẢ]", "A", locations)
   locations <- gsub("[àáâãäåæāăąǎǟǡǣǻǽȁȃấầẩặȧḁạảẚ]", "a", locations)
   locations <- gsub("[ḂḄḆɃ]", "B", locations)
@@ -56,6 +56,30 @@ coerce_location_names <- function(locations) {
   return(locations)
 }
 
+#' Helper function to help check and convert the encoding of the column specified
+#' @param column Column to check and convert the encoding for
+#' @return column with the encoding (hopefully) converted
+.check_and_convert <- function(col){
+  # Check if there exists a hidden environment to create hidden variables for
+  # If not, then create one
+  if (!exists(".pkgenv")){
+    .pkgenv <- new.env(parent = emptyenv())
+  }
+  if (!exists("foreign", envir = .pkgenv)){
+    assign("foreign", names(which(!unlist(l10n_info()[2:3]))),
+           envir = .pkgenv)
+    assign("native", names(which(unlist(l10n_info()[2:3]))),
+           envir = .pkgenv)
+  }
+  if (.pkgenv$native == "UTF-8"){
+    col <- iconv(col, from = "UTF-8", to = "latin1")
+    col <- iconv(col, from = "latin1", to = "UTF-8")
+  } else if (.pkgenv$native == "Latin-1"){
+    col <- iconv(col, from = "latin1", to = "UTF-8")
+    col <- iconv(col, from = "UTF-8", to = "UTF-8")
+  }
+}
+
 #' Cleans the dataset's country names and adds iso.
 #' @description Cleans the dataset actors' countries based on the package's country
 #' @description dictionary and adds the corresponding iso to the dataset.
@@ -63,9 +87,17 @@ coerce_location_names <- function(locations) {
 #' @param dataset Dataset to clean the country names for
 #' @param country.dict Country dictionary to clean the dataset against
 #' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
+#' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
 #' @return The original dataset with the country names cleaned
 #' @example clean_country_iso(df, country_dict, iso = 3)
-clean_country_iso <- function(dataset, country.dict, iso = 3) {
+clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
+  # If not sure if data is clean, check and convert to try to convert it to UTF-8
+  if (!is.logical(utf)){
+    stop("utf argument requires a logical (True/False) input.")
+  }
+  if (!utf){
+    .check_and_convert(dataset$country)
+  }
   dataset$country <- country.dict$right[match(toupper(dataset$country),
                                               toupper(country.dict$wrong))]
   if (iso != 2 & iso != 3){
@@ -146,20 +178,6 @@ standardize_type <- function(dataset) {
 #' @param dataset Dataset containing actors' names
 #' @return Dataset with extraneous words removed from actors' names
 remove_extra <- function(dataset){
-  # Find all row numbers that match name, iso, and entity type
-  # Do this by pasting name, iso and entity type together and then matching on those
-
-  all3_matching_rows <- which((paste0(dataset$name, dataset$iso,
-                                      dataset$entity.type) %in%
-                                 paste0(key.dict$right, key.dict$iso,
-                                        key.dict$entity.type)))
-  # creating the vector of indices (in the dataset) of the names that need to be cleaned
-  if (length(all3_matching_rows) != 0) {
-    indices <- 1:nrow(dataset)
-    indices <- indices[-all3_matching_rows]
-  } else {
-    indices <- 1:nrow(dataset)
-  }
   # cleaning names by getting rid of extraneous words
   # this list of words can be updated in the future
   words <- c("council|adjuntament|corporation|government|urban|district|mayor|
