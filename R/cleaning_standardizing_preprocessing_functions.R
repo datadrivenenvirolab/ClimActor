@@ -3,20 +3,25 @@
 # pre-processing of data for fuzzy matching
 
 #' Helper function to check for names column
-.name_check <- function(dataset){
-  if (!any(grepl("name", tolower(names(dataset))))){
-    cat("No \"name\" column is detected in the dataset. Would you like to rename the column containing actors name?")
-    ans <- readline(prompt = "Rename column with actors' names (Y/N): ")
+.col_check <- function(dataset, col){
+  if (!any(grepl(col, tolower(names(dataset))))){
+    cat(paste0("No \"" , col, "\"",
+               "column is detected in the dataset.",
+               " Would you like to specify a column to rename?")
+    ans <- readline(prompt = "Rename column? (Y/N): ")
     while (toupper(ans) != "Y" & toupper(ans) != "N"){
       ans <- readline(prompt = "Please input either Y/N:")
     }
     if (toupper(ans) == "Y"){
       ans2 <- readline(prompt = "Please input column name to be renamed:")
-      names(dataset)[grepl(tolower(ans2), tolower(names(dataset)))] <- "name"
+      names(dataset)[grepl(tolower(ans2), tolower(names(dataset)))] <- col
     } else if (toupper(ans) == "N"){
-      stop("Please create or rename a \"name\" column consisting of actors' names.")
+      stop("Stopping function. Please create or rename a \"", col, "\"",
+           "column.")
+      on.exit(assign("to.stop", T), add = T)
     }
   }
+  return(dataset)
 }
 
 #' Coerce location names to handle special characters
