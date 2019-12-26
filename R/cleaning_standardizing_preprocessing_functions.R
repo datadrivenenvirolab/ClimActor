@@ -2,6 +2,22 @@
 # Functions used for cleaning and standardizing of values in the
 # pre-processing of data for fuzzy matching
 
+#' Helper function to check for names column
+.name_check <- function(dataset){
+  if (!any(grepl("name", tolower(names(dataset))))){
+    cat("No \"name\" column is detected in the dataset. Would you like to rename the column containing actors name?")
+    ans <- readline(prompt = "Rename column with actors' names (Y/N): ")
+    while (toupper(ans) != "Y" & toupper(ans) != "N"){
+      ans <- readline(prompt = "Please input either Y/N:")
+    }
+    if (toupper(ans) == "Y"){
+      ans2 <- readline(prompt = "Please input column name to be renamed:")
+      names(dataset)[grepl(tolower(ans2), tolower(names(dataset)))] <- "name"
+    } else if (toupper(ans) == "N"){
+      stop("Please create or rename a \"name\" column consisting of actors' names.")
+    }
+  }
+}
 
 #' Coerce location names to handle special characters
 #'
@@ -96,7 +112,23 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
   if (!is.logical(utf)){
     stop("utf argument requires a logical (True/False) input.")
   }
-  if (!utf){
+  if (!any(grepl("country", tolower(names(dataset))))){
+    cat("There is no country column within the dataset. Add the column?")
+    ans <- readline(prompt = " Add country column? Y/N")
+    while (toupper(ans) != "Y" & toupper(ans) != "N"){
+      ans <- readline(prompt = "Please input either Y/N")
+    }
+    if (toupper(ans) == "N"){
+      stop("Exiting function. Please create a country column before proceeding.")
+    } else if (toupper(ans) == "Y"){
+      dataset$country <- NA
+    }
+  }
+  if (any(grepl("Country", names(dataset)))){
+    tmp <- T
+    names(dataset)[grepl("Country", names(dataset))] <- "country"
+  }
+  if (!utf & !all(is.na(dataset$country))){
     dataset$country <- .check_and_convert(dataset$country)
   }
   dataset$country <- country.dict$right[match(toupper(dataset$country),
@@ -113,6 +145,9 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
   } else if (iso == 3){
     dataset$iso <- country.dict$iso[match(toupper(dataset$country),
                                           toupper(country.dict$right))]
+  }
+  if (tmp){
+    names(dataset)[grepl("country", names(dataset))] <- "Country"
   }
   return(dataset)
 }
@@ -181,6 +216,7 @@ standardize_type <- function(dataset) {
 remove_extra <- function(dataset){
   # cleaning names by getting rid of extraneous words
   # this list of words can be updated in the future
+
   words <- c("council|adjuntament|corporation|government|urban|district|mayor|
            the|of|city|autonomous|state|province|provincial|county|municipality|
            municipalidad de|municipalidad|municipio|kommune|municipal|prefecture|
