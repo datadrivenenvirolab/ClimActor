@@ -78,6 +78,7 @@
     col <- iconv(col, from = "latin1", to = "UTF-8")
     col <- iconv(col, from = "UTF-8", to = "UTF-8")
   }
+  return(col)
 }
 
 #' Cleans the dataset's country names and adds iso.
@@ -96,7 +97,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
     stop("utf argument requires a logical (True/False) input.")
   }
   if (!utf){
-    .check_and_convert(dataset$country)
+    dataset$country <- .check_and_convert(dataset$country)
   }
   dataset$country <- country.dict$right[match(toupper(dataset$country),
                                               toupper(country.dict$wrong))]

@@ -20,7 +20,7 @@ clean_name <- function(dataset, key.dict) {
   }
   # If not sure if data is clean, check and convert to try to convert it to UTF-8
   if (!utf){
-    .check_and_convert(dataset$name)
+    dataset$name <- .check_and_convert(dataset$name)
   }
 
   # First find actors that have the correct names and iso but not the correct entity type
@@ -128,7 +128,7 @@ phonetify_names <- function(dataset, key.dict) {
     stop("utf argument requires a logical (True/False) input.")
   }
   if (!utf){
-    .check_and_convert(dataset$name)
+    dataset$name <- .check_and_convert(dataset$name)
   }
   # creating a vector of indices (in the dataset) of the names that need to be fuzzy matched
   dataset.tmp <- dataset[!duplicated(paste0(dataset$name,
@@ -525,3 +525,4 @@ contextualize_data <- function(dataset, contextual_df, contextuals = c("region",
   return(merge_df)
 
 }
+
