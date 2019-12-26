@@ -2,22 +2,20 @@
 % Please edit documentation in R/adding_preprocessing_functions.R
 \name{rename_col}
 \alias{rename_col}
-\title{Renames the "name", "country", and "entity_type" columns to the correct column name}
+\title{Renames the columns within the dataset}
 \usage{
-rename_col(dataset, raw_name_col, raw_country_col, raw_type_col)
+rename_col(dataset)
 }
 \arguments{
 \item{dataset}{Dataset to rename columns for}
-
-\item{raw_name_col}{Current column name for "name"}
-
-\item{raw_country_col}{Current column name for "country"}
-
-\item{raw_type_col}{Current column name for "entity_type"}
 }
 \value{
 The dataset with the appropriately named columns
 }
 \description{
-Renames the "name", "country", and "entity_type" columns to the correct column name
+Checks the dataset for the correct names necessary for further data
+
+processing. If the requisite data names are not in the dataset, then prompts
+
+the user for the columns to be renamed to the requisite names.
 }

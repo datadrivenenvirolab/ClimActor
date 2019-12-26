@@ -5,7 +5,8 @@
 \title{Merge contextual data into original dataset}
 \usage{
 contextualize_data(dataset, contextual_df, contextuals = c("region",
-  "pop", "lat", "lng", "area", "elevation", "initiatives_committed"))
+  "population", "lat", "lng", "area", "elevation",
+  "initiatives_committed"))
 }
 \arguments{
 \item{dataset}{Original dataset}

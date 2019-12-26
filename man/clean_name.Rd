@@ -10,6 +10,8 @@ clean_name(dataset, key.dict)
 \item{dataset}{Dataset to clean the actors' names for}
 
 \item{key.dict}{Key dictionary to use to clean the actors' names}
+
+\item{utf}{Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.}
 }
 \value{
 Returns a dataset with actors names' cleaned using exact string matching
