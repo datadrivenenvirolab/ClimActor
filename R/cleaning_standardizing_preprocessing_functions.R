@@ -2,106 +2,6 @@
 # Functions used for cleaning and standardizing of values in the
 # pre-processing of data for fuzzy matching
 
-#' Helper function to check for names column
-.col_check <- function(dataset, col){
-  if (!any(grepl(col, tolower(names(dataset))))){
-    cat(paste0("No \"" , col, "\"",
-               "column is detected in the dataset.",
-               " Would you like to specify a column to rename?")
-    ans <- readline(prompt = "Rename column? (Y/N): ")
-    while (toupper(ans) != "Y" & toupper(ans) != "N"){
-      ans <- readline(prompt = "Please input either Y/N:")
-    }
-    if (toupper(ans) == "Y"){
-      ans2 <- readline(prompt = "Please input column name to be renamed:")
-      names(dataset)[grepl(tolower(ans2), tolower(names(dataset)))] <- col
-    } else if (toupper(ans) == "N"){
-      stop("Stopping function. Please create or rename a \"", col, "\"",
-           "column.")
-      on.exit(assign("to.stop", T), add = T)
-    }
-  }
-  return(dataset)
-}
-
-#' Coerce location names to handle special characters
-#'
-#' @param locations Column with names of location (city, country, etc.)
-#' @return A vector of locations names with the special character replaced with
-#' closest equivalent
-#' @example coerce_locations_names(df$name)
-.coerce_location_names <- function(locations) {
-  locations <- gsub("[ÀÁÂÃÄÅÆĀĂĄǍǞǠǢǺǼȀȂẤẦẨẶȦḀẠẢ]", "A", locations)
-  locations <- gsub("[àáâãäåæāăąǎǟǡǣǻǽȁȃấầẩặȧḁạảẚ]", "a", locations)
-  locations <- gsub("[ḂḄḆɃ]", "B", locations)
-  locations <- gsub("[ḃḅḇƀᵬᶀɓ]", "b", locations)
-  locations <- gsub("[ÇĆĈĊČ]", "C", locations)
-  locations <- gsub("[çćĉċč]", "c", locations)
-  locations <- gsub("[ÐĎĐ]", "D", locations)
-  locations <- gsub("[ðďđ]", "d", locations)
-  locations <- gsub("[ÈÉÊËĒĔĖĘĚȄȆ]", "E", locations)
-  locations <- gsub("[èéêëēĕėęěȅȇ]", "e", locations)
-  locations <- gsub("[Ƒ]", "F", locations)
-  locations <- gsub("[ƒ]", "f", locations)
-  locations <- gsub("[ĜĞĠĢǤǦ]", "G", locations)
-  locations <- gsub("[ĝğġģǥǧ]", "g", locations)
-  locations <- gsub("[ĤĦ]", "H", locations)
-  locations <- gsub("[ĥħ]", "h", locations)
-  locations <- gsub("[ÌÍÎÏĨĪĬĮİĲǏȈȊ]", "I", locations)
-  locations <- gsub("[ìíîïĩīĭįıĳǐȉȋ]", "i", locations)
-  locations <- gsub("[ĴɈ]", "J", locations)
-  locations <- gsub("[ĵǰɉ]", "j", locations)
-  locations <- gsub("[Ķ]", "K", locations)
-  locations <- gsub("[ķĸ]", "k", locations)
-  locations <- gsub("[ĹĻĽĿŁ]", "L", locations)
-  locations <- gsub("[ĺļľŀłƚ]", "l", locations)
-  locations <- gsub("[ÑŃŅŇŊǸ]", "N", locations)
-  locations <- gsub("[ñńņňŉŋǹ]", "n", locations)
-  locations <- gsub("[ÒÓÔÕÖØŌŎŐŒƟƠƢǑǪǬȌȎȪȬȮȰ]", "O", locations)
-  locations <- gsub("[òóôõöøōŏőœơƣǒǫǭȍȏȫȭȯȱ]", "o", locations)
-  locations <- gsub("[ŔŖŘȐȒɌ]", "R", locations)
-  locations <- gsub("[ŕŗřȑȓɍ]", "r", locations)
-  locations <- gsub("[ŚŜŞŠȘ]", "S", locations)
-  locations <- gsub("[śŝşšș]", "s", locations)
-  locations <- gsub("[ŢŤŦƬƮ]", "T", locations)
-  locations <- gsub("[ţťŧƫƭ]", "t", locations)
-  locations <- gsub("[ÙÚÛÜŨŪŬŮŰŲǓǕǗǙǛȔȖ]", "U", locations)
-  locations <- gsub("[ùúûüũūŭůűųǔǖǘǚǜȕȗ]", "u", locations)
-  locations <- gsub("[Ŵ]", "W", locations)
-  locations <- gsub("[ŵ]", "w", locations)
-  locations <- gsub("[ÝŶŸɎ]", "Y", locations)
-  locations <- gsub("[ýÿŷɏ]", "y", locations)
-  locations <- gsub("[ŹŻŽẒẔẐŹƵ]", "Z", locations)
-  locations <- gsub("[źżžẓẕẑʐʑȥƶ]", "z", locations)
-
-  return(locations)
-}
-
-#' Helper function to help check and convert the encoding of the column specified
-#' @param column Column to check and convert the encoding for
-#' @return column with the encoding (hopefully) converted
-.check_and_convert <- function(col){
-  # Check if there exists a hidden environment to create hidden variables for
-  # If not, then create one
-  if (!exists(".pkgenv")){
-    .pkgenv <- new.env(parent = emptyenv())
-  }
-  if (!exists("foreign", envir = .pkgenv)){
-    assign("foreign", names(which(!unlist(l10n_info()[2:3]))),
-           envir = .pkgenv)
-    assign("native", names(which(unlist(l10n_info()[2:3]))),
-           envir = .pkgenv)
-  }
-  if (.pkgenv$native == "UTF-8"){
-    col <- iconv(col, from = "UTF-8", to = "latin1")
-    col <- iconv(col, from = "latin1", to = "UTF-8")
-  } else if (.pkgenv$native == "Latin-1"){
-    col <- iconv(col, from = "latin1", to = "UTF-8")
-    col <- iconv(col, from = "UTF-8", to = "UTF-8")
-  }
-  return(col)
-}
-
 #' Cleans the dataset's country names and adds iso.
 #' @description Cleans the dataset actors' countries based on the package's country
 #' @description dictionary and adds the corresponding iso to the dataset.
@@ -117,21 +17,12 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
   if (!is.logical(utf)){
     stop("utf argument requires a logical (True/False) input.")
   }
-  if (!any(grepl("country", tolower(names(dataset))))){
-    cat("There is no country column within the dataset. Add the column?")
-    ans <- readline(prompt = " Add country column? Y/N")
-    while (toupper(ans) != "Y" & toupper(ans) != "N"){
-      ans <- readline(prompt = "Please input either Y/N")
-    }
-    if (toupper(ans) == "N"){
-      stop("Exiting function. Please create a country column before proceeding.")
-    } else if (toupper(ans) == "Y"){
-      dataset$country <- NA
-    }
-  }
-  if (any(grepl("Country", names(dataset)))){
-    tmp <- T
-    names(dataset)[grepl("Country", names(dataset))] <- "country"
+  # Check for column naming
+  col <- "country"
+  .col_check(dataset, col)
+  if (exists(to.stop)){
+    stop("Stopping function. Please create or rename a \"", col, "\"",
+         "column.")
   }
   if (!utf & !all(is.na(dataset$country))){
     dataset$country <- .check_and_convert(dataset$country)
@@ -151,7 +42,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
     dataset$iso <- country.dict$iso[match(toupper(dataset$country),
                                           toupper(country.dict$right))]
   }
-  if (tmp){
+  if (exists(cap.check)){
     names(dataset)[grepl("country", names(dataset))] <- "Country"
   }
   return(dataset)
@@ -164,7 +55,13 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
 #' @return The original dataset with entity types filled for the actors
 #' @example fill_type(df)
 fill_type <- function(dataset) {
-
+  # Check for column naming
+  col <- "entity.type"
+  .col_check(dataset, col)
+  if (exists(to.stop)){
+    stop("Stopping function. Please create or rename a \"", col, "\"",
+         "column.")
+  }
   # fill the corresponding entity type with "City" if it contains a U.S. state abbreviation
   dataset$entity.type[grep(", AL|, AK|, AZ|, AR|, CA|, CO|, CT|, DE|, FL|, GA|, HI|, ID|, IL|, IN|, IA|, KS|, KY|, LA|, ME|, MD|, MA|, MI|, MN|, MS|, MO|, MT|, NE|, NV|, NH|, NJ|, NM|, NY|, NC|, ND|, OH|, OK|, OR|, PA|, RI|, SC|, SD|, TN|, TX|, UT|, VT|, VA|, WA|, WV|, WI|, WY",
                            dataset$name, ignore.case = TRUE)] <- "City"
@@ -196,6 +93,10 @@ fill_type <- function(dataset) {
     print(paste0("You seem to have ", missing_ET, " missing values in the entity.type column. Please fill these before proceeding."))
   }
   cat("Warning: This function will be generally accurate for the entity type of most--but not all--entries. It is highly recommended you double check the entity types, fix any errors, and fill in any missing values. ")
+
+  if (exists(cap.check)){
+    names(dataset)[grepl("entity.type", names(dataset))] <- "Entity.type"
+  }
   return(dataset)
 }
 
@@ -205,10 +106,20 @@ fill_type <- function(dataset) {
 #' @return Original dataset with the entity types cleaned
 #' @example standardize_type(df)
 standardize_type <- function(dataset) {
+  # Check for column naming
+  col <- "entity.type"
+  .col_check(dataset, col)
+  if (exists(to.stop)){
+    stop("Stopping function. Please create or rename a \"", col, "\"",
+         "column.")
+  }
   dataset$entity.type[grep("City|Muni|Town|County|Shire|District|Village|Assembly|Comm|Metro|Council|Ministry|Authority|Canton|Reg",
                            dataset$entity.type, ignore.case = TRUE)] <- "City"
   dataset$entity.type[grep("Prov|Region|Government|State|Pref",
                            dataset$entity.type, ignore.case = TRUE)] <- "Region"
+  if (exists(to.stop)){
+    names(dataset)[grepl("entity.type", names(dataset))] <- "Entity.type"
+  }
   return(dataset)
 }
 
@@ -221,7 +132,8 @@ standardize_type <- function(dataset) {
 remove_extra <- function(dataset){
   # cleaning names by getting rid of extraneous words
   # this list of words can be updated in the future
-
+  col <- "name"
+  .col_check(dataset, col)
   words <- c("council|adjuntament|corporation|government|urban|district|mayor|
            the|of|city|autonomous|state|province|provincial|county|municipality|
            municipalidad de|municipalidad|municipio|kommune|municipal|prefecture|
@@ -232,5 +144,8 @@ remove_extra <- function(dataset){
                                                     stringr::regex(words, ignore_case = T), "")
 
   dataset$name[indices] <- trimws(dataset$name[indices])
+  if (exists(to.stop)){
+    names(dataset)[grepl("name", names(dataset))] <- "Name"
+  }
   return(dataset)
 }
