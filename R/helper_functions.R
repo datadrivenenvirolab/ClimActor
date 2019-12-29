@@ -2,7 +2,7 @@
 # Helper functions for package
 
 #' Helper function to check for names column
-#' 
+#'
 #' @param dataset
 #' @param col
 .col_check <- function(dataset, col) {
@@ -22,11 +22,12 @@
           on.exit(assign("to.stop", T), add = T)
         }
   }
-  # Create a version of col with first letter capital
-  cap <- paste0(toupper(substring(col, 1, 1)), substring(col, 2))
-  if (any(grepl(cap, names(dataset)))){
-    names(dataset)[grepl(cap, names(dataset))] <- col
-    assign("cap.check", T)
+  # Check for similar versions of "col"
+  col.names <- gsub("[[:punct:]]", "", tolower(names(dataset)))
+  if (any(grepl(gsub("[[:punct:]]", "", col), col.names))){
+    names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)] <- col
+    assign(paste0(col, "name"),
+           names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)])
   }
   return(dataset)
 }
@@ -80,7 +81,7 @@
   locations <- gsub("[ýÿŷɏ]", "y", locations)
   locations <- gsub("[ŹŻŽẒẔẐŹƵ]", "Z", locations)
   locations <- gsub("[źżžẓẕẑʐʑȥƶ]", "z", locations)
-  
+
   return(locations)
 }
 

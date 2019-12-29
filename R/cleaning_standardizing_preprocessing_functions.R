@@ -17,10 +17,10 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
   if (!is.logical(utf)){
     stop("utf argument requires a logical (True/False) input.")
   }
-  # Check for column naming
+  # Check for column naming using helper function
   col <- "country"
   .col_check(dataset, col)
-  if (exists(to.stop)){
+  if (exists("to.stop")){
     stop("Stopping function. Please create or rename a \"", col, "\"",
          "column.")
   }
@@ -42,7 +42,9 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
     dataset$iso <- country.dict$iso[match(toupper(dataset$country),
                                           toupper(country.dict$right))]
   }
-  if (exists(cap.check)){
+  # Helper function returns output that checks if the name is capitalized
+  # Change back to capitalized version if the check is true
+  if (exists(paste0("cap.check", col))){
     names(dataset)[grepl("country", names(dataset))] <- "Country"
   }
   return(dataset)
@@ -58,7 +60,7 @@ fill_type <- function(dataset) {
   # Check for column naming
   col <- "entity.type"
   .col_check(dataset, col)
-  if (exists(to.stop)){
+  if (exists("to.stop")){
     stop("Stopping function. Please create or rename a \"", col, "\"",
          "column.")
   }
@@ -69,7 +71,7 @@ fill_type <- function(dataset) {
   # fill corresponding entity type with Company if it contains words that are usually associated with companies
   # this filling comes after the state abbreviations so that any company with "Inc"
   # (or similar company names that happen to have a ", ..") aren't coded as cities
-  dataset$entity.type[grep(" Inc|servic|limited| Co[.]|inc[.]|util|constr|contract|plc|ltd|plc[.]|ltd[.]|P[.]L[.]C[.]|L[.]T[.]D[.]|produ|LLP|L[.]L[.]P[.]|L[.]L[.]C[.]|LLC|group|hold|ltda|l[.]t[.]d[.]a[.]|craft |corp[.]| chapter|congregation|makers|method| stage|indust|organic|organiz|ingredi|transpo|glass|agricul|archite|hortic|logis|bevera|market|system|syst|corpo|packag|soluti|softwa|integra|perfo|desig|SRl|S[.]R[.]L[.]|chemic|cream|company|freight|metal|electr|intern|int'l|intl|aero|alcoh|contai|special|S[.]A[.]|SA[.]|sa de cv|sa de c[.]v[.]|s[.]a[.] de cv|s[.]a[.] de c[.]v[.]|C[.]V[.]|CV[.]|artform|corporat|co[.]|ltd[.]|print|maint|steel|rail|bank |banco |auto|build|special|plastic|health|medical|maintain|concie|office|hotel|food|center|charg|therap|pharma|device|harbor|harbour|mecan|mecha|ltda|L[.]T[.]D[.]A[.]|ltda[.]|styli|style|casting|investm|ventur|textil|knit|appare|merchan|sourc|soup|computer|labora|farm|greenh|outdoor|access|custom|produc|rubber|brewing| wood|lumber|bakery| baker| brand|dairy|confecti|interface|corporate|contract|electric|telecom|recycl|waste|energy|enviro|furnit|technolog|micro|surgic|manufac|interio|retail|holiday|worldwide|company|enterprise|propert|power",
+  dataset$entity.type[grep(" Inc|servic|limited| Co\\.|inc\\.|util|constr|contract|plc|ltd|plc\\.|ltd\\.|P\\.L\\.C\\.|L\\.T\\.D\\.|produ|LLP|L\\.L\\.P\\.|L\\.L\\C\\.|LLC|group|hold|ltda|l\\.t\\.d\\.a\\.|craft |corp\\.| chapter|congregation|makers|method| stage|indust|organic|organiz|ingredi|transpo|glass|agricul|archite|hortic|logis|bevera|market|system|syst|corpo|packag|soluti|softwa|integra|perfo|desig|SRl|S\\.R\\.L\\.|chemic|cream|company|freight|metal|electr|intern|int'l|intl|aero|alcoh|contai|special|S\\.A\\.|SA\\.|sa de cv|sa de c\\.v\\.|s\\.a\\. de cv|s\\.a\\. de c\\.v\\.|C\\.V\\.|CV\\.|artform|corporat|co\\.|ltd\\.|print|maint|steel|rail|bank |banco |auto|build|special|plastic|health|medical|maintain|concie|office|hotel|food|center|charg|therap|pharma|device|harbor|harbour|mecan|mecha|ltda|L\\.T\\.D\\.A\\.|ltda\\.|styli|style|casting|investm|ventur|textil|knit|appare|merchan|sourc|soup|computer|labora|farm|greenh|outdoor|access|custom|produc|rubber|brewing| wood|lumber|bakery| baker| brand|dairy|confecti|interface|corporate|contract|electric|telecom|recycl|waste|energy|enviro|furnit|technolog|micro|surgic|manufac|interio|retail|holiday|worldwide|company|enterprise|propert|power",
                            dataset$name, ignore.case = TRUE)] <- "Company"
 
   # fill the corresponding entity type with City if it contains words associated
@@ -93,8 +95,9 @@ fill_type <- function(dataset) {
     print(paste0("You seem to have ", missing_ET, " missing values in the entity.type column. Please fill these before proceeding."))
   }
   cat("Warning: This function will be generally accurate for the entity type of most--but not all--entries. It is highly recommended you double check the entity types, fix any errors, and fill in any missing values. ")
-
-  if (exists(cap.check)){
+  # Helper function returns output that checks if the name is capitalized
+  # Change back to capitalized version if the check is true
+  if (exists(paste0("cap.check", col))){
     names(dataset)[grepl("entity.type", names(dataset))] <- "Entity.type"
   }
   return(dataset)
@@ -109,7 +112,7 @@ standardize_type <- function(dataset) {
   # Check for column naming
   col <- "entity.type"
   .col_check(dataset, col)
-  if (exists(to.stop)){
+  if (exists("to.stop")){
     stop("Stopping function. Please create or rename a \"", col, "\"",
          "column.")
   }
@@ -117,7 +120,9 @@ standardize_type <- function(dataset) {
                            dataset$entity.type, ignore.case = TRUE)] <- "City"
   dataset$entity.type[grep("Prov|Region|Government|State|Pref",
                            dataset$entity.type, ignore.case = TRUE)] <- "Region"
-  if (exists(to.stop)){
+  # Helper function returns output that checks if the name is capitalized
+  # Change back to capitalized version if the check is true
+  if (exists(paste0("cap.check", col))){
     names(dataset)[grepl("entity.type", names(dataset))] <- "Entity.type"
   }
   return(dataset)
@@ -132,8 +137,13 @@ standardize_type <- function(dataset) {
 remove_extra <- function(dataset){
   # cleaning names by getting rid of extraneous words
   # this list of words can be updated in the future
+  # Check for column naming using helper function
   col <- "name"
   .col_check(dataset, col)
+  if (exists("to.stop")){
+    stop("Stopping function. Please create or rename a \"", col, "\"",
+         "column.")
+  }
   words <- c("council|adjuntament|corporation|government|urban|district|mayor|
            the|of|city|autonomous|state|province|provincial|county|municipality|
            municipalidad de|municipalidad|municipio|kommune|municipal|prefecture|
@@ -144,7 +154,9 @@ remove_extra <- function(dataset){
                                                     stringr::regex(words, ignore_case = T), "")
 
   dataset$name[indices] <- trimws(dataset$name[indices])
-  if (exists(to.stop)){
+  # Helper function returns output that checks if the name is capitalized
+  # Change back to capitalized version if the check is true
+  if (exists(paste0("cap.check", col))){
     names(dataset)[grepl("name", names(dataset))] <- "Name"
   }
   return(dataset)

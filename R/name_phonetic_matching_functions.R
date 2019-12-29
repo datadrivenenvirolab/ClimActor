@@ -22,7 +22,14 @@ clean_name <- function(dataset, key.dict) {
   if (!utf){
     dataset$name <- .check_and_convert(dataset$name)
   }
-
+  # Check for column naming using helper function
+  col <- "name"
+  .col_check(dataset, col)
+  .col_check(dataset, "entity.type")
+  if (exists("to.stop")){
+    stop("Stopping function. Please create or rename a \"", col, "\"",
+         "column.")
+  }
   # First find actors that have the correct names and iso but not the correct entity type
   # Subset data for those that have correct names and iso first
   name_iso_right <- which(paste0(dataset$name, dataset$iso) %in% paste0(key.dict$right, key.dict$iso))
@@ -106,7 +113,11 @@ clean_name <- function(dataset, key.dict) {
   } else {
     indices <<- 1:nrow(dataset)
   }
-
+  # Helper function returns output that checks if the name is capitalized
+  # Change back to capitalized version if the check is true
+  if (exists("cap.check")){
+    names(dataset)[grepl("name", names(dataset))] <- "Name"
+  }
   return(dataset)
 }
 
@@ -129,6 +140,15 @@ phonetify_names <- function(dataset, key.dict) {
   }
   if (!utf){
     dataset$name <- .check_and_convert(dataset$name)
+  }
+  # Check for column naming using helper function
+  col <- "name"
+  .col_check(dataset, col)
+  col <- "entity.type"
+  .col_check(dataset, col)
+  if (exists("to.stop")){
+    stop("Stopping function. Please create or rename a \"", col, "\"",
+         "column.")
   }
   # creating a vector of indices (in the dataset) of the names that need to be fuzzy matched
   dataset.tmp <- dataset[!duplicated(paste0(dataset$name,
