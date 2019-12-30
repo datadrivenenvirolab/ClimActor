@@ -23,12 +23,11 @@ clean_name <- function(dataset, key.dict) {
     dataset$name <- .check_and_convert(dataset$name)
   }
   # Check for column naming using helper function
-  col <- "name"
-  .col_check(dataset, col)
+  .col_check(dataset, "name")
   .col_check(dataset, "entity.type")
+  .col_check(dataset, "iso")
   if (exists("to.stop")){
-    stop("Stopping function. Please create or rename a \"", col, "\"",
-         "column.")
+    stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
   }
   # First find actors that have the correct names and iso but not the correct entity type
   # Subset data for those that have correct names and iso first
@@ -115,8 +114,14 @@ clean_name <- function(dataset, key.dict) {
   }
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
-  if (exists("cap.check")){
-    names(dataset)[grepl("name", names(dataset))] <- "Name"
+  if (exists(paste0("isoname"))){
+    names(dataset)[grepl("iso", names(dataset))] <- isoname
+  }
+  if (exists(paste0("entity.typename"))){
+    names(dataset)[grepl("entity.type", names(dataset))] <- entity.typename
+  }
+  if (exists(paste0("namename"))){
+    names(dataset)[grepl("name", names(dataset))] <- namename
   }
   return(dataset)
 }
@@ -142,13 +147,11 @@ phonetify_names <- function(dataset, key.dict) {
     dataset$name <- .check_and_convert(dataset$name)
   }
   # Check for column naming using helper function
-  col <- "name"
-  .col_check(dataset, col)
-  col <- "entity.type"
-  .col_check(dataset, col)
+  .col_check(dataset, "name")
+  .col_check(dataset, "entity.type")
+  .col_check(dataset, "iso")
   if (exists("to.stop")){
-    stop("Stopping function. Please create or rename a \"", col, "\"",
-         "column.")
+    stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
   }
   # creating a vector of indices (in the dataset) of the names that need to be fuzzy matched
   dataset.tmp <- dataset[!duplicated(paste0(dataset$name,
@@ -466,6 +469,15 @@ Would you like the function to proceed with this vector anyways (future edits ma
   custom_indices <<- custom_indices[!is.na(custom_indices)]
   unmatched_indices <<- unmatched_indices[!is.na(unmatched_indices)]
 
+  if (exists(paste0("isoname"))){
+    names(dataset)[grepl("iso", names(dataset))] <- isoname
+  }
+  if (exists(paste0("entity.typename"))){
+    names(dataset)[grepl("entity.type", names(dataset))] <- entity.typename
+  }
+  if (exists(paste0("namename"))){
+    names(dataset)[grepl("name", names(dataset))] <- namename
+  }
   # the final (hopefully cleaner) dataset!
   return(dataset)
 }
@@ -478,6 +490,13 @@ Would you like the function to proceed with this vector anyways (future edits ma
 #' @return Key dictionary with updated entries
 #' @example update_key_dict(df, key_dict, custom_indices)
 update_key_dict <- function(dataset, key.dict, custom_indices) {
+  # Check for column naming using helper function
+  .col_check(dataset, "name")
+  .col_check(dataset, "entity.type")
+  .col_check(dataset, "iso")
+  if (exists("to.stop")){
+    stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
+  }
   # Subset for names that were custom added by users
   custom <- dataset[custom_indices, ]
   # Make an indicator for these actors' names, entity types, and iso
@@ -532,6 +551,13 @@ contextualize_data <- function(dataset, contextual_df, contextuals = c("region",
                                                                        "lat", "lng", "area",
                                                                        "elevation",
                                                                        "initiatives_committed")){
+  # Check for column naming using helper function
+  .col_check(dataset, "name")
+  .col_check(dataset, "entity.type")
+  .col_check(dataset, "iso")
+  if (exists("to.stop")){
+    stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
+  }
   # Incorporate check to make sure that the contextuals for merging are in the
   # contextual dataframe
   if (any(!(contextuals %in% names(contextual_df)))){

@@ -18,10 +18,10 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
     stop("utf argument requires a logical (True/False) input.")
   }
   # Check for column naming using helper function
-  col <- "country"
-  .col_check(dataset, col)
+  .col_check(dataset, "country")
+  .col_check(dataset, "iso")
   if (exists("to.stop")){
-    stop("Stopping function. Please create or rename a \"", col, "\"",
+    stop("Stopping function. Missing the \"country\" or \"ISO\"",
          "column.")
   }
   if (!utf & !all(is.na(dataset$country))){
@@ -44,8 +44,11 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
   }
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
-  if (exists(paste0("cap.check", col))){
-    names(dataset)[grepl("country", names(dataset))] <- "Country"
+  if (exists(paste0("countryname"))){
+    names(dataset)[grepl("country", names(dataset))] <- countryname
+  }
+  if (exists(paste0("isoname"))){
+    names(dataset)[grepl("iso", names(dataset))] <- isoname
   }
   return(dataset)
 }
@@ -61,8 +64,8 @@ fill_type <- function(dataset) {
   col <- "entity.type"
   .col_check(dataset, col)
   if (exists("to.stop")){
-    stop("Stopping function. Please create or rename a \"", col, "\"",
-         "column.")
+    stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
+                "column."))
   }
   # fill the corresponding entity type with "City" if it contains a U.S. state abbreviation
   dataset$entity.type[grep(", AL|, AK|, AZ|, AR|, CA|, CO|, CT|, DE|, FL|, GA|, HI|, ID|, IL|, IN|, IA|, KS|, KY|, LA|, ME|, MD|, MA|, MI|, MN|, MS|, MO|, MT|, NE|, NV|, NH|, NJ|, NM|, NY|, NC|, ND|, OH|, OK|, OR|, PA|, RI|, SC|, SD|, TN|, TX|, UT|, VT|, VA|, WA|, WV|, WI|, WY",
@@ -95,10 +98,10 @@ fill_type <- function(dataset) {
     print(paste0("You seem to have ", missing_ET, " missing values in the entity.type column. Please fill these before proceeding."))
   }
   cat("Warning: This function will be generally accurate for the entity type of most--but not all--entries. It is highly recommended you double check the entity types, fix any errors, and fill in any missing values. ")
-  # Helper function returns output that checks if the name is capitalized
+  # Helper function returns output that checks if the name is slightly different
   # Change back to capitalized version if the check is true
-  if (exists(paste0("cap.check", col))){
-    names(dataset)[grepl("entity.type", names(dataset))] <- "Entity.type"
+  if (exists(paste0("entity.typename"))){
+    names(dataset)[grepl("entity.type", names(dataset))] <- entity.typename
   }
   return(dataset)
 }
@@ -113,8 +116,8 @@ standardize_type <- function(dataset) {
   col <- "entity.type"
   .col_check(dataset, col)
   if (exists("to.stop")){
-    stop("Stopping function. Please create or rename a \"", col, "\"",
-         "column.")
+    stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
+                "column."))
   }
   dataset$entity.type[grep("City|Muni|Town|County|Shire|District|Village|Assembly|Comm|Metro|Council|Ministry|Authority|Canton|Reg",
                            dataset$entity.type, ignore.case = TRUE)] <- "City"
@@ -122,8 +125,8 @@ standardize_type <- function(dataset) {
                            dataset$entity.type, ignore.case = TRUE)] <- "Region"
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
-  if (exists(paste0("cap.check", col))){
-    names(dataset)[grepl("entity.type", names(dataset))] <- "Entity.type"
+  if (exists(paste0("entity.typename"))){
+    names(dataset)[grepl("entity.type", names(dataset))] <- entity.typename
   }
   return(dataset)
 }
@@ -141,8 +144,8 @@ remove_extra <- function(dataset){
   col <- "name"
   .col_check(dataset, col)
   if (exists("to.stop")){
-    stop("Stopping function. Please create or rename a \"", col, "\"",
-         "column.")
+    stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
+         "column."))
   }
   words <- c("council|adjuntament|corporation|government|urban|district|mayor|
            the|of|city|autonomous|state|province|provincial|county|municipality|
@@ -156,8 +159,8 @@ remove_extra <- function(dataset){
   dataset$name[indices] <- trimws(dataset$name[indices])
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
-  if (exists(paste0("cap.check", col))){
-    names(dataset)[grepl("name", names(dataset))] <- "Name"
+  if (exists(paste0("namename"))){
+    names(dataset)[grepl("name", names(dataset))] <- namename
   }
   return(dataset)
 }
