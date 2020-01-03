@@ -10,20 +10,26 @@
 #' @return The dataset with the appropriately named columns
 #' @example rename_col(df)
 rename_col <- function(dataset) {
-  if (!("name" %in% names(dataset))){
-    cat("Please input the column name that contains the actors' names.")
-    ans <- readline(prompt = "Input (Case-Sensitive):")
-    names(dataset)[names(dataset) == ans] <- "name"
+  if (!("name" %in% tolower(names(dataset)))){
+    cat("Please input the column name that contains the actors' names. \nInput \"skip\" if column does not exist.")
+    ans <- readline(prompt = "Input:")
+    if (tolower(ans) != "skip"){
+      names(dataset)[tolower(names(dataset)) == tolower(ans)] <- "name"
+    }
   }
-  if(!("country" %in% names(dataset))){
-    cat("Please input the column name that contains the countries.")
-    ans <- readline(prompt = "Input (Case-Sensitive):")
-    names(dataset[names(dataset) == ans]) <- "country"
+  if(!("country" %in% tolower(names(dataset)))){
+    cat("Please input the column name that contains the countries. \nInput \"skip\" if column does not exist.")
+    ans <- readline(prompt = "Input:")
+    if (tolower(ans) != "skip"){
+      names(dataset)[tolower(names(dataset)) == tolower(ans)] <- "country"
+    }
   }
-  if (!("entity_type" %in% names(dataset))){
-    cat("Please input the column name that contains the actors' entity types.")
-    ans <- readline(prompt = "Input (Case-Sensitive):")
-    names(dataset[names(dataset) == ans]) <- "entity_type"
+  if (!("entity_type" %in% tolower(names(dataset)))){
+    cat("Please input the column name that contains the actors' entity types. \nInput \"skip\" if column does not exist.")
+    ans <- readline(prompt = "Input:")
+    if (tolower(ans) != "skip"){
+      names(dataset)[tolower(names(dataset)) == tolower(ans)] <- "entity_type"
+    }
   }
   if (all(c("name", "country", "entity_type") %in% names(dataset))) {
     cat("It seems like you have all the requisite column names in your dataset")
