@@ -12,7 +12,8 @@
 #' @param dataset Dataset to clean the actors' names for
 #' @param key.dict Key dictionary to use to clean the actors' names
 #' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
-#' @return Returns a dataset with actors names' cleaned using exact string matching
+#' @return Returns a dataset with actors names' cleaned using exact string matching.
+#' @return Also creates a vector of indices of names that require cleaning.
 #' @example clean_name(df, key_dict)
 clean_name <- function(dataset, key.dict, utf = F) {
   if (!is.logical(utf)){
@@ -128,7 +129,7 @@ clean_name <- function(dataset, key.dict, utf = F) {
 
 
 #' @export
-#' Cleans name using phonetic matching
+#' @title Cleans name using phonetic matching
 #' @description \code{phonetify_names} searches for actors' names which are not standardized
 #' and standardizes them according to the key dictionary. Users get to choose which name
 #' is correct based on a selection narrowed down by using phonetic matching. Users can
@@ -137,8 +138,12 @@ clean_name <- function(dataset, key.dict, utf = F) {
 #' @param key.dict Key dictionary to clean actors' names against
 #' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
 #' @return Cleaned dataset with actors names standardized against the key dictionary.
-#' @return 2 vectors of indices will also be created to store the indices of those names
-#' @return that needs to be matched.
+#' @return A few vectors of indices will also be created to store the indices of those names
+#' @return that needs to be matched. The first is a vector of indices of all actors that
+#' @return require cleaning. \code{unmatched_indices} is a vector of indices of names
+#' @return not cleaned by the function. \code{custom_indices} is a vector of indices
+#' @return denoting names for which custom actor names are given by the user, and will be
+#' @return used to update the key dictionary.
 phonetify_names <- function(dataset, key.dict) {
   # If not sure if data is clean, check and convert to try to convert it to UTF-8
   if (!is.logical(utf)){
@@ -480,8 +485,8 @@ Would you like the function to proceed with this vector anyways (future edits ma
 }
 
 #' @export
-#' Update key dictionary
-#' @description Update the key dictionary with the new inputs from user.
+#' @title Update key dictionary
+#' @description Update the key dictionary with the custom names given by the user.
 #' @param dataset Dataset by user
 #' @param key.dict Key dictionary
 #' @param custom_indices Vector of numbers containing which indices were new custom names added by the user
@@ -534,7 +539,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
 }
 
 #' @export
-#' Merge contextual data into original dataset
+#' @title Merge contextual data into original dataset
 #' @description Contextual data from the contextuals database obtained from a variety
 #' of sources. Contextual information includes region, population, latitude,
 #' longitude, area, elevation, and the initiatives committed by the actor. Merging is done

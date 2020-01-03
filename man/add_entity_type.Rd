@@ -18,6 +18,6 @@ Dataset with new column consisting of "type" param added to dataset
 Adds the entity_type column to the dataset
 }
 \examples{
-add_entity_type(df, "city")
+add_entity_type(df, "City")
 add_entity_type(df, NA)
 }

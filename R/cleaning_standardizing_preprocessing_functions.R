@@ -3,7 +3,7 @@
 # pre-processing of data for fuzzy matching
 
 #' @export
-#' Cleans the dataset's country names and adds iso.
+#' @title Cleans the dataset's country names and adds iso.
 #' @description Cleans the dataset actors' countries based on the package's country
 #' @description dictionary and adds the corresponding iso to the dataset.
 #'
@@ -60,8 +60,9 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
 
 
 #' @export
-#' Fills in the corresponding actor entity type for the dataset based on the actor name
-#'
+#' @title Fills in the corresponding actor entity type for the dataset based on the actor name
+#' @description Guesses the entity type for the actors within the dataset based on commonly
+#' @description used words for the respective entity types.
 #' @param dataset Dataset to fill in the entity type for
 #' @return The original dataset with entity types filled for the actors
 #' @example fill_type(df)
@@ -113,8 +114,10 @@ fill_type <- function(dataset) {
 }
 
 #' @export
-#' Standardizes and cleans existing entity types within the dataset
-#'
+#' @title Standardizes existing entity types within the dataset
+#' @description Similar to function \code{fill_type}, guesses the entity type of actors based
+#' @description based on commonly used words. However, this function applies specifically
+#' @description to differentiate between different subnational actors (City vs Region)
 #' @param dataset Dataset to standardize and clean the entity type for
 #' @return Original dataset with the entity types cleaned
 #' @example standardize_type(df)
@@ -139,7 +142,7 @@ standardize_type <- function(dataset) {
 }
 
 #' @export
-#' Remove extraneous words from actors' names
+#' @title Remove extraneous words from actors' names
 #' @description Removes extraneous words such as "council", "district", etc. from the
 #' @description names of actors. See vignette for the full list of "extraneous" words
 #'

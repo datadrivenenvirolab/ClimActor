@@ -14,5 +14,7 @@ fill_type(dataset)
 The original dataset with entity types filled for the actors
 }
 \description{
-Fills in the corresponding actor entity type for the dataset based on the actor name
+Guesses the entity type for the actors within the dataset based on commonly
+
+used words for the respective entity types.
 }

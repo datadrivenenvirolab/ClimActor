@@ -3,7 +3,7 @@
 %   R/cleaning_standardizing_preprocessing_functions.R
 \name{standardize_type}
 \alias{standardize_type}
-\title{Standardizes and cleans existing entity types within the dataset}
+\title{Standardizes existing entity types within the dataset}
 \usage{
 standardize_type(dataset)
 }
@@ -14,5 +14,9 @@ standardize_type(dataset)
 Original dataset with the entity types cleaned
 }
 \description{
-Standardizes and cleans existing entity types within the dataset
+Similar to function \code{fill_type}, guesses the entity type of actors based
+
+based on commonly used words. However, this function applies specifically
+
+to differentiate between different subnational actors (City vs Region)
 }

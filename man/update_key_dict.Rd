@@ -17,5 +17,5 @@ update_key_dict(dataset, key.dict, custom_indices)
 Key dictionary with updated entries
 }
 \description{
-Update the key dictionary with the new inputs from user.
+Update the key dictionary with the custom names given by the user.
 }

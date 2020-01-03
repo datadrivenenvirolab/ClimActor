@@ -16,9 +16,17 @@ phonetify_names(dataset, key.dict)
 \value{
 Cleaned dataset with actors names standardized against the key dictionary.
 
-2 vectors of indices will also be created to store the indices of those names
+A few vectors of indices will also be created to store the indices of those names
 
-that needs to be matched.
+that needs to be matched. The first is a vector of indices of all actors that
+
+require cleaning. \code{unmatched_indices} is a vector of indices of names
+
+not cleaned by the function. \code{custom_indices} is a vector of indices
+
+denoting names for which custom actor names are given by the user, and will be
+
+used to update the key dictionary.
 }
 \description{
 \code{phonetify_names} searches for actors' names which are not standardized

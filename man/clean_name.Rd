@@ -4,7 +4,7 @@
 \alias{clean_name}
 \title{Cleans name using exact matches}
 \usage{
-clean_name(dataset, key.dict)
+clean_name(dataset, key.dict, utf = F)
 }
 \arguments{
 \item{dataset}{Dataset to clean the actors' names for}
@@ -14,7 +14,9 @@ clean_name(dataset, key.dict)
 \item{utf}{Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.}
 }
 \value{
-Returns a dataset with actors names' cleaned using exact string matching
+Returns a dataset with actors names' cleaned using exact string matching.
+
+Also creates a vector of indices of names that require cleaning.
 }
 \description{
 Cleans the datasets' actors names based on the key dictionary using
