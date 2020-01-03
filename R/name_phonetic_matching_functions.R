@@ -4,7 +4,7 @@
 
 #' @importFrom dplyr %>%
 
-#'
+#' @export
 #' @title Cleans name using exact matches
 #' @description Cleans the datasets' actors names based on the key dictionary using
 #' exact string matching
@@ -127,6 +127,7 @@ clean_name <- function(dataset, key.dict, utf = F) {
 }
 
 
+#' @export
 #' Cleans name using phonetic matching
 #' @description \code{phonetify_names} searches for actors' names which are not standardized
 #' and standardizes them according to the key dictionary. Users get to choose which name
@@ -478,6 +479,7 @@ Would you like the function to proceed with this vector anyways (future edits ma
   return(dataset)
 }
 
+#' @export
 #' Update key dictionary
 #' @description Update the key dictionary with the new inputs from user.
 #' @param dataset Dataset by user
@@ -531,6 +533,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
   return(key.dict)
 }
 
+#' @export
 #' Merge contextual data into original dataset
 #' @description Contextual data from the contextuals database obtained from a variety
 #' of sources. Contextual information includes region, population, latitude,

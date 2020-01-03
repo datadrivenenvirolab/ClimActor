@@ -2,6 +2,7 @@
 # Functions used for cleaning and standardizing of values in the
 # pre-processing of data for fuzzy matching
 
+#' @export
 #' Cleans the dataset's country names and adds iso.
 #' @description Cleans the dataset actors' countries based on the package's country
 #' @description dictionary and adds the corresponding iso to the dataset.
@@ -58,6 +59,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
 }
 
 
+#' @export
 #' Fills in the corresponding actor entity type for the dataset based on the actor name
 #'
 #' @param dataset Dataset to fill in the entity type for
@@ -110,6 +112,7 @@ fill_type <- function(dataset) {
   return(dataset)
 }
 
+#' @export
 #' Standardizes and cleans existing entity types within the dataset
 #'
 #' @param dataset Dataset to standardize and clean the entity type for
@@ -135,6 +138,7 @@ standardize_type <- function(dataset) {
   return(dataset)
 }
 
+#' @export
 #' Remove extraneous words from actors' names
 #' @description Removes extraneous words such as "council", "district", etc. from the
 #' @description names of actors. See vignette for the full list of "extraneous" words
