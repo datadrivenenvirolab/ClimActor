@@ -95,4 +95,3 @@ add_country_entity_type <- function(dataset, type = NA) {
   return(dataset)
 }
 
-
