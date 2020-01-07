@@ -1,10 +1,10 @@
 # Data-Driven Lab
 # Helper functions for package
 
-#' Helper function to check for names column
-#'
-#' @param dataset
-#' @param col
+# Helper function to check for names column
+#
+# @param dataset
+# @param col
 .col_check <- function(dataset, col) {
   if (!any(grepl(col, tolower(names(dataset))))){
     cat(paste0("No \"" , col, "\"",
@@ -32,12 +32,12 @@
   return(dataset)
 }
 
-#' Coerce location names to handle special characters
-#'
-#' @param locations Column with names of location (city, country, etc.)
-#' @return A vector of locations names with the special character replaced with
-#' closest equivalent
-#' @example coerce_locations_names(df$name)
+# Coerce location names to handle special characters
+#
+# @param locations Column with names of location (city, country, etc.)
+# @return A vector of locations names with the special character replaced with
+# closest equivalent
+# @example coerce_locations_names(df$name)
 .coerce_location_names <- function(locations) {
   locations <- gsub("[ÀÁÂÃÄÅÆĀĂĄǍǞǠǢǺǼȀȂẤẦẨẶȦḀẠẢ]", "A", locations)
   locations <- gsub("[àáâãäåæāăąǎǟǡǣǻǽȁȃấầẩặȧḁạảẚ]", "a", locations)
@@ -86,9 +86,9 @@
 }
 
 
-#' Helper function to help check and convert the encoding of the column specified
-#' @param column Column to check and convert the encoding for
-#' @return column with the encoding (hopefully) converted
+# Helper function to help check and convert the encoding of the column specified
+# @param column Column to check and convert the encoding for
+# @return column with the encoding (hopefully) converted
 .check_and_convert <- function(col){
   # Check if there exists a hidden environment to create hidden variables for
   # If not, then create one
