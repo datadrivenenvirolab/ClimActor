@@ -3,6 +3,7 @@
 # Need to import the pipe '%>%' function for use in one of our functions later on
 
 #' @importFrom dplyr %>%
+#' @importFrom stats na.omit
 
 #' @export
 #' @title Cleans name using exact matches
@@ -144,7 +145,7 @@ clean_name <- function(dataset, key.dict, utf = F) {
 #' @return not cleaned by the function. \code{custom_indices} is a vector of indices
 #' @return denoting names for which custom actor names are given by the user, and will be
 #' @return used to update the key dictionary.
-phonetify_names <- function(dataset, key.dict) {
+phonetify_names <- function(dataset, key.dict, utf = F) {
   # If not sure if data is clean, check and convert to try to convert it to UTF-8
   if (!is.logical(utf)){
     stop("utf argument requires a logical (True/False) input.")

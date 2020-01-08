@@ -4,7 +4,7 @@
 \alias{phonetify_names}
 \title{Cleans name using phonetic matching}
 \usage{
-phonetify_names(dataset, key.dict)
+phonetify_names(dataset, key.dict, utf = F)
 }
 \arguments{
 \item{dataset}{Dataset containing actors by user}
