@@ -16,3 +16,25 @@ library(stringdist)
 library(stringr)
 ```
 
+As more non-state actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet show up across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
+
+The \code{climactor} package provides a workflow to efficiently standardize actor names across different databases and clean climate commitment data when analyzing non-state actors' climate commitments. 
+
+## Data
+
+The data used in this vignette comes from the Carbon Disclosure Project's 2018-2019 City-wide emissions data. The data can be downloaded [here](https://data.cdp.net/Emissions/2018-2019-City-wide-emissions/k7qn-m6i9). Metadata of the dataset is also documented in the link above. 
+
+```{r, include = FALSE}
+cdp <- read.csv("../data-raw/2018_-_2019_City-wide_emissions.csv", stringsAsFactors = F,
+                as.is = T, encoding = "UTF-8")
+```
+
+With data read in (as `cdp`)
+
+``` {r}
+dim(cdp)
+
+# Quick peek at the data
+knitr::kable(head(cdp[, 1:5]))
+```
+
