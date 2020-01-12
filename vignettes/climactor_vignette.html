@@ -313,7 +313,8 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>With data read in (as <code>cdp</code>)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">dim</span>(cdp)</a></code></pre></div>
 <pre><code>## [1] 1299   34</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(cdp[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]))</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Quick peek at the data</span></a>
+<a class="sourceLine" id="cb3-2" title="2">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(cdp[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]))</a></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -369,6 +370,23 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </tr>
 </tbody>
 </table>
+<p>Apart from the data you wish to clean, two other important datasets would be the key dictionary and country dictionary. These datasets can be accessed once the <code>climactor</code> package has been called with either <code>library(climactor)</code> or <code>require(climactor)</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">head</span>(key_dict[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a></code></pre></div>
+<pre><code>##   X.1 X              right              wrong iso
+## 1   1 1             Lassee             Lassee AUT
+## 2   2 2          Laxenburg          Laxenburg AUT
+## 3   3 3            Antwerp            Antwerp BEL
+## 4   4 4 Bruxelles-Capitale Bruxelles-Capitale BEL
+## 5   5 5               Genk               Genk BEL
+## 6   6 6              Ghent               Gent BEL</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">head</span>(country_dict[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a></code></pre></div>
+<pre><code>##            wrong          right code iso                          region
+## 1  Guinea Bissau  Guinea-Bissau  624 GNB              Sub-Saharan Africa
+## 2    Afghanistan    Afghanistan    4 AFG                      South Asia
+## 3        Albania        Albania    8 ALB Eastern Europe and Central Asia
+## 4        Algeria        Algeria   12 DZA    Middle East and North Africa
+## 5 American Samoa American Samoa   16 ASM       East Asia and the Pacific
+## 6        Andorra        Andorra   20 AND                          Europe</code></pre>
 </div>
 
 

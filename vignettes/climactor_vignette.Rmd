@@ -14,6 +14,7 @@ library(dplyr)
 library(phonics)
 library(stringdist)
 library(stringr)
+library(climactor)
 ```
 
 As more non-state actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet show up across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
@@ -36,5 +37,12 @@ dim(cdp)
 
 # Quick peek at the data
 knitr::kable(head(cdp[, 1:5]))
+```
+
+Apart from the data you wish to clean, two other important datasets would be the key dictionary and country dictionary. These datasets can be accessed once the `climactor` package has been called with either `library(climactor)` or `require(climactor)`, 
+
+```{r}
+head(key_dict[, 1:5])
+head(country_dict[, 1:5])
 ```
 
