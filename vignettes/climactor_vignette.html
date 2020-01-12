@@ -370,23 +370,130 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </tr>
 </tbody>
 </table>
-<p>Apart from the data you wish to clean, two other important datasets would be the key dictionary and country dictionary. These datasets can be accessed once the <code>climactor</code> package has been called with either <code>library(climactor)</code> or <code>require(climactor)</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">head</span>(key_dict[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a></code></pre></div>
-<pre><code>##   X.1 X              right              wrong iso
-## 1   1 1             Lassee             Lassee AUT
-## 2   2 2          Laxenburg          Laxenburg AUT
-## 3   3 3            Antwerp            Antwerp BEL
-## 4   4 4 Bruxelles-Capitale Bruxelles-Capitale BEL
-## 5   5 5               Genk               Genk BEL
-## 6   6 6              Ghent               Gent BEL</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">head</span>(country_dict[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a></code></pre></div>
-<pre><code>##            wrong          right code iso                          region
-## 1  Guinea Bissau  Guinea-Bissau  624 GNB              Sub-Saharan Africa
-## 2    Afghanistan    Afghanistan    4 AFG                      South Asia
-## 3        Albania        Albania    8 ALB Eastern Europe and Central Asia
-## 4        Algeria        Algeria   12 DZA    Middle East and North Africa
-## 5 American Samoa American Samoa   16 ASM       East Asia and the Pacific
-## 6        Andorra        Andorra   20 AND                          Europe</code></pre>
+<p>Apart from the data you wish to clean, two other important datasets would be the key dictionary (<code>key_dict</code>) and country dictionary (<code>country_dict</code>). These datasets can be accessed once the <code>climactor</code> package has been called with either <code>library(climactor)</code> or <code>require(climactor)</code>. For more details on the two dictionaries, you can use <code>?key_dict</code> and <code>?country_dict</code> for the full data documentation.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(key_dict[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]))</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">right</th>
+<th align="left">wrong</th>
+<th align="left">iso</th>
+<th align="left">entity.type</th>
+<th align="left">allcaps</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Lassee</td>
+<td align="left">Lassee</td>
+<td align="left">AUT</td>
+<td align="left">City</td>
+<td align="left">LASSEE</td>
+</tr>
+<tr class="even">
+<td align="left">Laxenburg</td>
+<td align="left">Laxenburg</td>
+<td align="left">AUT</td>
+<td align="left">City</td>
+<td align="left">LAXENBURG</td>
+</tr>
+<tr class="odd">
+<td align="left">Antwerp</td>
+<td align="left">Antwerp</td>
+<td align="left">BEL</td>
+<td align="left">City</td>
+<td align="left">ANTWERP</td>
+</tr>
+<tr class="even">
+<td align="left">Bruxelles-Capitale</td>
+<td align="left">Bruxelles-Capitale</td>
+<td align="left">BEL</td>
+<td align="left">City</td>
+<td align="left">BRUXELLES-CAPITALE</td>
+</tr>
+<tr class="odd">
+<td align="left">Genk</td>
+<td align="left">Genk</td>
+<td align="left">BEL</td>
+<td align="left">City</td>
+<td align="left">GENK</td>
+</tr>
+<tr class="even">
+<td align="left">Ghent</td>
+<td align="left">Gent</td>
+<td align="left">BEL</td>
+<td align="left">City</td>
+<td align="left">GENT</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">head</span>(country_dict[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]))</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">wrong</th>
+<th align="left">right</th>
+<th align="right">code</th>
+<th align="left">iso</th>
+<th align="left">region</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Guinea Bissau</td>
+<td align="left">Guinea-Bissau</td>
+<td align="right">624</td>
+<td align="left">GNB</td>
+<td align="left">Sub-Saharan Africa</td>
+</tr>
+<tr class="even">
+<td align="left">Afghanistan</td>
+<td align="left">Afghanistan</td>
+<td align="right">4</td>
+<td align="left">AFG</td>
+<td align="left">South Asia</td>
+</tr>
+<tr class="odd">
+<td align="left">Albania</td>
+<td align="left">Albania</td>
+<td align="right">8</td>
+<td align="left">ALB</td>
+<td align="left">Eastern Europe and Central Asia</td>
+</tr>
+<tr class="even">
+<td align="left">Algeria</td>
+<td align="left">Algeria</td>
+<td align="right">12</td>
+<td align="left">DZA</td>
+<td align="left">Middle East and North Africa</td>
+</tr>
+<tr class="odd">
+<td align="left">American Samoa</td>
+<td align="left">American Samoa</td>
+<td align="right">16</td>
+<td align="left">ASM</td>
+<td align="left">East Asia and the Pacific</td>
+</tr>
+<tr class="even">
+<td align="left">Andorra</td>
+<td align="left">Andorra</td>
+<td align="right">20</td>
+<td align="left">AND</td>
+<td align="left">Europe</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="data-preparation-functions" class="section level2">
+<h2>Data Preparation functions</h2>
+<p>Naturally, the first step in any data cleaning pipeline would be to read in and prepare the data.</p>
+<p>Within the <code>climactor</code> workflow the first important step comes when the data is read in. For the later string matching aspects of the workflow to work more accurately, the data should ideally be read in or converted to <strong>UTF-8</strong> encoding. <strong>UTF-8</strong> is the preferred encoding when working with strings and both the <code>key_dict</code> and <code>country_dict</code> are encoding in UTF-8 encoding. Reading in data with the UTF-8 encoding can be done by using the <code>encoding</code> argument within the <code>read.csv</code> function.</p>
+<p>If you know the encoding of your data, it is best to convert it to UTF-8 (either within R or elsewhere) before proceeding with the string matching algorithmns. If you are unsure of the encoding of your data, an (optional) helper function within some string matching functions will try to guess the encoding of your data and convert it to UTF-8. For more information on the helper function, see the code in the github <a href="https://github.com/datadrivenyale/climactor/blob/master/R/helper_functions.R">here</a>.</p>
+<p>If you would like to learn more about encoding in R, you can refer to the Appendix (<em>Notes on encoding</em>) of this vignette or refer to several articles writtin on the topic by <a href="http://kunststube.net/encoding">Kunsttube</a>, <a href="http://kevinushey.github.io/">Kevin Ushey</a>, or <a href="https://rstudio-pubs-static.s3.amazonaws.com/279354_f552c4c41852439f910ad620763960b6.html">Maurício Collaça</a>.</p>
+<p>Other data preparation functions include</p>
+<ul>
+<li>test</li>
+</ul>
 </div>
 
 

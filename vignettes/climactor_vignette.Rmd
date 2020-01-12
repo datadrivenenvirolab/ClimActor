@@ -39,10 +39,30 @@ dim(cdp)
 knitr::kable(head(cdp[, 1:5]))
 ```
 
-Apart from the data you wish to clean, two other important datasets would be the key dictionary and country dictionary. These datasets can be accessed once the `climactor` package has been called with either `library(climactor)` or `require(climactor)`, 
+Apart from the data you wish to clean, two other important datasets would be the key dictionary (`key_dict`) and country dictionary (`country_dict`). These datasets can be accessed once the `climactor` package has been called with either `library(climactor)` or `require(climactor)`. For more details on the two dictionaries, you can use `?key_dict` and `?country_dict` for the full data documentation.  
 
 ```{r}
-head(key_dict[, 1:5])
-head(country_dict[, 1:5])
+knitr::kable(head(key_dict[, 1:5]))
+knitr::kable(head(country_dict[, 1:5]))
 ```
 
+## Data Preparation functions
+
+Naturally, the first step in any data cleaning pipeline would be to read in and prepare the data.
+
+Within the `climactor` workflow the first important step comes when the data is read in. For the later string matching aspects of the workflow to work more accurately, the data should ideally be read in or converted to **UTF-8** encoding. **UTF-8** is the preferred encoding when working with strings and both the `key_dict` and `country_dict` are encoding in UTF-8 encoding. Reading in data with the UTF-8 encoding can be done by using the `encoding` argument within the `read.csv` function. 
+
+If you know the encoding of your data, it is best to convert it to UTF-8 (either within R or elsewhere) before proceeding with the string matching algorithmns. If you are unsure of the encoding of your data, an (optional) helper function within some string matching functions will try to guess the encoding of your data and convert it to UTF-8. For more  information on the helper function, see the code in the github [here](https://github.com/datadrivenyale/climactor/blob/master/R/helper_functions.R). 
+
+If you would like to learn more about encoding in R, you can refer to the Appendix (*Notes on encoding*) of this vignette or refer to several articles writtin on the topic by [Kunsttube](http://kunststube.net/encoding), [Kevin Ushey](http://kevinushey.github.io/), or [Maurício Collaça](https://rstudio-pubs-static.s3.amazonaws.com/279354_f552c4c41852439f910ad620763960b6.html). 
+
+3 specific variables (name, country, entity type) are the most important while using the `climactor` package. Data preparation functions ensure that these variables are present and include the following functions: 
+
+* `rename_col()` to rename data columns to the appropriate names 
+* `add_country()` adds the country column to the dataset
+* `add_entity_type()` adds the entity type column to the dataset
+* `add_country_entity_type()` adds both the country and entity type columns to the dataset
+
+### Rename columns with `rename_col()`
+
+`rename_col()` checks the dataset for the requisite names 
