@@ -490,10 +490,24 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <p>Within the <code>climactor</code> workflow the first important step comes when the data is read in. For the later string matching aspects of the workflow to work more accurately, the data should ideally be read in or converted to <strong>UTF-8</strong> encoding. <strong>UTF-8</strong> is the preferred encoding when working with strings and both the <code>key_dict</code> and <code>country_dict</code> are encoding in UTF-8 encoding. Reading in data with the UTF-8 encoding can be done by using the <code>encoding</code> argument within the <code>read.csv</code> function.</p>
 <p>If you know the encoding of your data, it is best to convert it to UTF-8 (either within R or elsewhere) before proceeding with the string matching algorithmns. If you are unsure of the encoding of your data, an (optional) helper function within some string matching functions will try to guess the encoding of your data and convert it to UTF-8. For more information on the helper function, see the code in the github <a href="https://github.com/datadrivenyale/climactor/blob/master/R/helper_functions.R">here</a>.</p>
 <p>If you would like to learn more about encoding in R, you can refer to the Appendix (<em>Notes on encoding</em>) of this vignette or refer to several articles writtin on the topic by <a href="http://kunststube.net/encoding">Kunsttube</a>, <a href="http://kevinushey.github.io/">Kevin Ushey</a>, or <a href="https://rstudio-pubs-static.s3.amazonaws.com/279354_f552c4c41852439f910ad620763960b6.html">Maurício Collaça</a>.</p>
-<p>Other data preparation functions include</p>
+<p>3 specific variables (name, country, entity type) are the most important while using the <code>climactor</code> package. Data preparation functions ensure that these variables are present and include the following functions:</p>
 <ul>
-<li>test</li>
+<li><code>rename_col()</code> to rename data columns to the appropriate names</li>
+<li><code>add_country()</code> adds the country column to the dataset</li>
+<li><code>add_entity_type()</code> adds the entity type column to the dataset</li>
+<li><code>add_country_entity_type()</code> adds both the country and entity type columns to the dataset</li>
 </ul>
+<div id="rename-columns-with-rename_col" class="section level3">
+<h3>Rename columns with <code>rename_col()</code></h3>
+<p><code>rename_col()</code> checks the dataset for the requisite names and asks the user for columns to be renamed if the dataset do not contain the requisite names. This function ensures that column names are standardized so that downstream functions will work as intended. The only argument for the function is the user’s dataset that is to be cleaned.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">tmp &lt;-<span class="st"> </span><span class="kw">rename_col</span>(cdp)</a></code></pre></div>
+<pre><code>## Please input the column name that contains the actors&#39; names. 
+## Input &quot;skip&quot; if column does not exist.Input:
+## Please input the column name that contains the actors&#39; entity types. 
+## Input &quot;skip&quot; if column does not exist.Input:</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="st">&quot;name&quot;</span></a></code></pre></div>
+<pre><code>## [1] &quot;name&quot;</code></pre>
+</div>
 </div>
 
 

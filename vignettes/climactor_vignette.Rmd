@@ -2,6 +2,8 @@
 title: "The climactor guide"
 author: "Data-Driven Lab"
 output: rmarkdown::html_vignette
+params:
+  cdpname: name
 vignette: >
   %\VignetteIndexEntry{The climactor guide}
   %\VignetteEngine{knitr::rmarkdown}
@@ -65,4 +67,11 @@ If you would like to learn more about encoding in R, you can refer to the Append
 
 ### Rename columns with `rename_col()`
 
-`rename_col()` checks the dataset for the requisite names 
+`rename_col()` checks the dataset for the requisite names and asks the user for columns to be renamed if the dataset do not contain the requisite names. This function ensures that column names are standardized so that downstream functions will work as intended. The only argument for the function is the user's dataset that is to be cleaned. 
+
+```{r}
+tmp <- rename_col(cdp)
+"name"
+```
+
+
