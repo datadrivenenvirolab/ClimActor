@@ -65,6 +65,37 @@ If you would like to learn more about encoding in R, you can refer to the Append
 * `add_entity_type()` adds the entity type column to the dataset
 * `add_country_entity_type()` adds both the country and entity type columns to the dataset
 
+```{r, include=FALSE}
+# Spawn a child process to run some code to work around the issue of interactivity
+library(subprocess)
+# Helper functions necessary for the package to run 
+is_windows <- function () (tolower(.Platform$OS.type) == "windows")
+
+R_binary <- function () {
+  R_exe <- ifelse (is_windows(), "R.exe", "R")
+  return(file.path(R.home("bin"), R_exe))
+}
+
+child_r <- spawn_process(R_binary(), c("--vanilla"))
+Sys.sleep(2)
+process_read(child_r)$stdout
+code <- 
+'
+library(climactor)
+cdp <- read.csv("../data-raw/2018_-_2019_City-wide_emissions.csv", stringsAsFactors = F,
+                as.is = T, encoding = "UTF-8")
+
+tmp <- rename_col(cdp)
+'
+process_write(child_r, code)
+process_read(child_r)$stdout
+process_write(child_r, "City")
+process_read(child_r)$stdout
+```
+
+
+
+
 ### Rename columns with `rename_col()`
 
 `rename_col()` checks the dataset for the requisite names and asks the user for columns to be renamed if the dataset do not contain the requisite names. This function ensures that column names are standardized so that downstream functions will work as intended. The only argument for the function is the user's dataset that is to be cleaned. 
