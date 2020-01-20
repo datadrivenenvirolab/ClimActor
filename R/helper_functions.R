@@ -33,7 +33,6 @@
 }
 
 # Coerce location names to handle special characters
-
 # @param locations Column with names of location (city, country, etc.)
 # @return A vector of locations names with the special character replaced with
 # closest equivalent
