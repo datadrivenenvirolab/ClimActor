@@ -9,7 +9,7 @@ Description: When working with climate actor data, data often come from a variet
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Imports: 
     dplyr,
     phonics,
