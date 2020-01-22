@@ -272,13 +272,13 @@ Would you like the function to proceed with this vector anyways (future edits ma
   }
 
   ## creating a dataframe of all phonetic codes for all the names that need to be fuzzy matched
-  ds.phon.codes <- phonics::phonics(dataset$name[ind.short], c("caverphone", "caverphone.modified",
-                                                               "cologne", "lein", "metaphone",
-                                                               "nysiis", "nysiis.modified", "onca",
-                                                               "onca.modified", "onca.refined",
-                                                               "onca.modified.refined", "phonex",
-                                                               "rogerroot", "soundex",
-                                                               "soundex.refined", "statcan"), clean = FALSE)
+  ds.phon.codes <- phonics::phonics(.coerce_location_names(dataset$name[ind.short]), c("caverphone", "caverphone.modified",
+                                                                                       "cologne", "lein", "metaphone",
+                                                                                       "nysiis", "nysiis.modified", "onca",
+                                                                                       "onca.modified", "onca.refined",
+                                                                                       "onca.modified.refined", "phonex",
+                                                                                       "rogerroot", "soundex",
+                                                                                       "soundex.refined", "statcan"), clean = FALSE)
 
   ds.phon.codes$rogerroot <- as.character(ds.phon.codes$rogerroot)
   # starting the fuzzy matching process:

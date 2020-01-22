@@ -15,6 +15,5 @@ The original dataset with entity types filled for the actors
 }
 \description{
 Guesses the entity type for the actors within the dataset based on commonly
-
 used words for the respective entity types.
 }

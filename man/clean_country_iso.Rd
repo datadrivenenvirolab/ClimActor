@@ -21,6 +21,5 @@ The original dataset with the country names cleaned
 }
 \description{
 Cleans the dataset actors' countries based on the package's country
-
 dictionary and adds the corresponding iso to the dataset.
 }

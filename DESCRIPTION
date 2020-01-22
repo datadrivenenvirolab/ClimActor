@@ -1,7 +1,7 @@
 Package: climactor
 Type: Package
 Title: Data cleaning workflow for climate actor data
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Author: Data-Driven Lab
 Maintainer: Data-Driven Lab <datdrivenlab@gmail.com>
 Description: When working with climate actor data, data often come from a variety of sources. However, names for the same actor (both subnationals and businesses) can differ across different data sources. The climactor package provides a workflow for the cleaning and standardizing of climate actor data across different data sources. 

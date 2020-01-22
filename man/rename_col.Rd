@@ -14,8 +14,6 @@ The dataset with the appropriately named columns
 }
 \description{
 Checks the dataset for the correct names necessary for further data
-
 processing. If the requisite data names are not in the dataset, then prompts
-
 the user for the columns to be renamed to the requisite names.
 }

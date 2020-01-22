@@ -15,8 +15,6 @@ Original dataset with the entity types cleaned
 }
 \description{
 Similar to function \code{fill_type}, guesses the entity type of actors based
-
 based on commonly used words. However, this function applies specifically
-
 to differentiate between different subnational actors (City vs Region)
 }

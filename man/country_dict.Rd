@@ -4,15 +4,14 @@
 \name{country_dict}
 \alias{country_dict}
 \title{Country Dictionary for \code{climactor}}
-\format{country_dict is a data frame with 456 commonly country names (rows) and 9 variables}
+\format{country_dict is a data frame with 456 commonly country names (rows) and 9 variables
+(columns)}
 \usage{
 country_dict
 }
 \description{
 A list of commonly found country names and their standardized equivalent
-
 for use in the cleaning of non-state actor names. Other information on these
-
 countries provided include ISO2 and ISO3, land area, population, and region.
 }
 \keyword{datasets}

@@ -4,17 +4,15 @@
 \name{key_dict}
 \alias{key_dict}
 \title{Key Dictionary for non-state actors}
-\format{key_dict is a dataframe with 29215 commonly found climate actor names (rows) and}
+\format{key_dict is a dataframe with 29215 commonly found climate actor names (rows) and
+22 variables (columns)}
 \usage{
 key_dict
 }
 \description{
 The key dictionary contains the commonly found names for non-state climate
-
 actors found across different climate databases for use in the cleaning
-
 of actor names. The dictionary also includes the different phonetic codes
-
 to be used in the phonetic string matching.
 }
 \keyword{datasets}
