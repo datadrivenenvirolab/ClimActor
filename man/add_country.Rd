@@ -11,6 +11,7 @@ add_country(dataset)
 }
 \value{
 The dataset with a new column named "country" added to dataset.
+**## Not run:**
 }
 \description{
 Adds country column to the dataset

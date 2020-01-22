@@ -13,6 +13,7 @@ add_country_entity_type(dataset, type = NA)
 }
 \value{
 Dataset with the 2 new columns
+**## Not run:**
 }
 \description{
 Adds both the entity_type and country columns to the dataset
@@ -20,4 +21,5 @@ Adds both the entity_type and country columns to the dataset
 \examples{
 add_country_entity_type(df, NA)
 add_country_entity_type(df, "City")
+## End(**Not run**)
 }
