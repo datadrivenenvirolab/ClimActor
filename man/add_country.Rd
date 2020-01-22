@@ -10,7 +10,7 @@ add_country(dataset)
 \item{dataset}{Dataset to add column to}
 }
 \value{
-
+The dataset with a new column named "country" added to dataset.
 }
 \description{
 Adds country column to the dataset

@@ -12,8 +12,12 @@ add_country_entity_type(dataset, type = NA)
 \item{type}{Default value to set for the entity.type column}
 }
 \value{
-
+Dataset with the 2 new columns
 }
 \description{
 Adds both the entity_type and country columns to the dataset
+}
+\examples{
+\dontrun{add_country_entity_type(df, NA)}
+\dontrun{add_country_entity_type(df, "City")}
 }

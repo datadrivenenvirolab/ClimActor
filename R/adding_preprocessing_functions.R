@@ -9,9 +9,8 @@
 #'
 #' @param dataset Dataset to rename columns for
 #' @return The dataset with the appropriately named columns
-#' \dontrun{
-#' @example rename_col(df)
-#' }
+#'
+#' @example \dontrun{rename_col(df)
 rename_col <- function(dataset) {
   if (!("name" %in% tolower(names(dataset)))){
     cat("Please input the column name that contains the actors' names. \nInput \"skip\" if column does not exist.")
@@ -46,9 +45,8 @@ rename_col <- function(dataset) {
 #'
 #' @param dataset Dataset to add column to
 #' @return The dataset with a new column named "country" added to dataset.
-#' \dontrun{
-#' @example add_country(df)
-#' }
+#'
+#' @example \dontrun{add_country(df)}
 add_country <- function(dataset){
   if ("country" %in% tolower(names(dataset))){
     stop("A \"country\" column already exists in the dataset.")
@@ -63,7 +61,10 @@ add_country <- function(dataset){
 #' @param dataset Dataset to add column to
 #' @param type Default entity type to set as value for the column
 #' @return Dataset with new column consisting of "type" param added to dataset
-#' \dontrun{@examples add_entity_type(df, "City") add_entity_type(df, NA)}
+#'
+#' @examples
+#' \dontrun{add_entity_type(df, "City")}
+#' \dontrun{add_entity_type(df, NA)}
 add_entity_type <- function(dataset, type){
   # Function that takes in a dataset and returns a new column "entity.type", with
   # type input as the entry for the column
@@ -81,11 +82,10 @@ add_entity_type <- function(dataset, type){
 #' @param type Default value to set for the entity.type column
 #' @return Dataset with the 2 new columns
 #'
-#' \dontrun{
+#'
 #' @examples
-#' add_country_entity_type(df, NA)
-#' add_country_entity_type(df, "City")
-#' }
+#' \dontrun{add_country_entity_type(df, NA)}
+#' \dontrun{add_country_entity_type(df, "City")}
 add_country_entity_type <- function(dataset, type = NA) {
   if (!"country" %in% tolower(names(dataset))) {
     dataset$country <- NA

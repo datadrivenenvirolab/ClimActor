@@ -18,7 +18,6 @@ clean_country_iso(dataset, country.dict, iso = 3, utf = F)
 }
 \value{
 The original dataset with the country names cleaned
-\dontrun{@example clean_country_iso(df, country_dict, iso = 3)}
 }
 \description{
 Cleans the dataset actors' countries based on the package's country

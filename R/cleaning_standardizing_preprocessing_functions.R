@@ -12,7 +12,8 @@
 #' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
 #' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
 #' @return The original dataset with the country names cleaned
-#' \dontrun{@example clean_country_iso(df, country_dict, iso = 3)}
+#'
+#' @example \dontrun{clean_country_iso(df, country_dict, iso = 3)}
 clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
   # If not sure if data is clean, check and convert to try to convert it to UTF-8
   if (!is.logical(utf)){
@@ -65,7 +66,8 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
 #' used words for the respective entity types.
 #' @param dataset Dataset to fill in the entity type for
 #' @return The original dataset with entity types filled for the actors
-#' @example fill_type(df)
+#'
+#' @example \dontrun{fill_type(df)}
 fill_type <- function(dataset) {
   # Check for column naming
   col <- "entity.type"
@@ -120,7 +122,8 @@ fill_type <- function(dataset) {
 #' to differentiate between different subnational actors (City vs Region)
 #' @param dataset Dataset to standardize and clean the entity type for
 #' @return Original dataset with the entity types cleaned
-#' @example standardize_type(df)
+#'
+#' @example \dontrun{standardize_type(df)}
 standardize_type <- function(dataset) {
   # Check for column naming
   col <- "entity.type"

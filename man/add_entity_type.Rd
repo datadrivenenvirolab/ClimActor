@@ -13,8 +13,11 @@ add_entity_type(dataset, type)
 }
 \value{
 Dataset with new column consisting of "type" param added to dataset
-\dontrun{@examples add_entity_type(df, "City") add_entity_type(df, NA)}
 }
 \description{
 Adds the entity_type column to the dataset
+}
+\examples{
+\dontrun{add_entity_type(df, "City")}
+\dontrun{add_entity_type(df, NA)}
 }

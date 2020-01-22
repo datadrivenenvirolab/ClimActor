@@ -15,7 +15,8 @@
 #' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
 #' @return Returns a dataset with actors names' cleaned using exact string matching.
 #' @return Also creates a vector of indices of names that require cleaning.
-#' @example clean_name(df, key_dict)
+#'
+#' @example \dontrun{clean_name(df, key_dict)}
 clean_name <- function(dataset, key.dict, utf = F) {
   if (!is.logical(utf)){
     stop("utf argument requires a logical (True/False) input.")
@@ -491,7 +492,8 @@ Would you like the function to proceed with this vector anyways (future edits ma
 #' @param key.dict Key dictionary
 #' @param custom_indices Vector of numbers containing which indices were new custom names added by the user
 #' @return Key dictionary with updated entries
-#' @example update_key_dict(df, key_dict, custom_indices)
+#'
+#' @example \dontrun{update_key_dict(df, key_dict, custom_indices)}
 update_key_dict <- function(dataset, key.dict, custom_indices) {
   # Check for column naming using helper function
   .col_check(dataset, "name")
@@ -550,7 +552,8 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
 #' includes "region", "pop", "lat", "lng", "area", "elevation", "intiatives_committed".
 #' Defaults to taking all the contextual information.
 #' @return Dataset with contextuals merged
-#' @example contextualize_data(df, contextuals_df, c("pop", "region", "lat", "lng"))
+#'
+#' @example \dontrun{contextualize_data(df, contextuals_df, c("pop", "region", "lat", "lng"))}
 contextualize_data <- function(dataset, contextual_df, contextuals = c("region", "population",
                                                                        "lat", "lng", "area",
                                                                        "elevation",
