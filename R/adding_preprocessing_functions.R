@@ -4,8 +4,8 @@
 #' @export
 #' @title Renames the columns within the dataset
 #' @description Checks the dataset for the correct names necessary for further data
-#' @description processing. If the requisite data names are not in the dataset, then prompts
-#' @description the user for the columns to be renamed to the requisite names.
+#' processing. If the requisite data names are not in the dataset, then prompts
+#' the user for the columns to be renamed to the requisite names.
 #'
 #' @param dataset Dataset to rename columns for
 #' @return The dataset with the appropriately named columns

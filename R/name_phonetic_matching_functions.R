@@ -140,11 +140,11 @@ clean_name <- function(dataset, key.dict, utf = F) {
 #' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
 #' @return Cleaned dataset with actors names standardized against the key dictionary.
 #' @return A few vectors of indices will also be created to store the indices of those names
-#' @return that needs to be matched. The first is a vector of indices of all actors that
-#' @return require cleaning. \code{unmatched_indices} is a vector of indices of names
-#' @return not cleaned by the function. \code{custom_indices} is a vector of indices
-#' @return denoting names for which custom actor names are given by the user, and will be
-#' @return used to update the key dictionary.
+#' that needs to be matched. The first is a vector of indices of all actors that
+#' require cleaning. \code{unmatched_indices} is a vector of indices of names
+#' not cleaned by the function. \code{custom_indices} is a vector of indices
+#' denoting names for which custom actor names are given by the user, and will be
+#' used to update the key dictionary.
 phonetify_names <- function(dataset, key.dict, utf = F) {
   # If not sure if data is clean, check and convert to try to convert it to UTF-8
   if (!is.logical(utf)){
@@ -371,7 +371,6 @@ Would you like the function to proceed with this vector anyways (future edits ma
                                                  #statcan.score
     )
 
-    # calculating the final total score:
 
 
     # arranging by total score in descending order so we can list the top matches (based on those scores)
