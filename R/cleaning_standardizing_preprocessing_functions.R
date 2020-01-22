@@ -12,7 +12,7 @@
 #' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
 #' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
 #' @return The original dataset with the country names cleaned
-#' @example clean_country_iso(df, country_dict, iso = 3)
+#' \dontrun{@example clean_country_iso(df, country_dict, iso = 3)}
 clean_country_iso <- function(dataset, country.dict, iso = 3, utf = F) {
   # If not sure if data is clean, check and convert to try to convert it to UTF-8
   if (!is.logical(utf)){

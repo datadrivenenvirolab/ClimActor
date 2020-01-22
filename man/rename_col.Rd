@@ -10,8 +10,7 @@ rename_col(dataset)
 \item{dataset}{Dataset to rename columns for}
 }
 \value{
-The dataset with the appropriately named columns
-**## Not run:**
+
 }
 \description{
 Checks the dataset for the correct names necessary for further data
