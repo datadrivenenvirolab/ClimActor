@@ -17,14 +17,14 @@
 #' @return Also creates a vector of indices of names that require cleaning.
 #'
 #' @example \dontrun{clean_name(df, key_dict)}
-clean_name <- function(dataset, key.dict, utf = F) {
-  if (!is.logical(utf)){
-    stop("utf argument requires a logical (True/False) input.")
-  }
+clean_name <- function(dataset, key.dict) {
+  # if (!is.logical(utf)){
+  #   stop("utf argument requires a logical (True/False) input.")
+  # }
   # If not sure if data is clean, check and convert to try to convert it to UTF-8
-  if (!utf){
-    dataset$name <- .check_and_convert(dataset$name)
-  }
+  # if (!utf){
+  #   dataset$name <- .check_and_convert(dataset$name)
+  # }
   # Check for column naming using helper function
   .col_check(dataset, "name")
   .col_check(dataset, "entity.type")
@@ -146,14 +146,14 @@ clean_name <- function(dataset, key.dict, utf = F) {
 #' not cleaned by the function. \code{custom_indices} is a vector of indices
 #' denoting names for which custom actor names are given by the user, and will be
 #' used to update the key dictionary.
-phonetify_names <- function(dataset, key.dict, utf = F) {
+phonetify_names <- function(dataset, key.dict) {
   # If not sure if data is clean, check and convert to try to convert it to UTF-8
-  if (!is.logical(utf)){
-    stop("utf argument requires a logical (True/False) input.")
-  }
-  if (!utf){
-    dataset$name <- .check_and_convert(dataset$name)
-  }
+  # if (!is.logical(utf)){
+  #   stop("utf argument requires a logical (True/False) input.")
+  # }
+  # if (!utf){
+  #   dataset$name <- .check_and_convert(dataset$name)
+  # }
   # Check for column naming using helper function
   .col_check(dataset, "name")
   .col_check(dataset, "entity.type")
