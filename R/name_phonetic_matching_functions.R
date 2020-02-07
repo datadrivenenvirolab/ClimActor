@@ -51,14 +51,14 @@ clean_name <- function(dataset, key.dict) {
     # Make sure user enters valid response
     # Allow users to 1) accept all key dict's entity types 2) resolve conflicts 1 by 1
     # or 3) not resolve conflicts
-    while (ans != "Y"|"N"|"Skip"){
+    while (toupper(ans) != "Y"|"N"|"SKIP"){
       cat("Please enter a valid input (Y/N/Skip)")
       ans <- readline(prompt = "Answer: ")
     }
-    if (ans == "Y"){
+    if (toupper(ans) == "Y"){
       # Resolve conflicts by taking all key dict's entity types
       dataset$entity.type[ent_ind] <- key.dict$entity.type[dict.ind]
-    } else if (ans == "N"){
+    } else if (toupper(ans) == "N"){
       # Resolve conflicts 1 by 1
       cat("Proceeding to resolve conflict of entity types actor by actor")
       for (k in seq_along(ent_ind)){
@@ -79,11 +79,11 @@ clean_name <- function(dataset, key.dict) {
           dataset$entity.type[ent_ind[k]] <- key.dict$entity.type[dict.ind[k]]
         } else if (ans2 == "2"){
           next
-        } else if (ans2 == "S"){
+        } else if (toupper(ans2) == "S"){
           cat("Stop resolving conflicts in entity types.")
           break
         }
-      }} else if (ans == "Skip"){
+      }} else if (toupper(ans) == "SKIP"){
         cat("Entity types will not be changed for now.")
       }
   }
@@ -129,6 +129,24 @@ clean_name <- function(dataset, key.dict) {
   return(dataset)
 }
 
+#' @export
+#' @title Matches country names based on fuzzy matching
+#'
+#'
+fuzzify_country <- function(dataset, country_keydict){
+  if (!exists("country_ind")){
+    stop("Please run the clean_country_iso function first before running this function.")
+  }
+  if (length(country_ind) == 0){
+    stop("The countries within the dataset have already been cleaned")
+  }
+  .col_check(dataset, "country")
+  if (exists("to.stop")){
+    stop("Stopping function. Missing the \"country\" columns.")
+  }
+
+
+}
 
 #' @export
 #' @title Cleans name using phonetic matching

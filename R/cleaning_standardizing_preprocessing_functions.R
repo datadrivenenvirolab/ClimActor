@@ -46,8 +46,11 @@ clean_country_iso <- function(dataset, country.dict, iso = 3) {
   }
 
   print(paste0("There are ", sum(is.na(dataset$country)),
-               " entries with no matching countries in the country dictionary.",
-               " Please check and input these entries manually."))
+               " entries with no exact matches in the country dictionary. The indices",
+               " for these names are recorded in the country_ind vector",
+               " Please use the fuzzify_country function to clean those names or input",
+               " them manually."))
+  country_ind <<- which(is.na(dataset$country))
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
   if (exists(paste0("countryname"))){
