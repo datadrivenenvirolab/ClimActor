@@ -144,6 +144,19 @@ fuzzify_country <- function(dataset, country_keydict){
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"country\" columns.")
   }
+  country_short <- which(!duplicated(dataset$country[country_ind]))
+  for (i in seq_along(country_short)){
+    ind <- country_short[i]
+    tmp <- agrep(dataset$country[ind], country_keydict$wrong, ignore.case = T,
+                 value = F)
+    if (length(tmp) > 15){
+      matches <- country_keydict$wrong[tmp[1:15]]
+    } else {
+      matches <- country_keydict$wrong[tmp]
+    }
+
+  }
+
 
 
 }
@@ -194,10 +207,7 @@ phonetify_names <- function(dataset, key.dict) {
                                       dataset$entity.type) %in%
                                  paste0(key.dict$right, key.dict$iso,
                                         key.dict$entity.type)))
-  ind.short <- which(!(unique(paste0(dataset$name, dataset$iso,
-                                     dataset$entity.type)) %in%
-                         paste0(key.dict$right, key.dict$iso,
-                                key.dict$entity.type)))
+  ind.short <- which(!duplicated(dataset$name[-all3_matching_rows]))
   if (length(ind.short) == 0){
     stop("It seems the dataset has already been cleaned.")
   }

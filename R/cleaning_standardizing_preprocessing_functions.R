@@ -29,8 +29,10 @@ clean_country_iso <- function(dataset, country.dict, iso = 3) {
   # if (!utf & !all(is.na(dataset$country))){
   #   dataset$country <- .check_and_convert(dataset$country)
   # }
-  dataset$country <- country.dict$right[match(toupper(dataset$country),
-                                              toupper(country.dict$wrong))]
+  match_country <- which(dataset$country %in% country.dict$wrong)
+  dataset$country[match_country] <- country.dict$right[match(toupper(dataset$country[match_country]),
+                                                             toupper(country.dict$wrong))]
+  country_ind <<- which(!dataset$country %in% country.dict$right)
   if (iso != 2 & iso != 3){
     stop("Please input either 2 or 3 for the \"iso\" argument.")
   }
@@ -44,13 +46,14 @@ clean_country_iso <- function(dataset, country.dict, iso = 3) {
     dataset$iso <- country.dict$iso[match(toupper(dataset$country),
                                           toupper(country.dict$right))]
   }
+  if (length(country_ind) != 0){
+    print(paste0("There are ", length(country_ind),
+                 " entries with no exact matches in the country dictionary. The indices",
+                 " for these names are recorded in the country_ind vector",
+                 " Please use the fuzzify_country function to clean those names or input",
+                 " them manually."))
+  }
 
-  print(paste0("There are ", sum(is.na(dataset$country)),
-               " entries with no exact matches in the country dictionary. The indices",
-               " for these names are recorded in the country_ind vector",
-               " Please use the fuzzify_country function to clean those names or input",
-               " them manually."))
-  country_ind <<- which(is.na(dataset$country))
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
   if (exists(paste0("countryname"))){
@@ -162,7 +165,7 @@ remove_extra <- function(dataset){
   .col_check(dataset, col)
   if (exists("to.stop")){
     stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
-         "column."))
+                "column."))
   }
   words <- c("council|adjuntament|corporation|government|urban|district|mayor|
            the|of|city|autonomous|state|province|provincial|county|municipality|
