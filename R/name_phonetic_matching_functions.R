@@ -247,6 +247,20 @@ fuzzify_country <- function(dataset, country_keydict){
 }
 
 #' @export
+#' @title Updates the key dictionary
+#' @description
+#'
+update_country_dict <- function(dataset, country.dict, custom_count){
+  .col_check(dataset, "country")
+  if (exists("to.stop")){
+    stop("Stopping function. Missing the \"country\" columns.")
+  }
+  tmp <- dataset[custom_count, ]
+
+}
+
+
+#' @export
 #' @title Cleans name using phonetic matching
 #' @description \code{phonetify_names} searches for actors' names which are not standardized
 #' and standardizes them according to the key dictionary. Users get to choose which name
@@ -621,12 +635,11 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
   cus_ind <- paste0(custom$name, custom$entity.type, custom$iso)
   # Match the indicator with key dict (we want those that are not in the key dict yet)
   # match_rows give the indices of those that ARE in the key dict, use ! to get the reverse
-  match_rows <- which(cus_ind %in% paste0(key.dict$right, key.dict$entity.type,
-                                          key.dict$iso) | cus_ind %in% paste0(key.dict$wrong,
-                                                                              key.dict$entity.type,
-                                                                              key.dict$iso))
+  match_rows <- which(cus_ind %in% paste0(key.dict$wrong,
+                                          key.dict$entity.type,
+                                          key.dict$iso))
   # Create the rows to be binded to key.dict
-  newrows <- data.frame(right = custom$name[!match_rows],
+  newrows <- data.frame(right = NA,
                         wrong = custom$name[!match_rows],
                         iso = custom$iso[!match_rows],
                         entity.type = custom$entity.type[!match_rows],
