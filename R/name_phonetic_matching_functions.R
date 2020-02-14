@@ -134,6 +134,7 @@ clean_name <- function(dataset, key.dict) {
 #'
 #'
 fuzzify_country <- function(dataset, country_keydict){
+  # Do the usual checks
   if (!exists("country_ind")){
     stop("Please run the clean_country_iso function first before running this function.")
   }
@@ -144,21 +145,105 @@ fuzzify_country <- function(dataset, country_keydict){
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"country\" columns.")
   }
+  # We only want to iterate through unique names that are not matched
+  # Remove duplicates here
   country_short <- which(!duplicated(dataset$country[country_ind]))
+  # Iterate through the names that are wrong
   for (i in seq_along(country_short)){
+    # Subset for index
     ind <- country_short[i]
-    tmp <- agrep(dataset$country[ind], country_keydict$wrong, ignore.case = T,
-                 value = F)
-    if (length(tmp) > 15){
-      matches <- country_keydict$wrong[tmp[1:15]]
+    origname <- dataset$country[ind]
+    # Calculate distance (using Levenstein distance) and find the 15 closest countries
+    # that match
+    tmp <- country_dict$right[order(adist(dataset$country[ind],
+                                          country_keydict$wrong))[1:15]]
+    # Print out the top 15 matches
+    print(paste0("The original country is ", dataset$country[ind]))
+    print(paste0("Here are some possible matches we found: "))
+    cat(paste0(1:15, ". ", tmp, "\n"))
+
+    # Let users choose which name they want to keep
+    cat("Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress)")
+    ans1 <- readline(prompt = "Answer: ")
+    ## if one of the listed matches is correct (and not NA), the standardized
+    ## version of the matched name will be replaced into the dataset
+    if (!is.na(ans1) &
+        (as.numeric(ans1) %in% c(1:15)) &
+        (!is.na(tmp[ans1]))) {
+      correct.name <- tmp[ans1]
+      print(paste0(correct.name, "has been selected and will replace ",
+                   dataset$country[ind], " in the database."))
+
+      # replacing all instances of the recently matched (raw) name in the dataset
+      # with the standardized name
+      samecount_inds <- which(dataset$country == origname)
+
+      if (length(samecount_inds) != 0) {
+        dataset$country[samecount_inds] <- correct.name
+        country_ind <<- country_ind[!(country_ind %in% samecount_inds)]
+      }
+
+    } else if (substr(toupper(as.character(ans1)), 1, 1) == "S") {
+      cat("Your current progress will be returned.")
+      cat("If it's not saved, be sure you saved your results in a variable with an assign function")
+      return(dataset)
+
+    } else if (substr(toupper(as.character(ans1)), 1, 1) == "N") {
+      cat("Do you want to enter a custom name instead? (Y/N)")
+      ans2 <- readline(prompt = "Answer: ")
+
+      ### if the user enters a custom name, the name will be replaced in the dataset,
+      ### and the index will be added to the custom_indices vector to make it easier
+      ### for the user to look back at the name later and fix, if necessary
+      ### if the user wants to add the custom names to the key dictionary,
+      ### the update_key_dict function can be used
+      if (substr(toupper(as.character(ans2)), 1, 1) == "Y") {
+        ans3 <- readline(prompt = "Enter in custom name: ")
+        ans3 <- as.character(ans3)
+        print(paste0("The name (", ans3, ") will be kept in the dataset.
+        The name has not been added to the key dictionary yet but can be added with the update_country_dict function.
+        The row number of the custom name has been added to a vector called custom_count"))
+        if (!exists("custom_count")){
+          custom_count <<- ind
+        } else {
+          custom_count <<- c(custom_count, ind)
+        }
+
+        # replacing all instances in the dataset of the original (raw) name
+        # with the new custom name
+        samecount_inds <- which(dataset$name == origname)
+
+        if (length(samecount_inds) != 0) {
+          dataset$country[samecount_inds] <- ans3
+          country_ind <<- country_ind[!(country_ind %in% samecount_inds)]
+        }
+        ### if the user chooses not to enter a custom name, the original name
+        ### will be kept, and the index will be added to the unmatched_indices vector
+      } else if (toupper(as.character(ans2)) == "N") {
+        print(paste0("The previous name (", origname, ") will be kept."))
+        if (!(exists("unmatched_count"))){
+          unmatched_count <<- ind
+        } else {
+          unmatched_count <<- c(unmatched_count, ind)
+        }
+      }
+      ## if the user makes a typo or other invalid answer, the function will continue, and
+      ## the index will be added to the unmatched_indices vector for the user to look at later
+      ## (or restart the function again later)
     } else {
-      matches <- country_keydict$wrong[tmp]
+      print("Sorry, an invalid answer was provided.")
+      print(paste0("The previous name (", origname, ") will be kept.",
+                   " The index of this entry will be recorded for future inspection."))
+      if (!(exists("unmatched_count"))){
+        unmatched_count <<- ind
+      } else {
+        unmatched_count <<- c(unmatched_count, ind)
+      }
     }
-
   }
-
-
-
+  # making these vectors more readable by getting rid of NAs
+  custom_count <<- custom_count[!is.na(custom_count)]
+  unmatched_count <<- unmatched_count[!is.na(unmatched_count)]
 }
 
 #' @export
