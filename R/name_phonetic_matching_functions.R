@@ -148,6 +148,8 @@ fuzzify_country <- function(dataset, country_keydict){
   # We only want to iterate through unique names that are not matched
   # Remove duplicates here
   country_short <- which(!duplicated(dataset$country[country_ind]))
+  .count_updates <<- data.frame(ind = country_short,
+                                name = dataset$country[country_short])
   # Iterate through the names that are wrong
   for (i in seq_along(country_short)){
     # Subset for index
@@ -251,11 +253,42 @@ fuzzify_country <- function(dataset, country_keydict){
 #' @description
 #'
 update_country_dict <- function(dataset, country.dict, custom_count){
+  # Do the usual checks for column name and indices
   .col_check(dataset, "country")
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"country\" columns.")
   }
-  tmp <- dataset[custom_count, ]
+  if (!exists(".count_updates")){
+    stop(paste("Stopping function. There are either no new updates to the country dictionary",
+         "or you have not used the fuzzify_country function yet."))
+  }
+  # First update those that have custom inputs
+  cust_df <- data.frame(wrong = .count_updates$name[.count_updates$ind %in% custom_count],
+                        right = NA,
+                        code = NA,
+                        iso = NA,
+                        region = NA,
+                        Landarea = NA,
+                        iso2 = NA,
+                        Population = NA,
+                        PopulationGroup = NA)
+
+  # Now remove the names that have custom inputs
+  .count_updates <- .count_updates[-which(.count_updates$ind %in% custom_count), ]
+  .count_updates$right <- dataset$country[.count_updates$ind]
+  update_dict <- data.frame(wrong = .count_update$name,
+                            right = .count_updates$right,
+                            code = NA,
+                            iso = NA,
+                            region = NA,
+                            Landarea = NA,
+                            iso2 = NA,
+                            Population = NA,
+                            PopulationGroup = NA)
+  update_dict <- merge(update_dict, country.dict, by = "right",
+                       all.x = T, all.y = F)
+  country.dict <- rbind(country.dict, update_dict, cust_df)
+  return(country.dict)
 
 }
 

@@ -174,7 +174,8 @@ remove_extra <- function(dataset){
            community|communat|communat??|Ayuntamiento|Gemeente|Comune di|Comune|Kommune|
            Republic")
   dataset$name[indices] <- stringr::str_replace_all(dataset$name[indices],
-                                                    stringr::regex(words, ignore_case = T), "")
+                                                    stringr::regex(words, ignore_case = T),
+                                                    "")
 
   dataset$name[indices] <- trimws(dataset$name[indices])
   # Helper function returns output that checks if the name is capitalized
