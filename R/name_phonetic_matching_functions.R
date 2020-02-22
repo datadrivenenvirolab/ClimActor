@@ -131,7 +131,21 @@ clean_name <- function(dataset, key.dict) {
 
 #' @export
 #' @title Matches country names based on fuzzy matching
-#'
+#' @description \code{fuzzify_country} cleans the "country" column in the user's dataset
+#' for those names that did not find an exact match in the existing country_dictionary.
+#' Given the small size of the country dictionary and the relatively fewer number of
+#' countries (as compared to climate actors), a fuzzy string matching algorithm using
+#' the Levenshtein distance is used for the fuzzy matching instead of the phonetic
+#' algorithms used for matching climate actor names.
+#' @param dataset Dataset containing countries by user
+#' @param country_keydict Key dictionary to clean actors' countries against
+#' @return Cleaned dataset with countries standardized against the country dictionary.
+#' @return A few vectors of indices will also be created to store the indices of those
+#' countries that needs to be matched. The first is a vector of indices of all actors
+#' that require cleaning. \code{unmatched_count} is a vector of indices of countries
+#' not cleaned by the function. \code{custom_count} is a vector of indices
+#' denoting countries for which custom actor names are given by the user, and will be
+#' used to update the country dictionary.
 #'
 fuzzify_country <- function(dataset, country_keydict){
   # Do the usual checks
@@ -249,8 +263,16 @@ fuzzify_country <- function(dataset, country_keydict){
 }
 
 #' @export
-#' @title Updates the key dictionary
-#' @description
+#' @title Updates the country dictionary
+#' @description Update the country dictionary with the custom countries given by the
+#' user and the countries that were not in the country dictionary.
+#' @param dataset Dataset by user
+#' @param country.dict country dictionary
+#' @param custom_count Vector of numbers containing which indices were new custom
+#' countries added by the user
+#' @return Country dictionary with updated entries
+#'
+#' @example \dontrun{update_country_dict(df, country_dict, custom_count)}
 #'
 update_country_dict <- function(dataset, country.dict, custom_count){
   # Do the usual checks for column name and indices
@@ -260,7 +282,7 @@ update_country_dict <- function(dataset, country.dict, custom_count){
   }
   if (!exists(".count_updates")){
     stop(paste("Stopping function. There are either no new updates to the country dictionary",
-         "or you have not used the fuzzify_country function yet."))
+               "or you have not used the fuzzify_country function yet."))
   }
   # First update those that have custom inputs
   cust_df <- data.frame(wrong = .count_updates$name[.count_updates$ind %in% custom_count],
@@ -275,6 +297,8 @@ update_country_dict <- function(dataset, country.dict, custom_count){
 
   # Now remove the names that have custom inputs
   .count_updates <- .count_updates[-which(.count_updates$ind %in% custom_count), ]
+  # Remove those that have not been cleaned as well
+  .count_updates <- .count_updates[-which(.count_updates$ind %in% unmatched_count), ]
   .count_updates$right <- dataset$country[.count_updates$ind]
   update_dict <- data.frame(wrong = .count_update$name,
                             right = .count_updates$right,
@@ -442,6 +466,9 @@ Would you like the function to proceed with this vector anyways (future edits ma
                                                                                        "soundex.refined", "statcan"), clean = FALSE)
 
   ds.phon.codes$rogerroot <- as.character(ds.phon.codes$rogerroot)
+  # Export the dataframe to be used for updating the dictionary
+  .actor_updates <<- data.frame(ind = ind.short,
+                                name_wrong = dataset$name[ind.short])
   # starting the fuzzy matching process:
 
   for (i in seq_along(ind.short)) {
@@ -647,7 +674,8 @@ Would you like the function to proceed with this vector anyways (future edits ma
 
 #' @export
 #' @title Update key dictionary
-#' @description Update the key dictionary with the custom names given by the user.
+#' @description Update the key dictionary with the custom names given by the user and
+#' the names that were not in the key dictionary.
 #' @param dataset Dataset by user
 #' @param key.dict Key dictionary
 #' @param custom_indices Vector of numbers containing which indices were new custom names added by the user
@@ -662,40 +690,61 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
   }
-  # Subset for names that were custom added by users
-  custom <- dataset[custom_indices, ]
-  # Make an indicator for these actors' names, entity types, and iso
-  cus_ind <- paste0(custom$name, custom$entity.type, custom$iso)
-  # Match the indicator with key dict (we want those that are not in the key dict yet)
-  # match_rows give the indices of those that ARE in the key dict, use ! to get the reverse
-  match_rows <- which(cus_ind %in% paste0(key.dict$wrong,
-                                          key.dict$entity.type,
-                                          key.dict$iso))
+  # Get the complete dataset of those that needs to be updated first
+  .actor_updates <- cbind(.actor_updates, dataset[.actor_updates$ind])
+  # Update the custom names first
+  custom <- .actor_updates$ind %in% custom_indices
+  cust_df <- data.frame(right = NA,
+                        wrong = .actor_updates$name[custom],
+                        iso = .actor_updates$iso[custom],
+                        entity.type = .actor_updates$entity.type[custom],
+                        allcaps = toupper(.actor_updates$name[custom]),
+                        caverphone = phonics::caverphone(.actor_updates$name[custom], clean = FALSE),
+                        caverphone.modified = phonics::caverphone(.actor_updates$name[custom], modified = TRUE, clean = FALSE),
+                        cologne = phonics::cologne(.actor_updates$name[custom], clean = FALSE),
+                        lein = phonics::lein(.actor_updates$name[custom], clean = FALSE),
+                        metaphone = phonics::metaphone(.actor_updates$name[custom], clean = FALSE),
+                        mra = phonics::mra_encode(.actor_updates$name[custom], clean = FALSE),
+                        nysiis = phonics::nysiis(.actor_updates$name[custom], clean = FALSE),
+                        nysiis.modified = phonics::nysiis(.actor_updates$name[custom], modified = TRUE, clean = FALSE),
+                        onca = phonics::onca(.actor_updates$name[custom], clean = FALSE),
+                        onca.modified = phonics::onca(.actor_updates$name[custom], modified = TRUE, clean = FALSE),
+                        onca.refined = phonics::onca(.actor_updates$name[custom], refined = TRUE, clean = FALSE),
+                        onca.modified.refined = phonics::onca(.actor_updates$name[custom], modified = TRUE, refined = TRUE, clean = FALSE),
+                        phonex = phonics::phonex(.actor_updates$name[custom], clean = FALSE),
+                        rogerroot = phonics::rogerroot(.actor_updates$name[custom], clean = FALSE),
+                        soundex = phonics::soundex(.actor_updates$name[custom], clean = FALSE),
+                        soundex.refined = phonics::refinedSoundex(.actor_updates$name[custom], clean = FALSE),
+                        statcan = phonics::statcan(.actor_updates$name[custom], clean = FALSE))
+  # Now update the rest
+  # First remove those actors that are not yet cleaned and the custom names
+  .actor_updates <- .actor_updates[-which(.actor_updates$ind %in% unmatched_indices), ]
+  .actor_updates <- .actor_updates[-which(.actor_updates$ind %in% custom_indices), ]
   # Create the rows to be binded to key.dict
-  newrows <- data.frame(right = NA,
-                        wrong = custom$name[!match_rows],
-                        iso = custom$iso[!match_rows],
-                        entity.type = custom$entity.type[!match_rows],
-                        allcaps = toupper(custom$name[!match_rows]),
-                        caverphone = phonics::caverphone(custom$name[!match_rows], clean = FALSE),
-                        caverphone.modified = phonics::caverphone(custom$name[!match_rows], modified = TRUE, clean = FALSE),
-                        cologne = phonics::cologne(custom$name[!match_rows], clean = FALSE),
-                        lein = phonics::lein(custom$name[!match_rows], clean = FALSE),
-                        metaphone = phonics::metaphone(custom$name[!match_rows], clean = FALSE),
-                        mra = phonics::mra_encode(custom$name[!match_rows], clean = FALSE),
-                        nysiis = phonics::nysiis(custom$name[!match_rows], clean = FALSE),
-                        nysiis.modified = phonics::nysiis(custom$name[!match_rows], modified = TRUE, clean = FALSE),
-                        onca = phonics::onca(custom$name[!match_rows], clean = FALSE),
-                        onca.modified = phonics::onca(custom$name[!match_rows], modified = TRUE, clean = FALSE),
-                        onca.refined = phonics::onca(custom$name[!match_rows], refined = TRUE, clean = FALSE),
-                        onca.modified.refined = phonics::onca(custom$name[!match_rows], modified = TRUE, refined = TRUE, clean = FALSE),
-                        phonex = phonics::phonex(custom$name[!match_rows], clean = FALSE),
-                        rogerroot = phonics::rogerroot(custom$name[!match_rows], clean = FALSE),
-                        soundex = phonics::soundex(custom$name[!match_rows], clean = FALSE),
-                        soundex.refined = phonics::refinedSoundex(custom$name[!match_rows], clean = FALSE),
-                        statcan = phonics::statcan(custom$name[!match_rows], clean = FALSE))
+  update_df <- data.frame(right = .actor_updates$name,
+                        wrong = .actor_updates$name_wrong,
+                        iso = .actor_updates$iso,
+                        entity.type = .actor_updates$entity.type,
+                        allcaps = toupper(.actor_updates$name_wrong),
+                        caverphone = phonics::caverphone(.actor_updates$name_wrong, clean = FALSE),
+                        caverphone.modified = phonics::caverphone(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
+                        cologne = phonics::cologne(.actor_updates$name_wrong, clean = FALSE),
+                        lein = phonics::lein(.actor_updates$name_wrong, clean = FALSE),
+                        metaphone = phonics::metaphone(.actor_updates$name_wrong, clean = FALSE),
+                        mra = phonics::mra_encode(.actor_updates$name_wrong, clean = FALSE),
+                        nysiis = phonics::nysiis(.actor_updates$name_wrong, clean = FALSE),
+                        nysiis.modified = phonics::nysiis(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
+                        onca = phonics::onca(.actor_updates$name_wrong, clean = FALSE),
+                        onca.modified = phonics::onca(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
+                        onca.refined = phonics::onca(.actor_updates$name_wrong, refined = TRUE, clean = FALSE),
+                        onca.modified.refined = phonics::onca(.actor_updates$name_wrong, modified = TRUE, refined = TRUE, clean = FALSE),
+                        phonex = phonics::phonex(.actor_updates$name_wrong, clean = FALSE),
+                        rogerroot = phonics::rogerroot(.actor_updates$name_wrong, clean = FALSE),
+                        soundex = phonics::soundex(.actor_updates$name_wrong, clean = FALSE),
+                        soundex.refined = phonics::refinedSoundex(.actor_updates$name_wrong, clean = FALSE),
+                        statcan = phonics::statcan(.actor_updates$name_wrong, clean = FALSE))
   # Bind rows to key.dict
-  key.dict <- rbind(key.dict, newrows)
+  key.dict <- rbind(key.dict, update_df, cust_df)
   return(key.dict)
 }
 
