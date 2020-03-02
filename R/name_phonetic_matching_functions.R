@@ -260,6 +260,12 @@ fuzzify_country <- function(dataset, country_keydict){
   # making these vectors more readable by getting rid of NAs
   custom_count <<- custom_count[!is.na(custom_count)]
   unmatched_count <<- unmatched_count[!is.na(unmatched_count)]
+  # Helper function returns output that checks if the name is capitalized
+  # Change back to capitalized version if the check is true
+  if (exists(paste0("countryname"))){
+    names(dataset)[grepl("country", names(dataset))] <- countryname
+  }
+  return(dataset)
 }
 
 #' @export

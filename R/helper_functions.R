@@ -10,17 +10,17 @@
     cat(paste0("No \"" , col, "\"",
                "column is detected in the dataset.",
                " Would you like to specify a column to rename?"))
-        ans <- readline(prompt = "Rename column? (Y/N): ")
-        while (toupper(ans) != "Y" & toupper(ans) != "N"){
-          ans <- readline(prompt = "Please input either Y/N:")
-        }
-        if (toupper(ans) == "Y"){
-          ans2 <- readline(prompt = "Please input column name to be renamed:")
-          names(dataset)[grepl(tolower(ans2), tolower(names(dataset)))] <- col
-        } else if (toupper(ans) == "N"){
-          stop()
-          on.exit(assign("to.stop", T), add = T)
-        }
+    ans <- readline(prompt = "Rename column? (Y/N): ")
+    while (toupper(ans) != "Y" & toupper(ans) != "N"){
+      ans <- readline(prompt = "Please input either Y/N:")
+    }
+    if (toupper(ans) == "Y"){
+      ans2 <- readline(prompt = "Please input column name to be renamed:")
+      names(dataset)[grepl(tolower(ans2), tolower(names(dataset)))] <- col
+    } else if (toupper(ans) == "N"){
+      stop()
+      on.exit(assign("to.stop", T), add = T)
+    }
   }
   # Check for similar versions of "col"
   col.names <- gsub("[[:punct:]]", "", tolower(names(dataset)))
@@ -89,23 +89,54 @@
 # @param column Column to check and convert the encoding for
 # @return column with the encoding (hopefully) converted
 .check_and_convert <- function(col){
-  # Check if there exists a hidden environment to create hidden variables for
-  # If not, then create one
-  if (!exists(".pkgenv")){
-    .pkgenv <- new.env(parent = emptyenv())
+  # Use rvest's guess_encoding and repair_encoding functions to try and fix the encoding
+  # Then check for names that have non-ASCII characters (this will target only those
+  # whose encoding we need to fix)
+  nonascii <- data.frame(string = col[stringi::stri_enc_mark(col) != "ASCII"],
+                         ind = which(stringi::stri_enc_mark(col) != "ASCII"))
+  # Then break those that need to be converted into chunks to make it more manageable
+  # Break chunk size based on size of number that needs to be converted
+  if (nrow(nonascii) <= 4000){
+    breaks <- 200
+  } else {
+    breaks <- 400
   }
-  if (!exists("foreign", envir = .pkgenv)){
-    assign("foreign", names(which(!unlist(l10n_info()[2:3]))),
-           envir = .pkgenv)
-    assign("native", names(which(unlist(l10n_info()[2:3]))),
-           envir = .pkgenv)
-  }
-  if (.pkgenv$native == "UTF-8"){
-    col <- iconv(col, from = "UTF-8", to = "latin1")
-    col <- iconv(col, from = "latin1", to = "UTF-8")
-  } else if (.pkgenv$native == "Latin-1"){
-    col <- iconv(col, from = "latin1", to = "UTF-8")
-    col <- iconv(col, from = "UTF-8", to = "UTF-8")
-  }
-  return(col)
+  # Break into a list to use lapply on
+  nonascii_list <- split(nonascii$string, ceiling(seq_len(nrow(nonascii))/breaks))
+  # Use lapply to wrap around tryCatch
+  col_convert <- lapply(nonascii_list, function(x) tryCatch({rvest::repair_encoding(x)},
+                                                            error = function(cond){
+                                                              message("Some strings' encoding did not managed to get fixed - it is suggested you run the function again.")
+                                                              # print(x)
+                                                              return(x)
+                                                            },
+                                                            warning = function(cond){
+                                                              message("Some unicode characters could not be repaired.")
+                                                              suppressWarnings(return(rvest::repair_encoding(x)))
+                                                            }))
+  # Use a for loop with a tryCatch wrapper to catch errors and
+  # include our own error message
+  # Suppress warnings to make it more user friendly - write our own warning message
+  # col_convert <- nonascii
+  # for (i in seq_len(ceiling(nrow(nonascii)/breaks))){
+  #   # Get start and end for this iteration
+  #   start <- (i-1) * breaks + 1
+  #   end <- i * breaks
+  #   if (end > nrow(nonascii)){
+  #     end <- nrow(nonascii)
+  #   }
+  #   col_convert$string[start:end] <- tryCatch({rvest::repair_encoding(nonascii$string[start:end])},
+  #                                             error = function(cond){
+  #                                               message("Some strings' encoding did not managed to get fixed - it is suggested you run the function again.")
+  #                                               return(nonascii$string[start:end])
+  #                                             },
+  #                                             warning = function(cond){
+  #                                               message("Some unicode characters could not be repaired.")
+  #                                               return(nonascii$string[start:end])
+  #                                             })
+  # }
+  # Return converted strings back to original column
+  # col_convert <- do.call(c, col_convert)
+  # col[nonascii$ind] <- col_convert
+  return(col_convert)
 }
