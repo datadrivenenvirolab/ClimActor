@@ -12,19 +12,20 @@
 #'
 #' @param dataset Dataset to clean the actors' names for
 #' @param key.dict Key dictionary to use to clean the actors' names
-#' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
+#' @param clean_enc Is the data read in with the correct encoding?
+#' If unknown, set as FALSE. Defaults to TRUE.
 #' @return Returns a dataset with actors names' cleaned using exact string matching.
 #' @return Also creates a vector of indices of names that require cleaning.
 #'
-#' @example \dontrun{clean_name(df, key_dict)}
-clean_name <- function(dataset, key.dict) {
-  # if (!is.logical(utf)){
-  #   stop("utf argument requires a logical (True/False) input.")
-  # }
-  # If not sure if data is clean, check and convert to try to convert it to UTF-8
-  # if (!utf){
-  #   dataset$name <- .check_and_convert(dataset$name)
-  # }
+#' @example \dontrun{clean_name(df, key_dict, clean_enc = F)}
+clean_name <- function(dataset, key.dict, clean_enc = T) {
+  if (!is.logical(clean_enc)){
+    stop("clean_enc argument requires a logical (True/False) input.")
+  }
+  # If not sure if data is clean, check and convert to try and repair the encoding
+  if (!clean_enc){
+    dataset$name <- .check_and_convert(dataset$name)
+  }
   # Check for column naming using helper function
   .col_check(dataset, "name")
   .col_check(dataset, "entity.type")
@@ -331,7 +332,6 @@ update_country_dict <- function(dataset, country.dict, custom_count){
 #' choose to input custom names should the names not be in the key dictionary.
 #' @param dataset Dataset containing actors by user
 #' @param key.dict Key dictionary to clean actors' names against
-#' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
 #' @return Cleaned dataset with actors names standardized against the key dictionary.
 #' @return A few vectors of indices will also be created to store the indices of those names
 #' that needs to be matched. The first is a vector of indices of all actors that
@@ -340,13 +340,7 @@ update_country_dict <- function(dataset, country.dict, custom_count){
 #' denoting names for which custom actor names are given by the user, and will be
 #' used to update the key dictionary.
 phonetify_names <- function(dataset, key.dict) {
-  # If not sure if data is clean, check and convert to try to convert it to UTF-8
-  # if (!is.logical(utf)){
-  #   stop("utf argument requires a logical (True/False) input.")
-  # }
-  # if (!utf){
-  #   dataset$name <- .check_and_convert(dataset$name)
-  # }
+
   # Check for column naming using helper function
   .col_check(dataset, "name")
   .col_check(dataset, "entity.type")

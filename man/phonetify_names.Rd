@@ -4,14 +4,12 @@
 \alias{phonetify_names}
 \title{Cleans name using phonetic matching}
 \usage{
-phonetify_names(dataset, key.dict, utf = F)
+phonetify_names(dataset, key.dict)
 }
 \arguments{
 \item{dataset}{Dataset containing actors by user}
 
 \item{key.dict}{Key dictionary to clean actors' names against}
-
-\item{utf}{Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.}
 }
 \value{
 Cleaned dataset with actors names standardized against the key dictionary.

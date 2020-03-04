@@ -5,7 +5,7 @@
 \alias{clean_country_iso}
 \title{Cleans the dataset's country names and adds iso.}
 \usage{
-clean_country_iso(dataset, country.dict, iso = 3, utf = F)
+clean_country_iso(dataset, country.dict, iso = 3, clean_enc = T)
 }
 \arguments{
 \item{dataset}{Dataset to clean the country names for}
@@ -14,7 +14,8 @@ clean_country_iso(dataset, country.dict, iso = 3, utf = F)
 
 \item{iso}{Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3}
 
-\item{utf}{Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.}
+\item{clean_enc}{Is the data read in with the correct encoding?
+If unknown, set as FALSE. Defaults to TRUE}
 }
 \value{
 The original dataset with the country names cleaned

@@ -101,42 +101,21 @@
   } else {
     breaks <- 400
   }
+  repair_wrapper <- function(x){
+    out <- tryCatch({suppressWarnings(rvest::repair_encoding(x))},
+                    error = function(cond){
+                      message("Some strings' encoding did not managed to get fixed - it is suggested you run the function again.")
+                      return(as.character(x))
+                    })
+    return(out)
+  }
   # Break into a list to use lapply on
   nonascii_list <- split(nonascii$string, ceiling(seq_len(nrow(nonascii))/breaks))
-  # Use lapply to wrap around tryCatch
-  col_convert <- lapply(nonascii_list, function(x) tryCatch({rvest::repair_encoding(x)},
-                                                            error = function(cond){
-                                                              message("Some strings' encoding did not managed to get fixed - it is suggested you run the function again.")
-                                                              # print(x)
-                                                              return(x)
-                                                            },
-                                                            warning = function(cond){
-                                                              message("Some unicode characters could not be repaired.")
-                                                              suppressWarnings(return(rvest::repair_encoding(x)))
-                                                            }))
-  # Use a for loop with a tryCatch wrapper to catch errors and
-  # include our own error message
-  # Suppress warnings to make it more user friendly - write our own warning message
-  # col_convert <- nonascii
-  # for (i in seq_len(ceiling(nrow(nonascii)/breaks))){
-  #   # Get start and end for this iteration
-  #   start <- (i-1) * breaks + 1
-  #   end <- i * breaks
-  #   if (end > nrow(nonascii)){
-  #     end <- nrow(nonascii)
-  #   }
-  #   col_convert$string[start:end] <- tryCatch({rvest::repair_encoding(nonascii$string[start:end])},
-  #                                             error = function(cond){
-  #                                               message("Some strings' encoding did not managed to get fixed - it is suggested you run the function again.")
-  #                                               return(nonascii$string[start:end])
-  #                                             },
-  #                                             warning = function(cond){
-  #                                               message("Some unicode characters could not be repaired.")
-  #                                               return(nonascii$string[start:end])
-  #                                             })
-  # }
+  # # Use lapply to wrap around tryCatch
+  col_convert <- lapply(nonascii_list, repair_wrapper)
+
   # Return converted strings back to original column
-  # col_convert <- do.call(c, col_convert)
-  # col[nonascii$ind] <- col_convert
-  return(col_convert)
+  col_convert <- do.call(c, col_convert)
+  col[nonascii$ind] <- col_convert
+  return(col)
 }

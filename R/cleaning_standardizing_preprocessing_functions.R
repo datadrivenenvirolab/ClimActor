@@ -10,15 +10,16 @@
 #' @param dataset Dataset to clean the country names for
 #' @param country.dict Country dictionary to clean the dataset against
 #' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
-#' @param utf Is the data in UTF-8 encoding? If unknown, set as FALSE. Defaults to FALSE.
+#' @param clean_enc Is the data read in with the correct encoding?
+#' If unknown, set as FALSE. Defaults to TRUE
 #' @return The original dataset with the country names cleaned
 #'
-#' @example \dontrun{clean_country_iso(df, country_dict, iso = 3)}
-clean_country_iso <- function(dataset, country.dict, iso = 3) {
-  # If not sure if data is clean, check and convert to try to convert it to UTF-8
-  # if (!is.logical(utf)){
-  #   stop("utf argument requires a logical (True/False) input.")
-  # }
+#' @example \dontrun{clean_country_iso(df, country_dict, iso = 3, clean_enc = F)}
+clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
+  # If not sure if data is clean, check and convert to try and repair the encoding
+  if (!is.logical(clean_enc)){
+    stop("clean_enc argument requires a logical (True/False) input.")
+  }
   # Check for column naming using helper function
   .col_check(dataset, "country")
   .col_check(dataset, "iso")
@@ -26,9 +27,11 @@ clean_country_iso <- function(dataset, country.dict, iso = 3) {
     stop("Stopping function. Missing the \"country\" or \"ISO\"",
          "column.")
   }
-  # if (!utf & !all(is.na(dataset$country))){
-  #   dataset$country <- .check_and_convert(dataset$country)
-  # }
+  # If not sure if data is clean, check and convert to try and repair the encoding
+
+  if (!clean_enc & !all(is.na(dataset$country))){
+    dataset$country <- .check_and_convert(dataset$country)
+  }
   match_country <- which(dataset$country %in% country.dict$wrong)
   dataset$country[match_country] <- country.dict$right[match(toupper(dataset$country[match_country]),
                                                              toupper(country.dict$wrong))]
