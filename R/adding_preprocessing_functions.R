@@ -90,12 +90,12 @@ add_country_entity_type <- function(dataset, type = NA) {
   if (!"country" %in% tolower(names(dataset))) {
     dataset$country <- NA
   } else {
-    cat("A \"country\" already exists in the dataset.")
+    cat("A \"country\" already exists in the dataset.\n")
   }
   if (!"entity.type" %in% tolower(names(dataset))) {
     dataset$entity.type <- type
   } else {
-    cat("A \"entity type\" already exists in the dataset.")
+    cat("A \"entity type\" already exists in the dataset.\n")
   }
   return(dataset)
 }

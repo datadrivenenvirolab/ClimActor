@@ -12,10 +12,6 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(dplyr)
-library(phonics)
-library(stringdist)
-library(stringr)
 library(climactor)
 ```
 
@@ -54,7 +50,7 @@ Naturally, the first step in any data cleaning pipeline would be to read in and 
 
 Within the `climactor` workflow the first important step comes when the data is read in. For the later string matching aspects of the workflow to work more accurately, the data should ideally be read in or converted to **UTF-8** encoding. **UTF-8** is the preferred encoding when working with strings and both the `key_dict` and `country_dict` are encoding in UTF-8 encoding. Reading in data with the UTF-8 encoding can be done by using the `encoding` argument within the `read.csv` function. 
 
-If you know the encoding of your data, it is best to convert it to UTF-8 (either within R or elsewhere) before proceeding with the string matching algorithmns. If you are unsure of the encoding of your data, an (optional) helper function within some string matching functions will try to guess the encoding of your data and convert it to UTF-8. For more  information on the helper function, see the code in the github [here](https://github.com/datadrivenyale/climactor/blob/master/R/helper_functions.R). 
+If you know the encoding of your data, it is best to convert it to UTF-8 (either within R or elsewhere) before proceeding with the string matching algorithmns. If you are unsure of the encoding of your data, it is more important to read the data into R in its correct native encoding rather than to try and force the wrong encoding (eg. reading in data as UTF-8 when the data is encoded in Latin1). For those which are unfamiliar with encoding issues, an (optional) helper function within some string matching functions will try to guess the encoding of your data and fix it. For more information on the helper function, see the code in the github [here](https://github.com/datadrivenyale/climactor/blob/master/R/helper_functions.R). 
 
 If you would like to learn more about encoding in R, you can refer to the Appendix (*Notes on encoding*) of this vignette or refer to several articles writtin on the topic by [Kunsttube](http://kunststube.net/encoding), [Kevin Ushey](http://kevinushey.github.io/), or [Maurício Collaça](https://rstudio-pubs-static.s3.amazonaws.com/279354_f552c4c41852439f910ad620763960b6.html). 
 
@@ -71,8 +67,49 @@ If you would like to learn more about encoding in R, you can refer to the Append
 `rename_col()` checks the dataset for the requisite names and asks the user for columns to be renamed if the dataset do not contain the requisite names. This function ensures that column names are standardized so that downstream functions will work as intended. The only argument for the function is the user's dataset that is to be cleaned. 
 
 ```{r}
+# Check before 
+names(cdp)[1:5]
+```
+
+```{r, eval = F}
 cdp <- rename_col(cdp)
 
 ```
+```{r, echo = F, comment = ""}
+# Note that because R Markdown does not really support interactive input, the 
+# output that a user can expect for this dataset is printed here for user's reference 
+cat("Please input the column name that contains the actors' names. \nInput \"skip\" if column does not exist.")
+cat("Input:Organization")
 
+cat("Please input the column name that contains the actors' entity types.\nInput \"skip\" if column does not exist.")
+cat("Input:skip")
+
+names(cdp)[grep("Organization", names(cdp))] <- "name"
+```
+```{r}
+# Check names after
+names(cdp)[1:5]
+```
+
+### Add country column with `add_country()`
+`add_country()` first checks the dataset for the country column within the dataset provided. If the dataset does not contain a country column, then a country column will be initialized with default `NA` values. In this case, the country already exists in the cdp dataset. 
+```{r, error = T}
+add_country(cdp)
+
+```
+
+### Add the entity type column with `add_entity_type()`
+`add_entity_type()` first checks the dataset for the entity type column within the dataset provided. If the dataset does not contain and entity type column, then an entity type column will be initiatlized with a user specified input. In this case, we set the input as "City", since a majority of the actors within the CDP dataset are cities. 
+```{r}
+cdp <- add_entity_type(cdp, "City")
+# Check the last few columns of the dataset
+head(cdp[, (ncol(cdp)-5):ncol(cdp)])
+```
+### Add both country and entity type columns to the dataset with `add_country_entity_type()`
+`add_country_entity_type()` constitutes a combination of the above two functions, and should be used if users know both country and entity type columns are missing from the dataset. Similarly, the function checks the dataset for both of these columns and does not add new columns if the columns are found within the dataset. If not, a country column is defined with default `NA` values, and an entity type column is defined with values from the `type` argument. In this case, both countries are already present in the cdp database and thus the function does not add any new columns. 
+```{r}
+ncol(cdp)
+cdp <- add_country_entity_type(cdp)
+ncol(cdp)
+```
 
