@@ -131,4 +131,14 @@ cdp$entity.type[which(cdp$entity.type == "Company")] <- "City"
 ```
 
 ### Remove fill words from actor names using `remove_extra()`
-The `remove_extra()` function removes extraneous words 
+The `remove_extra()` function removes extraneous words from the actors' names such as "Council", "District", "Province", etc etc. This helps to streamline the matching process used in downstream functions and provides better matches with the key dictionary. However, some of these words are used in the `fill_type()` function to determine the entity type of the actor, hence it is recommended that the `remove_extra()` function be used after the `fill_type()` function. 
+
+```{r}
+# Make a copy of the original names 
+orignames <- cdp$name
+
+# Apply remove_extra function
+cdp <- remove_extra(cdp)
+
+```
+
