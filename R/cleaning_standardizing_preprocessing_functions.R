@@ -124,34 +124,34 @@ fill_type <- function(dataset) {
   return(dataset)
 }
 
-#' @export
-#' @title Standardizes existing entity types within the dataset
-#' @description Similar to function \code{fill_type}, guesses the entity type of actors based
-#' based on commonly used words. However, this function applies specifically
-#' to differentiate between different subnational actors (City vs Region)
-#' @param dataset Dataset to standardize and clean the entity type for
-#' @return Original dataset with the entity types cleaned
-#'
-#' @example \dontrun{standardize_type(df)}
-standardize_type <- function(dataset) {
-  # Check for column naming
-  col <- "entity.type"
-  .col_check(dataset, col)
-  if (exists("to.stop")){
-    stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
-                "column."))
-  }
-  dataset$entity.type[grep("City|Muni|Town|County|Shire|District|Village|Assembly|Comm|Metro|Council|Ministry|Authority|Canton|Reg",
-                           dataset$entity.type, ignore.case = TRUE)] <- "City"
-  dataset$entity.type[grep("Prov|Region|Government|State|Pref",
-                           dataset$entity.type, ignore.case = TRUE)] <- "Region"
-  # Helper function returns output that checks if the name is capitalized
-  # Change back to capitalized version if the check is true
-  if (exists(paste0("entity.typename"))){
-    names(dataset)[grepl("entity.type", names(dataset))] <- entity.typename
-  }
-  return(dataset)
-}
+# #' @export
+# #' @title Standardizes existing entity types within the dataset
+# #' @description Similar to function \code{fill_type}, guesses the entity type of actors based
+# #' based on commonly used words. However, this function applies specifically
+# #' to differentiate between different subnational actors (City vs Region)
+# #' @param dataset Dataset to standardize and clean the entity type for
+# #' @return Original dataset with the entity types cleaned
+# #'
+# #' @example \dontrun{standardize_type(df)}
+# standardize_type <- function(dataset) {
+#   # Check for column naming
+#   col <- "entity.type"
+#   .col_check(dataset, col)
+#   if (exists("to.stop")){
+#     stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
+#                 "column."))
+#   }
+#   dataset$entity.type[grep("City|Muni|Town|County|Shire|District|Village|Assembly|Comm|Metro|Council|Ministry|Authority|Canton|Reg",
+#                            dataset$entity.type, ignore.case = TRUE)] <- "City"
+#   dataset$entity.type[grep("Prov|Region|Government|State|Pref",
+#                            dataset$entity.type, ignore.case = TRUE)] <- "Region"
+#   # Helper function returns output that checks if the name is capitalized
+#   # Change back to capitalized version if the check is true
+#   if (exists(paste0("entity.typename"))){
+#     names(dataset)[grepl("entity.type", names(dataset))] <- entity.typename
+#   }
+#   return(dataset)
+# # }
 
 #' @export
 #' @title Remove extraneous words from actors' names

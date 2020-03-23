@@ -113,3 +113,22 @@ cdp <- add_country_entity_type(cdp)
 ncol(cdp)
 ```
 
+## Standardizing and preprocessing of data
+After the preliminary preparation of data from the previous functions, we now move on to functions that start standardizing and preprocess the dataset from the user. This family of functions provide easy ways to further standardize the structure of your data and to make inferences based on your dataset that will help with steps in cleaning and matching your dataset to the key dictionaries in later functions.
+
+### Fill in entity types for your data using `fill_type()`
+Since the `add_entity_type()` function only allow users to input only one entity type for the entire dataset, the `fill_type()` function will allow users to update the entity type for users with datasets that contain more than one entity type. The function looks at the actor name and identifies common words within the actor's name to guess the entity type for that actor. 
+```{r}
+table(cdp$entity.type)
+cdp <- fill_type(cdp)
+table(cdp$entity.type)
+# Just do a quick check for the ones listed as company
+cdp$name[which(cdp$entity.type == "Company")]
+```
+The example here highlights the importance to conduct careful checks on the data after using the `fill_type()` function. The function picked up two actors which has the word "Corporation" in its name, but should really be cities (instead of companies). We manually fix the entity types for these actors. 
+```{r}
+cdp$entity.type[which(cdp$entity.type == "Company")] <- "City"
+```
+
+### Remove fill words from actor names using `remove_extra()`
+The `remove_extra()` function removes extraneous words 

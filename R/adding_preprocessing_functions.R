@@ -49,10 +49,12 @@ rename_col <- function(dataset) {
 #' @example \dontrun{add_country(df)}
 add_country <- function(dataset){
   if ("country" %in% tolower(names(dataset))){
-    stop("A \"country\" column already exists in the dataset.")
+    cat("A \"country\" column already exists in the dataset.")
+    return(dataset)
+  } else {
+    dataset$country <- NA
+    return(dataset)
   }
-  dataset$country <- NA
-  return(dataset)
 }
 
 #' @export
@@ -69,10 +71,13 @@ add_entity_type <- function(dataset, type){
   # Function that takes in a dataset and returns a new column "entity.type", with
   # type input as the entry for the column
   if ("entity.type" %in% tolower(names(dataset))){
-    stop("A \"entity.type\" column already exists in the dataset.")
+    cat("A \"entity.type\" column already exists in the dataset.")
+    return(dataset)
+  } else {
+    dataset$entity.type <- type
+    return(dataset)
   }
-  dataset$entity.type <- type
-  return(dataset)
+
 }
 
 #' @export
