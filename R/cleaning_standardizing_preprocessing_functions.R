@@ -112,7 +112,7 @@ fill_type <- function(dataset) {
 
   # alert the user to fill any NAs in the entity.type column, if they exist
   missing_ET <- sum(is.na(dataset$entity.type))
-  if (length(missing_ET) > 0) {
+  if (missing_ET > 0) {
     print(paste0("You seem to have ", missing_ET, " missing values in the entity.type column. Please fill these before proceeding."))
   }
   cat("Warning: This function will be generally accurate for the entity type of most--but not all--entries. It is highly recommended you double check the entity types, fix any errors, and fill in any missing values. ")
