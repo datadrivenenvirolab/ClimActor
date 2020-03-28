@@ -22,9 +22,8 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
   }
   # Check for column naming using helper function
   .col_check(dataset, "country")
-  .col_check(dataset, "iso")
   if (exists("to.stop")){
-    stop("Stopping function. Missing the \"country\" or \"ISO\"",
+    stop("Stopping function. Missing the \"country\" ",
          "column.")
   }
   # If not sure if data is clean, check and convert to try and repair the encoding

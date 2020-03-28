@@ -140,5 +140,26 @@ orignames <- cdp$name
 # Apply remove_extra function
 cdp <- remove_extra(cdp)
 
+# Check for differences 
+length(setdiff(orignames, cdp$name))
+# 632 differences 
+
+# For comparison's sake, look at some of the differences 
+head(orignames[!orignames %in% cdp$name])
+head(cdp$name[!cdp$name %in% orignames])
+
+```
+
+### Clean country names and add ISO data using `clean_country_iso()`
+`clean_country_iso()` checks the countries in the supplied dataset and a supplied country dictionary using direct string matching and cleans the country names according to the standardized version in the country dictionary. The function allows users to input their own country dictionary (in the event that the user has a locally updated country dictionary, or their own one) but the package's included country dictionary can be called using `country_dict`. ISO2 and ISO3 data is available for including in one's own dataset, with users being able to select which version they prefer (with ISO3 being the default). Lastly, `clean_enc = F` checks the encoding of the country column of the user's dataset, guesses the correct encoding of the data, and tries to repair it if the data was read in with the wrong encoding. The default for this argument is `T` (checks not conducted), but the user should set it to `F` if they are unsure if they have read in the data in the correct encoding. A tell-tale sign is usually when unrecognized symbols or accents appear in the country names of the dataset. 
+
+```{r}
+# Set clean_enc = F (not sure if encoding is "clean" for the sake of this example)
+# Use package's country dictionary
+# As usual, we store an original copy of the country names for comparison later on
+origcountry <- cdp$Country
+cdp <- clean_country_iso(cdp, country_dict, iso = 3, clean_enc = F)
+
+
 ```
 

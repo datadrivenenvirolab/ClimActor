@@ -8,7 +8,7 @@
 .col_check <- function(dataset, col) {
   if (!any(grepl(col, tolower(names(dataset))))){
     cat(paste0("No \"" , col, "\"",
-               "column is detected in the dataset.",
+               " column is detected in the dataset.",
                " Would you like to specify a column to rename?"))
     ans <- readline(prompt = "Rename column? (Y/N): ")
     while (toupper(ans) != "Y" & toupper(ans) != "N"){
