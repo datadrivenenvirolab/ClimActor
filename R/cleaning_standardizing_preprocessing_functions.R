@@ -33,7 +33,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
   }
   match_country <- which(dataset$country %in% country.dict$wrong)
   dataset$country[match_country] <- country.dict$right[match(toupper(dataset$country[match_country]),
-                                                             toupper(country.dict$wrong))]
+                                                             toupper(.check_and_convert(country.dict$wrong)))]
   country_ind <<- which(!dataset$country %in% country.dict$right)
   if (iso != 2 & iso != 3){
     stop("Please input either 2 or 3 for the \"iso\" argument.")

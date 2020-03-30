@@ -94,7 +94,7 @@ names(cdp)[1:5]
 ### Add country column with `add_country()`
 `add_country()` first checks the dataset for the country column within the dataset provided. If the dataset does not contain a country column, then a country column will be initialized with default `NA` values. In this case, the country already exists in the cdp dataset. 
 ```{r, error = T}
-add_country(cdp)
+cdp <- add_country(cdp)
 
 ```
 
