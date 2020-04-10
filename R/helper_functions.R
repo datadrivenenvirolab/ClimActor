@@ -25,9 +25,9 @@
   # Check for similar versions of "col"
   col.names <- gsub("[[:punct:]]", "", tolower(names(dataset)))
   if (any(grepl(gsub("[[:punct:]]", "", tolower(col)), col.names))){
-    names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)] <- col
     assign(paste0(col, "name"),
            names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)])
+    names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)] <- col
   }
   return(dataset)
 }
