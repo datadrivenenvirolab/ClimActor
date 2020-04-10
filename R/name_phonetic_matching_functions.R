@@ -27,9 +27,9 @@ clean_name <- function(dataset, key.dict, clean_enc = T) {
     dataset$name <- .check_and_convert(dataset$name)
   }
   # Check for column naming using helper function
-  .col_check(dataset, "name")
-  .col_check(dataset, "entity.type")
-  .col_check(dataset, "iso")
+  dataset <- .col_check(dataset, "name")
+  dataset <- .col_check(dataset, "entity.type")
+  dataset <- .col_check(dataset, "iso")
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
   }
@@ -156,7 +156,7 @@ fuzzify_country <- function(dataset, country_keydict){
   if (length(country_ind) == 0){
     stop("The countries within the dataset have already been cleaned")
   }
-  .col_check(dataset, "country")
+  dataset <- .col_check(dataset, "country")
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"country\" columns.")
   }
@@ -283,7 +283,7 @@ fuzzify_country <- function(dataset, country_keydict){
 #'
 update_country_dict <- function(dataset, country.dict, custom_count){
   # Do the usual checks for column name and indices
-  .col_check(dataset, "country")
+  dataset <- .col_check(dataset, "country")
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"country\" columns.")
   }
@@ -342,9 +342,9 @@ update_country_dict <- function(dataset, country.dict, custom_count){
 phonetify_names <- function(dataset, key.dict) {
 
   # Check for column naming using helper function
-  .col_check(dataset, "name")
-  .col_check(dataset, "entity.type")
-  .col_check(dataset, "iso")
+  dataset <- .col_check(dataset, "name")
+  dataset <- .col_check(dataset, "entity.type")
+  dataset <- .col_check(dataset, "iso")
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
   }
@@ -684,9 +684,9 @@ Would you like the function to proceed with this vector anyways (future edits ma
 #' @example \dontrun{update_key_dict(df, key_dict, custom_indices)}
 update_key_dict <- function(dataset, key.dict, custom_indices) {
   # Check for column naming using helper function
-  .col_check(dataset, "name")
-  .col_check(dataset, "entity.type")
-  .col_check(dataset, "iso")
+  dataset <- .col_check(dataset, "name")
+  dataset <- .col_check(dataset, "entity.type")
+  dataset <- .col_check(dataset, "iso")
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
   }
@@ -767,9 +767,9 @@ contextualize_data <- function(dataset, contextual_df, contextuals = c("region",
                                                                        "elevation",
                                                                        "initiatives_committed")){
   # Check for column naming using helper function
-  .col_check(dataset, "name")
-  .col_check(dataset, "entity.type")
-  .col_check(dataset, "iso")
+  dataset <- .col_check(dataset, "name")
+  dataset <- .col_check(dataset, "entity.type")
+  dataset <- .col_check(dataset, "iso")
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
   }

@@ -21,7 +21,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
     stop("clean_enc argument requires a logical (True/False) input.")
   }
   # Check for column naming using helper function
-  .col_check(dataset, "country")
+  dataset <- .col_check(dataset, "country")
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"country\" ",
          "column.")
@@ -34,11 +34,12 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
   match_country <- which(dataset$country %in% country.dict$wrong)
   dataset$country[match_country] <- country.dict$right[match(toupper(dataset$country[match_country]),
                                                              toupper(.check_and_convert(country.dict$wrong)))]
-  country_ind <<- which(!dataset$country %in% country.dict$right)
+  country_ind <<- which(!(dataset$country %in% country.dict$right))
+
   if (iso != 2 & iso != 3){
     stop("Please input either 2 or 3 for the \"iso\" argument.")
   }
-  if (!("iso" %in% names(dataset))){
+  if (!("iso" %in% tolower(names(dataset)))){
     dataset$iso <- NA
   }
   if (iso == 2){
@@ -61,9 +62,6 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
   if (exists(paste0("countryname"))){
     names(dataset)[grepl("country", names(dataset))] <- countryname
   }
-  if (exists(paste0("isoname"))){
-    names(dataset)[grepl("iso", names(dataset))] <- isoname
-  }
   return(dataset)
 }
 
@@ -79,7 +77,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
 fill_type <- function(dataset) {
   # Check for column naming
   col <- "entity.type"
-  .col_check(dataset, col)
+  dataset <- .col_check(dataset, col)
   if (exists("to.stop")){
     stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
                 "column."))
@@ -164,7 +162,7 @@ remove_extra <- function(dataset){
   # this list of words can be updated in the future
   # Check for column naming using helper function
   col <- "name"
-  .col_check(dataset, col)
+  dataset <- .col_check(dataset, col)
   if (exists("to.stop")){
     stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
                 "column."))

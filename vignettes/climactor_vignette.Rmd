@@ -158,7 +158,7 @@ head(cdp$name[!cdp$name %in% orignames])
 # Use package's country dictionary
 # As usual, we store an original copy of the country names for comparison later on
 origcountry <- cdp$Country
-cdp <- clean_country_iso(cdp, country_dict, iso = 3, clean_enc = F)
+clean_country_iso(cdp, country_dict, iso = 3, clean_enc = F)
 
 
 ```
