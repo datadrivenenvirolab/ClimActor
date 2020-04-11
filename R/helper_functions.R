@@ -92,7 +92,7 @@
   # Use rvest's guess_encoding and repair_encoding functions to try and fix the encoding
   # Then check for names that have non-ASCII characters (this will target only those
   # whose encoding we need to fix)
-  nonascii <- data.frame(string = col[stringi::stri_enc_mark(col) != "ASCII"],
+  nonascii <- data.frame(string = col[stringi::stri_enc_mark(col) != "ASCII" & !is.na(stringi::stri_enc_mark(col))],
                          ind = which(stringi::stri_enc_mark(col) != "ASCII"))
   # Then break those that need to be converted into chunks to make it more manageable
   # Break chunk size based on size of number that needs to be converted

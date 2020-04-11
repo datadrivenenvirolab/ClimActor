@@ -60,6 +60,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
   if (exists("countryname")){
+    print(countryname)
     names(dataset)[grepl("country", names(dataset))] <- countryname
   }
   return(dataset)
