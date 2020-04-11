@@ -164,6 +164,6 @@ cdp <- clean_country_iso(cdp, country_dict, iso = 3, clean_enc = F)
 We see that there are 21 countries in the cdp dataset that do not have an exact match in the country dictionary. Let's examine these countries using the `country_ind` vector that was created from the function. 
 
 ```{r}
-cdp$country
+cdp$Country
 ```
 

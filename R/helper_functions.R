@@ -25,11 +25,12 @@
   # Check for similar versions of "col"
   col.names <- gsub("[[:punct:]]", "", tolower(names(dataset)))
   if (any(grepl(gsub("[[:punct:]]", "", tolower(col)), col.names))){
-    assign(paste0(col, "name"),
-           names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)])
+    origcol <- names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)]
     names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)] <- col
   }
+  on.exit(assign(paste0(col, "name"), origcol, inherits = T), add = T)
   return(dataset)
+
 }
 
 # Coerce location names to handle special characters

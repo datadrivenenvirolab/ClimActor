@@ -62,6 +62,8 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
   if (exists("countryname")){
     print(countryname)
     names(dataset)[grepl("country", names(dataset))] <- countryname
+  } else {
+    print("countryname does not exist")
   }
   return(dataset)
 }
