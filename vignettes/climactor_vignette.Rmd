@@ -161,9 +161,17 @@ origcountry <- cdp$Country
 cdp <- clean_country_iso(cdp, country_dict, iso = 3, clean_enc = F)
 
 ```
-We see that there are 21 countries in the cdp dataset that do not have an exact match in the country dictionary. Let's examine these countries using the `country_ind` vector that was created from the function. 
+We see that there are 21 countries in the cdp dataset that do not have an exact match in the country dictionary. The `country_ind` vector was created to show which rows in the datasets have countries where there was no exact matches in the country_dictionary. Let's examine these countries using the `country_ind` vector. 
 
 ```{r}
-cdp$Country
+cdp$Country[country_ind]
+# seems like there are some NAs in the data 
 ```
+It seems like there are some NAs in the data. Apart from that, the only other country where there isn't an exact match is Taiwan. 
+These names will be matched in a later function, as detailed below. 
 
+## String/Phonetic matching functions and cleaning of actor names 
+We now almost have all that we need to start the process of cleaning actors' names in the dataset (the primary goal of the package). To do that, we first need to start with making sure all the country names in our dataset are standardized. This picks up from the previous section where we used exact string matching to clean the country names within the dataset. Now, we use fuzzy string matching to standardize and clean whatever country names are left to be cleaned. Then, the functions following which will attempt to clean the actors' names first through exact matching, then through phonetic string matching. 
+
+### Use `fuzzify_country()` to ensure all countries in dataset are cleaned
+This function is a continuation of the previous function `clean_country_iso()`, and should only be used 1) after the `clean_country_iso()` function has been used and 2) if there are any remaining countries that need to be cleaned (signaled by the presence of a `country_ind` vector). 

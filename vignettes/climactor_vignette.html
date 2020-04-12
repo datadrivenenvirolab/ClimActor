@@ -519,8 +519,8 @@ Input &quot;skip&quot; if column does not exist.</code></pre>
 <div id="add-country-column-with-add_country" class="section level3">
 <h3>Add country column with <code>add_country()</code></h3>
 <p><code>add_country()</code> first checks the dataset for the country column within the dataset provided. If the dataset does not contain a country column, then a country column will be initialized with default <code>NA</code> values. In this case, the country already exists in the cdp dataset.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">add_country</span>(cdp)</a></code></pre></div>
-<pre><code>## Error in add_country(cdp): A &quot;country&quot; column already exists in the dataset.</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1">cdp &lt;-<span class="st"> </span><span class="kw">add_country</span>(cdp)</a></code></pre></div>
+<pre><code>## A &quot;country&quot; column already exists in the dataset.</code></pre>
 </div>
 <div id="add-the-entity-type-column-with-add_entity_type" class="section level3">
 <h3>Add the entity type column with <code>add_entity_type()</code></h3>
@@ -566,13 +566,67 @@ Input &quot;skip&quot; if column does not exist.</code></pre>
 ## City 
 ## 1299</code></pre>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">cdp &lt;-<span class="st"> </span><span class="kw">fill_type</span>(cdp)</a></code></pre></div>
-<pre><code>## [1] &quot;You seem to have 0 missing values in the entity.type column. Please fill these before proceeding.&quot;
-## Warning: This function will be generally accurate for the entity type of most--but not all--entries. It is highly recommended you double check the entity types, fix any errors, and fill in any missing values.</code></pre>
+<pre><code>## Warning: This function will be generally accurate for the entity type of most--but not all--entries. It is highly recommended you double check the entity types, fix any errors, and fill in any missing values.</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">table</span>(cdp<span class="op">$</span>entity.type)</a></code></pre></div>
 <pre><code>## 
 ##    City Company  Region 
 ##    1087       2     210</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co"># Just do a quick check for the ones listed as company</span></a>
+<a class="sourceLine" id="cb31-2" title="2">cdp<span class="op">$</span>name[<span class="kw">which</span>(cdp<span class="op">$</span>entity.type <span class="op">==</span><span class="st"> &quot;Company&quot;</span>)]</a></code></pre></div>
+<pre><code>## [1] &quot;Corporation of Chennai&quot; &quot;Corporation of Chennai&quot;</code></pre>
+<p>The example here highlights the importance to conduct careful checks on the data after using the <code>fill_type()</code> function. The function picked up two actors which has the word “Corporation” in its name, but should really be cities (instead of companies). We manually fix the entity types for these actors.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">cdp<span class="op">$</span>entity.type[<span class="kw">which</span>(cdp<span class="op">$</span>entity.type <span class="op">==</span><span class="st"> &quot;Company&quot;</span>)] &lt;-<span class="st"> &quot;City&quot;</span></a></code></pre></div>
 </div>
+<div id="remove-fill-words-from-actor-names-using-remove_extra" class="section level3">
+<h3>Remove fill words from actor names using <code>remove_extra()</code></h3>
+<p>The <code>remove_extra()</code> function removes extraneous words from the actors’ names such as “Council”, “District”, “Province”, etc etc. This helps to streamline the matching process used in downstream functions and provides better matches with the key dictionary. However, some of these words are used in the <code>fill_type()</code> function to determine the entity type of the actor, hence it is recommended that the <code>remove_extra()</code> function be used after the <code>fill_type()</code> function.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co"># Make a copy of the original names </span></a>
+<a class="sourceLine" id="cb34-2" title="2">orignames &lt;-<span class="st"> </span>cdp<span class="op">$</span>name</a>
+<a class="sourceLine" id="cb34-3" title="3"></a>
+<a class="sourceLine" id="cb34-4" title="4"><span class="co"># Apply remove_extra function</span></a>
+<a class="sourceLine" id="cb34-5" title="5">cdp &lt;-<span class="st"> </span><span class="kw">remove_extra</span>(cdp)</a>
+<a class="sourceLine" id="cb34-6" title="6"></a>
+<a class="sourceLine" id="cb34-7" title="7"><span class="co"># Check for differences </span></a>
+<a class="sourceLine" id="cb34-8" title="8"><span class="kw">length</span>(<span class="kw">setdiff</span>(orignames, cdp<span class="op">$</span>name))</a></code></pre></div>
+<pre><code>## [1] 632</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="co"># 632 differences </span></a>
+<a class="sourceLine" id="cb36-2" title="2"></a>
+<a class="sourceLine" id="cb36-3" title="3"><span class="co"># For comparison&#39;s sake, look at some of the differences </span></a>
+<a class="sourceLine" id="cb36-4" title="4"><span class="kw">head</span>(orignames[<span class="op">!</span>orignames <span class="op">%in%</span><span class="st"> </span>cdp<span class="op">$</span>name])</a></code></pre></div>
+<pre><code>## [1] &quot;City of Windhoek&quot;                   &quot;Municipality of Ilha de Mozambique&quot;
+## [3] &quot;Municipalidad Cerro Navia&quot;          &quot;Kasama Municipal Council&quot;          
+## [5] &quot;City of Lake Worth, FL&quot;             &quot;City of Winona, MN&quot;</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">head</span>(cdp<span class="op">$</span>name[<span class="op">!</span>cdp<span class="op">$</span>name <span class="op">%in%</span><span class="st"> </span>orignames])</a></code></pre></div>
+<pre><code>## [1] &quot;Windhoek&quot;           &quot;Ilha de Mozambique&quot; &quot;Cerro Navia&quot;       
+## [4] &quot;Kasama&quot;             &quot;Lake Worth, FL&quot;     &quot;Winona, MN&quot;</code></pre>
+</div>
+<div id="clean-country-names-and-add-iso-data-using-clean_country_iso" class="section level3">
+<h3>Clean country names and add ISO data using <code>clean_country_iso()</code></h3>
+<p><code>clean_country_iso()</code> checks the countries in the supplied dataset and a supplied country dictionary using direct string matching and cleans the country names according to the standardized version in the country dictionary. The function allows users to input their own country dictionary (in the event that the user has a locally updated country dictionary, or their own one) but the package’s included country dictionary can be called using <code>country_dict</code>. ISO2 and ISO3 data is available for including in one’s own dataset, with users being able to select which version they prefer (with ISO3 being the default). Lastly, <code>clean_enc = F</code> checks the encoding of the country column of the user’s dataset, guesses the correct encoding of the data, and tries to repair it if the data was read in with the wrong encoding. The default for this argument is <code>T</code> (checks not conducted), but the user should set it to <code>F</code> if they are unsure if they have read in the data in the correct encoding. A tell-tale sign is usually when unrecognized symbols or accents appear in the country names of the dataset.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="co"># Set clean_enc = F (not sure if encoding is &quot;clean&quot; for the sake of this example)</span></a>
+<a class="sourceLine" id="cb40-2" title="2"><span class="co"># Use package&#39;s country dictionary</span></a>
+<a class="sourceLine" id="cb40-3" title="3"><span class="co"># As usual, we store an original copy of the country names for comparison later on</span></a>
+<a class="sourceLine" id="cb40-4" title="4">origcountry &lt;-<span class="st"> </span>cdp<span class="op">$</span>Country</a>
+<a class="sourceLine" id="cb40-5" title="5">cdp &lt;-<span class="st"> </span><span class="kw">clean_country_iso</span>(cdp, country_dict, <span class="dt">iso =</span> <span class="dv">3</span>, <span class="dt">clean_enc =</span> F)</a></code></pre></div>
+<pre><code>## Best guess: UTF-8 (100% confident)</code></pre>
+<pre><code>## Best guess: windows-1250 (57% confident)</code></pre>
+<pre><code>## [1] &quot;There are 21 entries with no exact matches in the country dictionary. The indices for these names are recorded in the country_ind vector Please use the fuzzify_country function to clean those names or input them manually.&quot;
+## [1] &quot;Country&quot;</code></pre>
+<p>We see that there are 21 countries in the cdp dataset that do not have an exact match in the country dictionary. Let’s examine these countries using the <code>country_ind</code> vector that was created from the function.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">cdp<span class="op">$</span>Country[country_ind]</a></code></pre></div>
+<pre><code>##  [1] &quot;Taiwan, Greater China&quot; &quot;Taiwan, Greater China&quot; NA                     
+##  [4] &quot;Taiwan, Greater China&quot; &quot;Taiwan, Greater China&quot; &quot;Taiwan, Greater China&quot;
+##  [7] NA                      &quot;Taiwan, Greater China&quot; NA                     
+## [10] NA                      &quot;Taiwan, Greater China&quot; &quot;Taiwan, Greater China&quot;
+## [13] &quot;Taiwan, Greater China&quot; &quot;Taiwan, Greater China&quot; &quot;Taiwan, Greater China&quot;
+## [16] &quot;Taiwan, Greater China&quot; NA                      &quot;Taiwan, Greater China&quot;
+## [19] &quot;Taiwan, Greater China&quot; &quot;Taiwan, Greater China&quot; NA</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="co"># seems like there are some NAs in the data </span></a></code></pre></div>
+<p>It seems like there are some NAs in the data. Apart from that, the only other country where there isn’t an exact match is Taiwan. These names will be matched in a later function, as detailed below.</p>
+</div>
+</div>
+<div id="stringphonetic-matching-functions-and-cleaning-of-actor-names" class="section level2">
+<h2>String/Phonetic matching functions and cleaning of actor names</h2>
 </div>
 
 
