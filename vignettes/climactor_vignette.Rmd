@@ -175,3 +175,11 @@ We now almost have all that we need to start the process of cleaning actors' nam
 
 ### Use `fuzzify_country()` to ensure all countries in dataset are cleaned
 This function is a continuation of the previous function `clean_country_iso()`, and should only be used 1) after the `clean_country_iso()` function has been used and 2) if there are any remaining countries that need to be cleaned (signaled by the presence of a `country_ind` vector). 
+The function makes use of base R fuzzy matching algorithms to detect similar country names within the country dictionary to match to the user's input. The base R function in turn makes use of the Levenshtein distance to implement the fuzzy matching. The function will only do fuzzy matching for the rows which are in the `country_ind` vector, hence making the use of the `clean_country_iso()` function prior to the `fuzzify_country()` function crucial. 
+It should also be further noted that the `fuzzify_country()` function will not match for `NA` values in the country column. Users are encouraged to 
+
+```{r, eval = F}
+tmp <- fuzzify_country(cdp, country_dict)
+```
+
+

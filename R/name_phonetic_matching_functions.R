@@ -162,20 +162,20 @@ fuzzify_country <- function(dataset, country_keydict){
   }
   # We only want to iterate through unique names that are not matched
   # Remove duplicates here
-  country_short <- which(!duplicated(dataset$country[country_ind]))
+  country_short <- country_ind[!duplicated(dataset$country[country_ind])]
   .count_updates <<- data.frame(ind = country_short,
                                 name = dataset$country[country_short])
   # Iterate through the names that are wrong
-  for (i in seq_along(country_short)){
+  for (i in country_short){
     # Subset for index
-    ind <- country_short[i]
-    origname <- dataset$country[ind]
+    origname <- dataset$country[i]
     # Calculate distance (using Levenstein distance) and find the 15 closest countries
     # that match
-    tmp <- country_dict$right[order(adist(dataset$country[ind],
+    tmp <- country_dict$right[order(adist(dataset$country[i],
                                           country_keydict$wrong))[1:15]]
     # Print out the top 15 matches
-    print(paste0("The original country is ", dataset$country[ind]))
+    print(paste0("The original country is ", dataset$country[i], " (Actor name: ",
+                 dataset$name[i], ")"))
     print(paste0("Here are some possible matches we found: "))
     cat(paste0(1:15, ". ", tmp, "\n"))
 
@@ -184,22 +184,24 @@ fuzzify_country <- function(dataset, country_keydict){
     ans1 <- readline(prompt = "Answer: ")
     ## if one of the listed matches is correct (and not NA), the standardized
     ## version of the matched name will be replaced into the dataset
-    if (!is.na(ans1) &
-        (as.numeric(ans1) %in% c(1:15)) &
-        (!is.na(tmp[ans1]))) {
-      correct.name <- tmp[ans1]
-      print(paste0(correct.name, "has been selected and will replace ",
-                   dataset$country[ind], " in the database."))
+    # Use grepl to prevent warnings
+    if (grepl("^[0-9*]$")){
+      if (!is.na(ans1) &
+          (as.numeric(ans1) %in% 1:15) & # use suppressWarnings to prevent warnings about coercion
+          (!is.na(tmp[as.numeric(ans1)]))) {
+        correct.name <- tmp[as.numeric(ans1)]
+        print(paste0(correct.name, "has been selected and will replace ",
+                     dataset$country[i], " in the database."))
 
-      # replacing all instances of the recently matched (raw) name in the dataset
-      # with the standardized name
-      samecount_inds <- which(dataset$country == origname)
+        # replacing all instances of the recently matched (raw) name in the dataset
+        # with the standardized name
+        samecount_inds <- which(dataset$country == origname)
 
-      if (length(samecount_inds) != 0) {
-        dataset$country[samecount_inds] <- correct.name
-        country_ind <<- country_ind[!(country_ind %in% samecount_inds)]
+        if (length(samecount_inds) != 0) {
+          dataset$country[samecount_inds] <- correct.name
+          country_ind <<- country_ind[!(country_ind %in% samecount_inds)]
+        }
       }
-
     } else if (substr(toupper(as.character(ans1)), 1, 1) == "S") {
       cat("Your current progress will be returned.")
       cat("If it's not saved, be sure you saved your results in a variable with an assign function")
@@ -221,9 +223,9 @@ fuzzify_country <- function(dataset, country_keydict){
         The name has not been added to the key dictionary yet but can be added with the update_country_dict function.
         The row number of the custom name has been added to a vector called custom_count"))
         if (!exists("custom_count")){
-          custom_count <<- ind
+          custom_count <<- i
         } else {
-          custom_count <<- c(custom_count, ind)
+          custom_count <<- c(custom_count, i)
         }
 
         # replacing all instances in the dataset of the original (raw) name
@@ -237,11 +239,11 @@ fuzzify_country <- function(dataset, country_keydict){
         ### if the user chooses not to enter a custom name, the original name
         ### will be kept, and the index will be added to the unmatched_indices vector
       } else if (toupper(as.character(ans2)) == "N") {
-        print(paste0("The previous name (", origname, ") will be kept."))
+        print(paste0("The previous name ( ", origname, ") will be kept."))
         if (!(exists("unmatched_count"))){
-          unmatched_count <<- ind
+          unmatched_count <<- i
         } else {
-          unmatched_count <<- c(unmatched_count, ind)
+          unmatched_count <<- c(unmatched_count, i)
         }
       }
       ## if the user makes a typo or other invalid answer, the function will continue, and
@@ -252,15 +254,19 @@ fuzzify_country <- function(dataset, country_keydict){
       print(paste0("The previous name (", origname, ") will be kept.",
                    " The index of this entry will be recorded for future inspection."))
       if (!(exists("unmatched_count"))){
-        unmatched_count <<- ind
+        unmatched_count <<- i
       } else {
-        unmatched_count <<- c(unmatched_count, ind)
+        unmatched_count <<- c(unmatched_count, i)
       }
     }
   }
   # making these vectors more readable by getting rid of NAs
-  custom_count <<- custom_count[!is.na(custom_count)]
-  unmatched_count <<- unmatched_count[!is.na(unmatched_count)]
+  if (exists("custom_count")){
+    custom_count <<- custom_count[!is.na(custom_count)]
+  }
+  if (exists("unmatched_count")){
+    unmatched_count <<- unmatched_count[!is.na(unmatched_count)]
+  }
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
   if (exists(paste0("countryname"))){
@@ -722,27 +728,27 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
   .actor_updates <- .actor_updates[-which(.actor_updates$ind %in% custom_indices), ]
   # Create the rows to be binded to key.dict
   update_df <- data.frame(right = .actor_updates$name,
-                        wrong = .actor_updates$name_wrong,
-                        iso = .actor_updates$iso,
-                        entity.type = .actor_updates$entity.type,
-                        allcaps = toupper(.actor_updates$name_wrong),
-                        caverphone = phonics::caverphone(.actor_updates$name_wrong, clean = FALSE),
-                        caverphone.modified = phonics::caverphone(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
-                        cologne = phonics::cologne(.actor_updates$name_wrong, clean = FALSE),
-                        lein = phonics::lein(.actor_updates$name_wrong, clean = FALSE),
-                        metaphone = phonics::metaphone(.actor_updates$name_wrong, clean = FALSE),
-                        mra = phonics::mra_encode(.actor_updates$name_wrong, clean = FALSE),
-                        nysiis = phonics::nysiis(.actor_updates$name_wrong, clean = FALSE),
-                        nysiis.modified = phonics::nysiis(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
-                        onca = phonics::onca(.actor_updates$name_wrong, clean = FALSE),
-                        onca.modified = phonics::onca(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
-                        onca.refined = phonics::onca(.actor_updates$name_wrong, refined = TRUE, clean = FALSE),
-                        onca.modified.refined = phonics::onca(.actor_updates$name_wrong, modified = TRUE, refined = TRUE, clean = FALSE),
-                        phonex = phonics::phonex(.actor_updates$name_wrong, clean = FALSE),
-                        rogerroot = phonics::rogerroot(.actor_updates$name_wrong, clean = FALSE),
-                        soundex = phonics::soundex(.actor_updates$name_wrong, clean = FALSE),
-                        soundex.refined = phonics::refinedSoundex(.actor_updates$name_wrong, clean = FALSE),
-                        statcan = phonics::statcan(.actor_updates$name_wrong, clean = FALSE))
+                          wrong = .actor_updates$name_wrong,
+                          iso = .actor_updates$iso,
+                          entity.type = .actor_updates$entity.type,
+                          allcaps = toupper(.actor_updates$name_wrong),
+                          caverphone = phonics::caverphone(.actor_updates$name_wrong, clean = FALSE),
+                          caverphone.modified = phonics::caverphone(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
+                          cologne = phonics::cologne(.actor_updates$name_wrong, clean = FALSE),
+                          lein = phonics::lein(.actor_updates$name_wrong, clean = FALSE),
+                          metaphone = phonics::metaphone(.actor_updates$name_wrong, clean = FALSE),
+                          mra = phonics::mra_encode(.actor_updates$name_wrong, clean = FALSE),
+                          nysiis = phonics::nysiis(.actor_updates$name_wrong, clean = FALSE),
+                          nysiis.modified = phonics::nysiis(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
+                          onca = phonics::onca(.actor_updates$name_wrong, clean = FALSE),
+                          onca.modified = phonics::onca(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
+                          onca.refined = phonics::onca(.actor_updates$name_wrong, refined = TRUE, clean = FALSE),
+                          onca.modified.refined = phonics::onca(.actor_updates$name_wrong, modified = TRUE, refined = TRUE, clean = FALSE),
+                          phonex = phonics::phonex(.actor_updates$name_wrong, clean = FALSE),
+                          rogerroot = phonics::rogerroot(.actor_updates$name_wrong, clean = FALSE),
+                          soundex = phonics::soundex(.actor_updates$name_wrong, clean = FALSE),
+                          soundex.refined = phonics::refinedSoundex(.actor_updates$name_wrong, clean = FALSE),
+                          statcan = phonics::statcan(.actor_updates$name_wrong, clean = FALSE))
   # Bind rows to key.dict
   key.dict <- rbind(key.dict, update_df, cust_df)
   return(key.dict)
