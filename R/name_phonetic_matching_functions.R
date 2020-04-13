@@ -162,7 +162,10 @@ fuzzify_country <- function(dataset, country_keydict){
   }
   # We only want to iterate through unique names that are not matched
   # Remove duplicates here
-  country_short <- country_ind[!duplicated(dataset$country[country_ind])]
+  country_short <- country_ind[!duplicated(dataset$country[country_ind]) & !is.na(dataset$country[country_ind])]
+  if (any(is.na(dataset$country[country_ind]))){
+    unmatched_count <<- country_ind[is.na(dataset$country[country_ind])]
+  }
   .count_updates <<- data.frame(ind = country_short,
                                 name = dataset$country[country_short])
   # Iterate through the names that are wrong
@@ -185,12 +188,12 @@ fuzzify_country <- function(dataset, country_keydict){
     ## if one of the listed matches is correct (and not NA), the standardized
     ## version of the matched name will be replaced into the dataset
     # Use grepl to prevent warnings
-    if (grepl("^[0-9*]$")){
+    if (grepl("^[0-9*]$", ans1)){
       if (!is.na(ans1) &
-          (as.numeric(ans1) %in% 1:15) & # use suppressWarnings to prevent warnings about coercion
+          (as.numeric(ans1) %in% 1:15) &
           (!is.na(tmp[as.numeric(ans1)]))) {
         correct.name <- tmp[as.numeric(ans1)]
-        print(paste0(correct.name, "has been selected and will replace ",
+        print(paste0(correct.name, " has been selected and will replace ",
                      dataset$country[i], " in the database."))
 
         # replacing all instances of the recently matched (raw) name in the dataset
@@ -219,9 +222,7 @@ fuzzify_country <- function(dataset, country_keydict){
       if (substr(toupper(as.character(ans2)), 1, 1) == "Y") {
         ans3 <- readline(prompt = "Enter in custom name: ")
         ans3 <- as.character(ans3)
-        print(paste0("The name (", ans3, ") will be kept in the dataset.
-        The name has not been added to the key dictionary yet but can be added with the update_country_dict function.
-        The row number of the custom name has been added to a vector called custom_count"))
+        print(paste0("The name (", ans3, ") will be kept in the dataset.\nThe name has not been added to the key dictionary yet but can be added with the update_country_dict function.\nThe row number of the custom name has been added to a vector called custom_count"))
         if (!exists("custom_count")){
           custom_count <<- i
         } else {
@@ -266,6 +267,7 @@ fuzzify_country <- function(dataset, country_keydict){
   }
   if (exists("unmatched_count")){
     unmatched_count <<- unmatched_count[!is.na(unmatched_count)]
+    unmatched_count <<- sort(unmatched_count)
   }
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true

@@ -31,9 +31,9 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
   if (!clean_enc & !all(is.na(dataset$country))){
     dataset$country <- .check_and_convert(dataset$country)
   }
-  match_country <- which(dataset$country %in% country.dict$wrong)
-  dataset$country[match_country] <- country.dict$right[match(toupper(dataset$country[match_country]),
-                                                             toupper(.check_and_convert(country.dict$wrong)))]
+  match_country <- which(dataset$country %in% .check_and_convert(country.dict$wrong))
+  dataset$country[match_country] <- country.dict$right[match(dataset$country[match_country],
+                                                             .check_and_convert(country.dict$wrong))]
   country_ind <<- which(!(dataset$country %in% country.dict$right))
 
   if (iso != 2 & iso != 3){

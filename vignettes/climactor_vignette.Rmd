@@ -176,10 +176,39 @@ We now almost have all that we need to start the process of cleaning actors' nam
 ### Use `fuzzify_country()` to ensure all countries in dataset are cleaned
 This function is a continuation of the previous function `clean_country_iso()`, and should only be used 1) after the `clean_country_iso()` function has been used and 2) if there are any remaining countries that need to be cleaned (signaled by the presence of a `country_ind` vector). 
 The function makes use of base R fuzzy matching algorithms to detect similar country names within the country dictionary to match to the user's input. The base R function in turn makes use of the Levenshtein distance to implement the fuzzy matching. The function will only do fuzzy matching for the rows which are in the `country_ind` vector, hence making the use of the `clean_country_iso()` function prior to the `fuzzify_country()` function crucial. 
-It should also be further noted that the `fuzzify_country()` function will not match for `NA` values in the country column. Users are encouraged to 
+
+The `fuzzify_country()` function also returns different vectors based on the different input specified by the user. A `custom_count` vector will be returned if users decided to input a custom country for any actors. An `unmatched_count` vector will be returned if users decided to skip any countries within their dataset, such that they can return to it later or input their own countries later on.  
+It should also be further noted that the `fuzzify_country()` function will not match for `NA` values in the country column. The indices for these countries will still remain in the `country_ind` vector for users to easily check the name and entity types of those actors. The reason for this is to encourage users to manually check for those actors which countries are `NA` to ensure that these entries are valid. Users can opt to manually input a country after checking before using the functions to standardize the country names.   
 
 ```{r, eval = F}
-tmp <- fuzzify_country(cdp, country_dict)
+cdp <- fuzzify_country(cdp, country_dict)
+```
+```{r, echo = F, comment = ""}
+cat("[1] \"The original country is Taiwan, Greater China (Actor name: Yilan)\"
+[1] \"Here are some possible matches we found: \"
+1. Taiwan
+ 2. Macao
+ 3. Macao
+ 4. China
+ 5. Hong Kong
+ 6. Saint Helena
+ 7. Saint Martin
+ 8. Saint Martin
+ 9. Hong Kong
+ 10. Taiwan
+ 11. Papua New Guinea
+ 12. Saint Martin
+ 13. San Marino
+ 14. Bosnia and Herzegovina
+ 15. Bosnia and Herzegovina
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress)")
+cat("Answer: 1")
+cat("[1] \"Taiwan has been selected and will replace Taiwan, Greater China in the database.\"")
 ```
 
+We want to go back to the rows which countries didn't get matched (because the countries were NAs) and check for the actors of these rows to see if these entries are correct.
+
+```{r}
+cdp$name[unmatched_count]
+```
 

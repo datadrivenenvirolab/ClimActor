@@ -610,9 +610,8 @@ Input &quot;skip&quot; if column does not exist.</code></pre>
 <a class="sourceLine" id="cb40-5" title="5">cdp &lt;-<span class="st"> </span><span class="kw">clean_country_iso</span>(cdp, country_dict, <span class="dt">iso =</span> <span class="dv">3</span>, <span class="dt">clean_enc =</span> F)</a></code></pre></div>
 <pre><code>## Best guess: UTF-8 (100% confident)</code></pre>
 <pre><code>## Best guess: windows-1250 (57% confident)</code></pre>
-<pre><code>## [1] &quot;There are 21 entries with no exact matches in the country dictionary. The indices for these names are recorded in the country_ind vector Please use the fuzzify_country function to clean those names or input them manually.&quot;
-## [1] &quot;Country&quot;</code></pre>
-<p>We see that there are 21 countries in the cdp dataset that do not have an exact match in the country dictionary. Let’s examine these countries using the <code>country_ind</code> vector that was created from the function.</p>
+<pre><code>## [1] &quot;There are 21 entries with no exact matches in the country dictionary. The indices for these names are recorded in the country_ind vector Please use the fuzzify_country function to clean those names or input them manually.&quot;</code></pre>
+<p>We see that there are 21 countries in the cdp dataset that do not have an exact match in the country dictionary. The <code>country_ind</code> vector was created to show which rows in the datasets have countries where there was no exact matches in the country_dictionary. Let’s examine these countries using the <code>country_ind</code> vector.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">cdp<span class="op">$</span>Country[country_ind]</a></code></pre></div>
 <pre><code>##  [1] &quot;Taiwan, Greater China&quot; &quot;Taiwan, Greater China&quot; NA                     
 ##  [4] &quot;Taiwan, Greater China&quot; &quot;Taiwan, Greater China&quot; &quot;Taiwan, Greater China&quot;
@@ -627,6 +626,34 @@ Input &quot;skip&quot; if column does not exist.</code></pre>
 </div>
 <div id="stringphonetic-matching-functions-and-cleaning-of-actor-names" class="section level2">
 <h2>String/Phonetic matching functions and cleaning of actor names</h2>
+<p>We now almost have all that we need to start the process of cleaning actors’ names in the dataset (the primary goal of the package). To do that, we first need to start with making sure all the country names in our dataset are standardized. This picks up from the previous section where we used exact string matching to clean the country names within the dataset. Now, we use fuzzy string matching to standardize and clean whatever country names are left to be cleaned. Then, the functions following which will attempt to clean the actors’ names first through exact matching, then through phonetic string matching.</p>
+<div id="use-fuzzify_country-to-ensure-all-countries-in-dataset-are-cleaned" class="section level3">
+<h3>Use <code>fuzzify_country()</code> to ensure all countries in dataset are cleaned</h3>
+<p>This function is a continuation of the previous function <code>clean_country_iso()</code>, and should only be used 1) after the <code>clean_country_iso()</code> function has been used and 2) if there are any remaining countries that need to be cleaned (signaled by the presence of a <code>country_ind</code> vector). The function makes use of base R fuzzy matching algorithms to detect similar country names within the country dictionary to match to the user’s input. The base R function in turn makes use of the Levenshtein distance to implement the fuzzy matching. The function will only do fuzzy matching for the rows which are in the <code>country_ind</code> vector, hence making the use of the <code>clean_country_iso()</code> function prior to the <code>fuzzify_country()</code> function crucial.</p>
+<p>The <code>fuzzify_country()</code> function also returns different vectors based on the different input specified by the user. A <code>custom_count</code> vector will be returned if users decided to input a custom country for any actors. An <code>unmatched_count</code> vector will be returned if users decided to skip any countries within their dataset, such that they can return to it later or input their own countries later on.<br />
+It should also be further noted that the <code>fuzzify_country()</code> function will not match for <code>NA</code> values in the country column. The indices for these countries will still remain in the <code>country_ind</code> vector for users to easily check the name and entity types of those actors. The reason for this is to encourage users to manually check for those actors which countries are <code>NA</code> to ensure that these entries are valid. Users can opt to manually input a country after checking before using the functions to standardize the country names.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1">cdp &lt;-<span class="st"> </span><span class="kw">fuzzify_country</span>(cdp, country_dict)</a></code></pre></div>
+<pre><code>[1] &quot;The original country is Taiwan, Greater China (Actor name: Yilan)&quot;
+[1] &quot;Here are some possible matches we found: &quot;
+1. Taiwan
+ 2. Macao
+ 3. Macao
+ 4. China
+ 5. Hong Kong
+ 6. Saint Helena
+ 7. Saint Martin
+ 8. Saint Martin
+ 9. Hong Kong
+ 10. Taiwan
+ 11. Papua New Guinea
+ 12. Saint Martin
+ 13. San Marino
+ 14. Bosnia and Herzegovina
+ 15. Bosnia and Herzegovina
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress)</code></pre>
+<pre><code>Answer: 1</code></pre>
+<pre><code>[1] &quot;Taiwan has been selected and will replace Taiwan, Greater China in the database.&quot;</code></pre>
+</div>
 </div>
 
 
