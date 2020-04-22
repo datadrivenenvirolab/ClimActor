@@ -165,9 +165,8 @@ We see that there are 21 countries in the cdp dataset that do not have an exact 
 
 ```{r}
 cdp$Country[country_ind]
-# seems like there are some NAs in the data 
 ```
-It seems like there are some NAs in the data. Apart from that, the only other country where there isn't an exact match is Taiwan. 
+It seems like there are two countries where there wasn't exact matches (Taiwan and Côte d'Ivoire).
 These names will be matched in a later function, as detailed below. 
 
 ## String/Phonetic matching functions and cleaning of actor names 
@@ -204,11 +203,36 @@ cat("[1] \"The original country is Taiwan, Greater China (Actor name: Yilan)\"
 Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress)")
 cat("Answer: 1")
 cat("[1] \"Taiwan has been selected and will replace Taiwan, Greater China in the database.\"")
+cat("[1] \"The original country is Côte d'Ivoire (Actor name: Commune de Bouaké)\"
+[1] \"Here are some possible matches we found: \"
+1. Cote d'Ivoire
+ 2. Cote d'Ivoire
+ 3. Cote d'Ivoire
+ 4. Cote d'Ivoire
+ 5. Cote d'Ivoire
+ 6. Cape Verde
+ 7. Andorra
+ 8. Belize
+ 9. Cambodia
+ 10. Cameroon
+ 11. Cape Verde
+ 12. Chile
+ 13. Costa Rica
+ 14. Ecuador
+ 15. Ecuador
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress)")
+cat("Answer: 1")
+cat("[1] \"Cote d'Ivoire has been selected and will replace Côte d'Ivoire in the database.\"")
+
+cdp$Country[cdp$Country == "Taiwan, Greater China"] <- "Taiwan"
+cdp$Country[cdp$Country == "Côte d'Ivoire"] <- "Cote d'Ivoire"
+country_ind <- which(!(cdp$country %in% country_dict$right))
 ```
 
-We want to go back to the rows which countries didn't get matched (because the countries were NAs) and check for the actors of these rows to see if these entries are correct.
-
+We can do a quick check to make sure that all the country names are standardized based on the country dictionary. 
 ```{r}
-cdp$name[unmatched_count]
+sum(cdp$Country %in% country_dict$right)
+# Quick check on country_ind 
+country_ind
 ```
 
