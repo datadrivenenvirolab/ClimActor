@@ -151,7 +151,8 @@ head(cdp$name[!cdp$name %in% orignames])
 ```
 
 ### Clean country names and add ISO data using `clean_country_iso()`
-`clean_country_iso()` checks the countries in the supplied dataset and a supplied country dictionary using direct string matching and cleans the country names according to the standardized version in the country dictionary. The function allows users to input their own country dictionary (in the event that the user has a locally updated country dictionary, or their own one) but the package's included country dictionary can be called using `country_dict`. ISO2 and ISO3 data is available for including in one's own dataset, with users being able to select which version they prefer (with ISO3 being the default). Lastly, `clean_enc = F` checks the encoding of the country column of the user's dataset, guesses the correct encoding of the data, and tries to repair it if the data was read in with the wrong encoding. The default for this argument is `T` (checks not conducted), but the user should set it to `F` if they are unsure if they have read in the data in the correct encoding. A tell-tale sign is usually when unrecognized symbols or accents appear in the country names of the dataset. 
+`clean_country_iso()` checks the countries in the supplied dataset and a supplied country dictionary using direct string matching and standardizes the country names according to the version in the country dictionary. The function allows users to input their own country dictionary (in the event that the user has a locally updated country dictionary, or their own one) but the package's included country dictionary can be called using `country_dict`. ISO2 and ISO3 data is available for including in one's own dataset, with users being able to select which version they prefer (with ISO3 being the default). Lastly, `clean_enc = F` checks the encoding of the country column of the user's dataset, guesses the correct encoding of the data, and tries to repair it if the data was read in with the wrong encoding. The default for this argument is `T` (checks not conducted), but the user should set it to `F` if they are unsure if they have read in the data in the correct encoding. A tell-tale sign is usually when unrecognized symbols or accents appear in the country names of the dataset. 
+Apart from the dataset with the standardized country names, the `clean_country_iso()` also returns a `country_ind` vector which specifies which rows in the dataset will require further downstream cleaning of countries (countries not exactly matched to any entry in the country dictionary). 
 
 ```{r}
 # Set clean_enc = F (not sure if encoding is "clean" for the sake of this example)
@@ -234,5 +235,24 @@ We can do a quick check to make sure that all the country names are standardized
 sum(cdp$Country %in% country_dict$right)
 # Quick check on country_ind 
 country_ind
+```
+Now, with all the countries of the actors in the dataset all cleaned, we can go back to the clean_country_iso function again to add in the iso for the countries which were missed out because it was not cleaned. 
+```{r}
+# Check ISO first 
+any(is.na(cdp$iso))
+cdp$Country[is.na(cdp$iso)]
+
+cdp <- clean_country_iso(cdp, country_dict, iso = 3, clean_enc = T) # We know the encoding is fine
+
+any(is.na(cdp$iso)) # All have iso now 
+```
+
+### Standardize actors' names with exact matching using `clean_name()`
+We are now finally ready to start cleaning actors' names to standardized versions for further downstream analyses. The `clean_name()` function checks the actors' names within the dataset for exact matches in the supplied key dictionary, and replaces it with the standardized version if the original name is already present in the supplied key dictionary. 
+Similar to the `clean_country_iso()` function, users can supply their own version of the key dictionary (in the event that they have a locally updated version, for example). Otherwise, the package's included key dictionary can be called using `key_dict`.  The `clean_enc` argument also works similarly to the `clean_country_iso()` function, where if it is `F` (false), then the function checks the encoding of the name column within the user's dataset, guesses the correct encoding, and tries to repair it if the data was read in with the wrong encoding. The argument defaults to `T` (true). Apart from the dataset with the standardized actors' names, the `clean_name()` function also returns an `indices` vector, which specifies which rows in the dataset will require further downstream data cleaning (actors' names cannot be exactly matched to key dictionary). 
+
+```{r}
+tmp <- clean_name(cdp, key_dict, clean_enc = F)
+
 ```
 
