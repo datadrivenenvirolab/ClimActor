@@ -185,3 +185,83 @@ remove_extra <- function(dataset){
   }
   return(dataset)
 }
+
+
+
+# resolve_entity_types <- function(dataset, key.dict, clean_enc = T){
+#   if (!is.logical(clean_enc)){
+#     stop("clean_enc argument requires a logical (True/False) input.")
+#   }
+#   # If not sure if data is clean, check and convert to try and repair the encoding
+#   if (!clean_enc){
+#     dataset$name <- .check_and_convert(dataset$name)
+#   }
+#   # Check for column naming using helper function
+#   dataset <- .col_check(dataset, "name")
+#   dataset <- .col_check(dataset, "entity.type")
+#   dataset <- .col_check(dataset, "iso")
+#   if (exists("to.stop")){
+#     stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
+#   }
+#   # Find actors that have the correct names and iso but not the correct entity type
+#   # Subset data for those that have correct names and iso first
+#   name_iso_right <- which(paste0(dataset$name, dataset$iso) %in% paste0(key.dict$right, key.dict$iso))
+#   name_iso_right_short <- which(unique(paste0(dataset$name, dataset$iso)) %in% paste0(key.dict$right, key.dict$iso))
+#   # Coerce NA entity types to random character
+#   dataset$entity.type[intersect(which(is.na(dataset$entity.type)), name_iso_right)] <- ","
+#   # Check for wrong entity types in those that have correct names and iso
+#   dict_ind <- na.omit(match(paste0(dataset$name[name_iso_right], dataset$iso[name_iso_right]),
+#                             paste0(key.dict$right, key.dict$iso)))
+#   ent_ind <- name_iso_right[dataset$entity.type[name_iso_right] != key.dict$entity.type[dict_ind]]
+#   dict_ent_ind <- dict_ind[dataset$entity.type[name_iso_right] != key.dict$entity.type[dict_ind]]
+#   # Let users decide which entity type conflicts they want to resolve
+#   if (length(ent_ind) != 0){
+#     # Print number of conflicts
+#     cat(paste0("We found ", length(ent_ind), " number of entries with the same actor name ",
+#                "and iso but conflicting entity types. Would you like to resolve all",
+#                " conflicts by accepting the key dictionary's entity type? (Y/N/Skip)"))
+#     ans <- readline(prompt = "Answer: ")
+#     # Make sure user enters valid response
+#     # Allow users to 1) accept all key dict's entity types 2) resolve conflicts 1 by 1
+#     # or 3) not resolve conflicts
+#     while (toupper(ans) != "Y" & toupper(ans) != "N" & toupper(ans) != "SKIP"){
+#       cat("Please enter a valid input (Y/N/Skip)")
+#       ans <- readline(prompt = "Answer: ")
+#     }
+#     if (toupper(ans) == "Y"){
+#       # Resolve conflicts by taking all key dict's entity types
+#       dataset$entity.type[ent_ind] <- key.dict$entity.type[dict_ent_ind]
+#     } else if (toupper(ans) == "N"){
+#       # Resolve conflicts 1 by 1
+#       cat("Proceeding to resolve conflict of entity types actor by actor\n")
+#       ent_ind_short <- name_iso_right[dataset$entity.type[(unique(paste0(dataset$name,
+#                                                                          dataset$iso)) %in% paste0(key.dict$right,
+#                                                                                                    key.dict$iso))] != key.dict$entity.type[dict_ind]]
+#       for (k in seq_along(ent_ind_short)){
+#         # Iterate through conflicts 1 by 1 to let user select which entity type they want
+#         # to keep
+#         cat(paste0("For actor ", dataset$name[ent_ind_short[k]], ", ", dataset$iso[ent_ind_short[k]],
+#                    " you had an entity type of ", dataset$entity.type[ent_ind_short[k]],
+#                    " while our key dictionary had entity type of ",
+#                    key.dict$entity.type[dict_ent_ind[k]], ". Which entity type would you like to keep?",
+#                    "\n\n 1. Dataset \n 2. Key Dictionary \n S. Stop resolving conflicts"))
+#         ans2 <- readline(prompt = "Please input either 1/2/S: ")
+#         # Allow users to take the key dict's entity type, keep their own, or skip
+#         while (ans2 != "1" & ans2 != "2" & toupper(ans2) != "S"){
+#           cat("Please enter a valid input (1/2/S)")
+#           ans2 <- readline(prompt = "Answer: ")
+#         }
+#         if (ans2 == "1"){
+#           dataset$entity.type[ent_ind[k]] <- key.dict$entity.type[dict_ent_ind[k]]
+#         } else if (ans2 == "2"){
+#           next
+#         } else if (toupper(ans2) == "S"){
+#           cat("Stop resolving conflicts in entity types.")
+#           break
+#         }
+#       }} else if (toupper(ans) == "SKIP"){
+#         cat("Entity types will not be changed for now.")
+#       }
+#   }
+#
+# }
