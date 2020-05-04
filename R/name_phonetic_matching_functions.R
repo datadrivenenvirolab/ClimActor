@@ -521,7 +521,7 @@ Would you like the function to proceed with this vector anyways (future edits ma
 
     # listing the top 15 best-scoring fuzzy-matched names
     print(paste0("The original name is ", dataset$name[ind], " with iso code ",
-                 dataset$iso[ind] " and entity type ", dataset$entity.type[ind]))
+                 dataset$iso[ind], " and entity type ", dataset$entity.type[ind]))
     print(paste0("Here are some possible matches we found: "))
 
     for (k in 1:15) {
