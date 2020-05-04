@@ -318,7 +318,9 @@ phonetify_names <- function(dataset, key.dict) {
                                         key.dict$entity.type)))
   ind.short <- which(!duplicated(dataset$name[-all3_matching_rows]))
   if (length(ind.short) == 0){
-    stop("It seems the dataset has already been cleaned.")
+    stop(paste0("Please check your dataset and/or the key dictionary to make sure all the",
+                "column names are correct (name, iso, entity.type). Otherwise, it seems that" ,
+                "all the names in the dataset has already been matched with the key dictionary."))
   }
   ## creating the vector of indices (in the dataset) of the names that need to be fuzzy matched
   if (length(all3_matching_rows) != 0) {
@@ -518,14 +520,16 @@ Would you like the function to proceed with this vector anyways (future edits ma
     kd.filtered <- kd.filtered %>% dplyr::arrange(dplyr::desc(tot.phon.score))
 
     # listing the top 15 best-scoring fuzzy-matched names
-    print(paste0("The original name is ", dataset$name[ind]))
+    print(paste0("The original name is ", dataset$name[ind], " with iso code ",
+                 dataset$iso[ind] " and entity type ", dataset$entity.type[ind]))
     print(paste0("Here are some possible matches we found: "))
 
     for (k in 1:15) {
       if (is.na(kd.filtered$right[k])) {
         next
       } else {
-        print(paste0(k, ": ", kd.filtered$right[k]))
+        print(paste0(k, ": ", kd.filtered$right[k], "iso: ", kd.filtered$iso[k],
+                     "and entity type: ", kd.filtered$entity.type[k]))
       }
     }
 
@@ -544,8 +548,8 @@ Would you like the function to proceed with this vector anyways (future edits ma
     ## if one of the listed matches is correct (and not NA), the standardized
     ## version of the matched name will be replaced into the dataset
     if (!is.na(ans1) &
-        (as.numeric(ans1) %in% c(1:15)) &
-        (!is.na(kd.filtered$right[ans1]))) {
+        (as.numeric(ans1) %in% (1:15)) &
+        (!is.na(kd.filtered$right[as.numeric(ans1)]))) {
       correct.name <- kd.filtered$right[ans1]
       print(paste0(correct.name, "has been selected and will replace ", dataset$name[ind],
                    " in the database."))
