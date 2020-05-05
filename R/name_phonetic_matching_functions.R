@@ -601,7 +601,7 @@ Please check the vector to be sure that:
         ans3 <- as.character(ans3)
         cat(paste0("The name (", ans3, ") will be kept in the dataset.\n",
                    "The name has not been added to the key dictionary yet but can be added with the update_key_dict function.\n",
-                   "The row number of the custom name has been added to a vector called custom_indices."))
+                   "The row number of the custom name has been added to a vector called custom_indices.\n"))
         if (!exists("custom_indices")){
           custom_indices <<- ind
         } else {
