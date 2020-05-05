@@ -4,6 +4,7 @@
 
 #' @importFrom dplyr %>%
 #' @importFrom stats na.omit
+#' @importFrom utils adist
 
 #' @export
 #' @title Cleans name using exact matches
@@ -337,8 +338,7 @@ phonetify_names <- function(dataset, key.dict) {
   # creating a vector that--during the function--tracks which indices aren't
   # fuzzy matched by the end of the whole function
   if (exists("unmatched_indices")) {
-     if ((length(unmatched_indices) <= length(indices)) &
-               (all(unmatched_indices[!is.na(unmatched_indices)] <= nrow(dataset)))) {
+    if (all(unmatched_indices[!is.na(unmatched_indices)] <= nrow(dataset))) {
       cat("A vector that seems to contain valid indices that have not been matched (named unmatched_indices) already exists. \n Would you like to proceed using this vector? (Y/N)")
       ans_u1 <- readline(prompt = "Answer: ")
       if (substr(toupper(as.character(ans_u1)), 1, 1) == "Y") {
@@ -352,8 +352,7 @@ phonetify_names <- function(dataset, key.dict) {
       } else {
         cat("An invalid answer was provided, but we'll continue with this vector for now. \n")
       }
-    } else if ((length(unmatched_indices) <= length(indices)) &
-               (any(unmatched_indices[!is.na(unmatched_indices)] > nrow(dataset)))) {
+    } else if (any(unmatched_indices[!is.na(unmatched_indices)] > nrow(dataset))) {
       cat(paste0("A vector of indices named unmatched_indices already exists and contains invalid indices (e.g. values beyond the row numbers in the dataset or characters). \n",
                  "Please check the vector to be sure that:",
                  "\n1. It is a vector of indices from the dataset that have not been fuzzy matched and",
@@ -383,56 +382,48 @@ phonetify_names <- function(dataset, key.dict) {
   # to make it easier for the user to look back at the name later and fix, if necessary
   # note to readers: the code below is the exact same as the code to create the unmatched_indices vector,
   # except the name of the vector is different
-  if (!exists("custom_indices")) {
-    custom_indices <<- rep(NA, length(indices))
-  } else if (length(custom_indices) < length(indices)) {
-    custom_indices <<- append(custom_indices, rep(NA, (length(indices) - length(custom_indices))))
-  } else if ((length(custom_indices) == length(indices)) &
-             (all(custom_indices[!is.na(custom_indices)] <= nrow(dataset)))) {
-    cat("A vector that seems to contain valid indices that have custom names (named custom_indices) already exists.\nWould you like to proceed using this vector? (Y/N) \n")
-    ans_c1 <- readline(prompt = "Answer: ")
-    if (substr(toupper(as.character(ans_c1)), 1, 1) == "Y") {
-      cat("Function will proceed using this vector\n")
-    } else if (substr(toupper(as.character(ans_c1)), 1, 1) == "N") {
-      cat("Would you like to start with with cleaning the dataset anew (Y/N)? (Your progress might be lost)\n")
-      ans_c11 <- readline(prompt = "Answer: ")
-      if (substr(toupper(as.character(ans_c11)), 1, 1) == "Y") {
-        cat("Initializing new vector \n")
-        custom_indices <<- rep(NA, length(indices))
+  if (exists("custom_indices")) {
+    if (all(custom_indices[!is.na(custom_indices)] <= nrow(dataset))) {
+      cat("A vector that seems to contain valid indices that have custom names (named custom_indices) already exists.\nWould you like to proceed using this vector? (Y/N) \n")
+      ans_c1 <- readline(prompt = "Answer: ")
+      if (substr(toupper(as.character(ans_c1)), 1, 1) == "Y") {
+        cat("Function will proceed using this vector\n")
+      } else if (substr(toupper(as.character(ans_c1)), 1, 1) == "N") {
+        cat("Would you like to start with with cleaning the dataset anew (Y/N)? (Your progress might be lost)\n")
+        ans_c11 <- readline(prompt = "Answer: ")
+        if (substr(toupper(as.character(ans_c11)), 1, 1) != "Y") {
+          stop("We'll stop the function here to let you decide what to do with the vector.")
+        }
       } else {
-        stop("We'll stop the function here to let you decide what to do with the vector.")
+        cat("An invalid answer was provided, but we'll continue with this vector for now.\n")
       }
-    } else {
-      cat("An invalid answer was provided, but we'll continue with this vector for now.\n")
-    }
-  } else if ((length(custom_indices) == length(indices)) &
-             (any(custom_indices[!is.na(custom_indices)] > nrow(dataset)))) {
-    cat("A vector of indices named custom_indices already exists and contains invalid indices (e.g. values beyond the row numbers in the dataset or characters).\n
+    } else if (any(custom_indices[!is.na(custom_indices)] > nrow(dataset))) {
+      cat("A vector of indices named custom_indices already exists and contains invalid indices (e.g. values beyond the row numbers in the dataset or characters).\n
 
 Please check the vector to be sure that:
     \n1. It is a vector of indices from the dataset that have not been fuzzy matched and
     \n2. Each element in the vector is a possible row number from the dataset (within the range of the total # of rows)
 
 \nWould you like the function to proceed with this vector anyways (future edits may be difficult)? (Y/N). ")
-    ans_c2 <- readline(prompt = "Answer: ")
-    if (substr(toupper(as.character(ans_c2)), 1, 1) == "Y") {
-      cat("Function will proceed using this vector\n")
-    } else if (substr(toupper(as.character(ans_c2)), 1, 1) == "N") {
-      cat("Would you like to start with with cleaning the dataset anew (Y/N)? (Your progress might be lost)\n")
-      ans_c21 <- readline(prompt = "Answer: ")
-      if (substr(toupper(as.character(ans_c21)), 1, 1) == "Y") {
-        cat("Initializing new vector \n")
-        custom_indices <<- rep(NA, length(indices))
+      ans_c2 <- readline(prompt = "Answer: ")
+      if (substr(toupper(as.character(ans_c2)), 1, 1) == "Y") {
+        cat("Function will proceed using this vector\n")
+      } else if (substr(toupper(as.character(ans_c2)), 1, 1) == "N") {
+        cat("Would you like to start with with cleaning the dataset anew (Y/N)? (Your progress might be lost)\n")
+        ans_c21 <- readline(prompt = "Answer: ")
+        if (substr(toupper(as.character(ans_c21)), 1, 1) != "Y") {
+          stop("We'll stop the function here to let you decide what to do with the vector.")
+        }
       } else {
-        stop("We'll stop the function here to let you decide what to do with the vector.")
+        cat("An invalid answer was provided, but we'll continue with this vector for now.\n")
       }
     } else {
-      cat("An invalid answer was provided, but we'll continue with this vector for now.\n")
+      cat(paste0("A vector of indices named custom_indices already exists, but there might be something wrong with it.\n",
+                 "The function will continue with it for now.\n"))
     }
-  } else {
-    cat(paste0("A vector of indices named custom_indices already exists, but there might be something wrong with it.\n",
-               "The function will continue with it for now.\n"))
+    ind.short <- ind.short[!(ind.short %in% custom_indices)]
   }
+
 
   ## creating a dataframe of all phonetic codes for all the names that need to be fuzzy matched
   ds.phon.codes <- phonics::phonics(.coerce_location_names(dataset$name[ind.short]), c("caverphone", "caverphone.modified",
@@ -609,9 +600,9 @@ Please check the vector to be sure that:
         ans3 <- readline(prompt = "Enter in custom name: ")
         ans3 <- as.character(ans3)
         cat(paste0("The name (", ans3, ") will be kept in the dataset.\n",
-                   "The name has not been added to the key dictionary yet but can be added with the update_key_dict function.\n"
+                   "The name has not been added to the key dictionary yet but can be added with the update_key_dict function.\n",
                    "The row number of the custom name has been added to a vector called custom_indices."))
-        if !exists("custom_indices"){
+        if (!exists("custom_indices")){
           custom_indices <<- ind
         } else {
           custom_indices <<- c(custom_indices, ind)
@@ -629,7 +620,7 @@ Please check the vector to be sure that:
         ### will be kept, and the index will be added to the unmatched_indices vector
       } else if (substr(toupper(as.character(ans2)), 1, 1) == "N") {
         cat(paste0("The previous name (", origname, ") will be kept.\n"))
-        if !exists("unmatched_indices"){
+        if (!exists("unmatched_indices")){
           unmatched_indices <<- ind
         } else{
           unmatched_indices <<- c(unmatched_indices, ind)
@@ -642,7 +633,7 @@ Please check the vector to be sure that:
       cat("Sorry, an invalid answer was provided.\n")
       cat(paste0("The previous name (", origname, ") will be kept.",
                  " The index of this entry will be recorded for future inspection.\n"))
-      if !exists("unmatched_indices"){
+      if (!exists("unmatched_indices")){
         unmatched_indices <<- ind
       } else {
         unmatched_indices <<- c(unmatched_indices, ind)
