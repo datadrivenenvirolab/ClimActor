@@ -76,20 +76,20 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
 #' @example \dontrun{fill_type(df)}
 fill_type <- function(dataset) {
   # Check for column naming
-  col <- "entity.type"
+  col <- "entity_type"
   dataset <- .col_check(dataset, col)
   if (exists("to.stop")){
     stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
                 "column."))
   }
   # fill the corresponding entity type with "City" if it contains a U.S. state abbreviation
-  dataset$entity.type[grep(", AL|, AK|, AZ|, AR|, CA|, CO|, CT|, DE|, FL|, GA|, HI|, ID|, IL|, IN|, IA|, KS|, KY|, LA|, ME|, MD|, MA|, MI|, MN|, MS|, MO|, MT|, NE|, NV|, NH|, NJ|, NM|, NY|, NC|, ND|, OH|, OK|, OR|, PA|, RI|, SC|, SD|, TN|, TX|, UT|, VT|, VA|, WA|, WV|, WI|, WY",
+  dataset$entity_type[grep(", AL|, AK|, AZ|, AR|, CA|, CO|, CT|, DE|, FL|, GA|, HI|, ID|, IL|, IN|, IA|, KS|, KY|, LA|, ME|, MD|, MA|, MI|, MN|, MS|, MO|, MT|, NE|, NV|, NH|, NJ|, NM|, NY|, NC|, ND|, OH|, OK|, OR|, PA|, RI|, SC|, SD|, TN|, TX|, UT|, VT|, VA|, WA|, WV|, WI|, WY",
                            dataset$name, ignore.case = TRUE)] <- "City"
 
   # fill corresponding entity type with Company if it contains words that are usually associated with companies
   # this filling comes after the state abbreviations so that any company with "Inc"
   # (or similar company names that happen to have a ", ..") aren't coded as cities
-  dataset$entity.type[grep(" Inc|servic|limited| Co\\.|inc\\.|util|constr|contract|plc|ltd|plc\\.|ltd\\.|P\\.L\\.C\\.|L\\.T\\.D\\.|produ|LLP|L\\.L\\.P\\.|L\\.L\\C\\.|LLC|group|hold|ltda|l\\.t\\.d\\.a\\.|craft |corp\\.| chapter|congregation|makers|method| stage|indust|organic|organiz|ingredi|transpo|glass|agricul|archite|hortic|logis|bevera|market|system|syst|corpo|packag|soluti|softwa|integra|perfo|desig|SRl|S\\.R\\.L\\.|chemic|cream|company|freight|metal|electr|intern|int'l|intl|aero|alcoh|contai|special|S\\.A\\.|SA\\.|sa de cv|sa de c\\.v\\.|s\\.a\\. de cv|s\\.a\\. de c\\.v\\.|C\\.V\\.|CV\\.|artform|corporat|co\\.|ltd\\.|print|maint|steel|rail|bank |banco |auto|build|special|plastic|health|medical|maintain|concie|office|hotel|food|center|charg|therap|pharma|device|harbor|harbour|mecan|mecha|ltda|L\\.T\\.D\\.A\\.|ltda\\.|styli|style|casting|investm|ventur|textil|knit|appare|merchan|sourc|soup|computer|labora|farm|greenh|outdoor|access|custom|produc|rubber|brewing| wood|lumber|bakery| baker| brand|dairy|confecti|interface|corporate|contract|electric|telecom|recycl|waste|energy|enviro|furnit|technolog|micro|surgic|manufac|interio|retail|holiday|worldwide|company|enterprise|propert|power",
+  dataset$entity_type[grep(" Inc|servic|limited| Co\\.|inc\\.|util|constr|contract|plc|ltd|plc\\.|ltd\\.|P\\.L\\.C\\.|L\\.T\\.D\\.|produ|LLP|L\\.L\\.P\\.|L\\.L\\C\\.|LLC|group|hold|ltda|l\\.t\\.d\\.a\\.|craft |corp\\.| chapter|congregation|makers|method| stage|indust|organic|organiz|ingredi|transpo|glass|agricul|archite|hortic|logis|bevera|market|system|syst|corpo|packag|soluti|softwa|integra|perfo|desig|SRl|S\\.R\\.L\\.|chemic|cream|company|freight|metal|electr|intern|int'l|intl|aero|alcoh|contai|special|S\\.A\\.|SA\\.|sa de cv|sa de c\\.v\\.|s\\.a\\. de cv|s\\.a\\. de c\\.v\\.|C\\.V\\.|CV\\.|artform|corporat|co\\.|ltd\\.|print|maint|steel|rail|bank |banco |auto|build|special|plastic|health|medical|maintain|concie|office|hotel|food|center|charg|therap|pharma|device|harbor|harbour|mecan|mecha|ltda|L\\.T\\.D\\.A\\.|ltda\\.|styli|style|casting|investm|ventur|textil|knit|appare|merchan|sourc|soup|computer|labora|farm|greenh|outdoor|access|custom|produc|rubber|brewing| wood|lumber|bakery| baker| brand|dairy|confecti|interface|corporate|contract|electric|telecom|recycl|waste|energy|enviro|furnit|technolog|micro|surgic|manufac|interio|retail|holiday|worldwide|company|enterprise|propert|power",
                            dataset$name, ignore.case = TRUE)] <- "Company"
 
   # fill the corresponding entity type with City if it contains words associated
@@ -97,26 +97,26 @@ fill_type <- function(dataset) {
   # this comes after the filling of company entity types because some city names
   # will include "corporation", "brand" or similar "company-esque" nwords in
   # their name (e.g. Pune Municipal Corporation is the civic body that governs Pune, a city in India)
-  dataset$entity.type[grep("City|Muni|Town|County|Shire|District|Village|Assembly|Comm|Metro|Council|Ministry|Authority|Canton|Reg",
+  dataset$entity_type[grep("City|Muni|Town|County|Shire|District|Village|Assembly|Comm|Metro|Council|Ministry|Authority|Canton|Reg",
                            dataset$name, ignore.case = TRUE)] <- "City"
 
   # fill corresponding entity type with Region if it contains words associated
   # with "regions" (as coded in the key dictionary)
   # reasoning for having this entity type filled after companies is the same as
   # why the filling of cities came after companies
-  dataset$entity.type[grep("Prov|Region|Government|State|Pref",
+  dataset$entity_type[grep("Prov|Region|Government|State|Pref",
                            dataset$name, ignore.case = TRUE)] <- "Region"
 
-  # alert the user to fill any NAs in the entity.type column, if they exist
-  missing_ET <- sum(is.na(dataset$entity.type))
+  # alert the user to fill any NAs in the entity_type column, if they exist
+  missing_ET <- sum(is.na(dataset$entity_type))
   if (missing_ET > 0) {
-    print(paste0("You seem to have ", missing_ET, " missing values in the entity.type column. Please fill these before proceeding."))
+    print(paste0("You seem to have ", missing_ET, " missing values in the entity_type column. Please fill these before proceeding."))
   }
   cat("Warning: This function will be generally accurate for the entity type of most--but not all--entries. It is highly recommended you double check the entity types, fix any errors, and fill in any missing values. ")
   # Helper function returns output that checks if the name is slightly different
   # Change back to capitalized version if the check is true
-  if (exists(paste0("entity.typename"))){
-    names(dataset)[grepl("entity.type", names(dataset))] <- entity.typename
+  if (exists(paste0("entity_typename"))){
+    names(dataset)[grepl("entity_type", names(dataset))] <- entity_typename
   }
   return(dataset)
 }
@@ -132,20 +132,20 @@ fill_type <- function(dataset) {
 # #' @example \dontrun{standardize_type(df)}
 # standardize_type <- function(dataset) {
 #   # Check for column naming
-#   col <- "entity.type"
+#   col <- "entity_type"
 #   .col_check(dataset, col)
 #   if (exists("to.stop")){
 #     stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
 #                 "column."))
 #   }
-#   dataset$entity.type[grep("City|Muni|Town|County|Shire|District|Village|Assembly|Comm|Metro|Council|Ministry|Authority|Canton|Reg",
-#                            dataset$entity.type, ignore.case = TRUE)] <- "City"
-#   dataset$entity.type[grep("Prov|Region|Government|State|Pref",
-#                            dataset$entity.type, ignore.case = TRUE)] <- "Region"
+#   dataset$entity_type[grep("City|Muni|Town|County|Shire|District|Village|Assembly|Comm|Metro|Council|Ministry|Authority|Canton|Reg",
+#                            dataset$entity_type, ignore.case = TRUE)] <- "City"
+#   dataset$entity_type[grep("Prov|Region|Government|State|Pref",
+#                            dataset$entity_type, ignore.case = TRUE)] <- "Region"
 #   # Helper function returns output that checks if the name is capitalized
 #   # Change back to capitalized version if the check is true
-#   if (exists(paste0("entity.typename"))){
-#     names(dataset)[grepl("entity.type", names(dataset))] <- entity.typename
+#   if (exists(paste0("entity_typename"))){
+#     names(dataset)[grepl("entity_type", names(dataset))] <- entity_typename
 #   }
 #   return(dataset)
 # # }
@@ -198,22 +198,22 @@ remove_extra <- function(dataset){
 #   }
 #   # Check for column naming using helper function
 #   dataset <- .col_check(dataset, "name")
-#   dataset <- .col_check(dataset, "entity.type")
+#   dataset <- .col_check(dataset, "entity_type")
 #   dataset <- .col_check(dataset, "iso")
 #   if (exists("to.stop")){
-#     stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
+#     stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
 #   }
 #   # Find actors that have the correct names and iso but not the correct entity type
 #   # Subset data for those that have correct names and iso first
 #   name_iso_right <- which(paste0(dataset$name, dataset$iso) %in% paste0(key.dict$right, key.dict$iso))
 #   name_iso_right_short <- which(unique(paste0(dataset$name, dataset$iso)) %in% paste0(key.dict$right, key.dict$iso))
 #   # Coerce NA entity types to random character
-#   dataset$entity.type[intersect(which(is.na(dataset$entity.type)), name_iso_right)] <- ","
+#   dataset$entity_type[intersect(which(is.na(dataset$entity_type)), name_iso_right)] <- ","
 #   # Check for wrong entity types in those that have correct names and iso
 #   dict_ind <- na.omit(match(paste0(dataset$name[name_iso_right], dataset$iso[name_iso_right]),
 #                             paste0(key.dict$right, key.dict$iso)))
-#   ent_ind <- name_iso_right[dataset$entity.type[name_iso_right] != key.dict$entity.type[dict_ind]]
-#   dict_ent_ind <- dict_ind[dataset$entity.type[name_iso_right] != key.dict$entity.type[dict_ind]]
+#   ent_ind <- name_iso_right[dataset$entity_type[name_iso_right] != key.dict$entity_type[dict_ind]]
+#   dict_ent_ind <- dict_ind[dataset$entity_type[name_iso_right] != key.dict$entity_type[dict_ind]]
 #   # Let users decide which entity type conflicts they want to resolve
 #   if (length(ent_ind) != 0){
 #     # Print number of conflicts
@@ -230,20 +230,20 @@ remove_extra <- function(dataset){
 #     }
 #     if (toupper(ans) == "Y"){
 #       # Resolve conflicts by taking all key dict's entity types
-#       dataset$entity.type[ent_ind] <- key.dict$entity.type[dict_ent_ind]
+#       dataset$entity_type[ent_ind] <- key.dict$entity_type[dict_ent_ind]
 #     } else if (toupper(ans) == "N"){
 #       # Resolve conflicts 1 by 1
 #       cat("Proceeding to resolve conflict of entity types actor by actor\n")
-#       ent_ind_short <- name_iso_right[dataset$entity.type[(unique(paste0(dataset$name,
+#       ent_ind_short <- name_iso_right[dataset$entity_type[(unique(paste0(dataset$name,
 #                                                                          dataset$iso)) %in% paste0(key.dict$right,
-#                                                                                                    key.dict$iso))] != key.dict$entity.type[dict_ind]]
+#                                                                                                    key.dict$iso))] != key.dict$entity_type[dict_ind]]
 #       for (k in seq_along(ent_ind_short)){
 #         # Iterate through conflicts 1 by 1 to let user select which entity type they want
 #         # to keep
 #         cat(paste0("For actor ", dataset$name[ent_ind_short[k]], ", ", dataset$iso[ent_ind_short[k]],
-#                    " you had an entity type of ", dataset$entity.type[ent_ind_short[k]],
+#                    " you had an entity type of ", dataset$entity_type[ent_ind_short[k]],
 #                    " while our key dictionary had entity type of ",
-#                    key.dict$entity.type[dict_ent_ind[k]], ". Which entity type would you like to keep?",
+#                    key.dict$entity_type[dict_ent_ind[k]], ". Which entity type would you like to keep?",
 #                    "\n\n 1. Dataset \n 2. Key Dictionary \n S. Stop resolving conflicts"))
 #         ans2 <- readline(prompt = "Please input either 1/2/S: ")
 #         # Allow users to take the key dict's entity type, keep their own, or skip
@@ -252,7 +252,7 @@ remove_extra <- function(dataset){
 #           ans2 <- readline(prompt = "Answer: ")
 #         }
 #         if (ans2 == "1"){
-#           dataset$entity.type[ent_ind[k]] <- key.dict$entity.type[dict_ent_ind[k]]
+#           dataset$entity_type[ent_ind[k]] <- key.dict$entity_type[dict_ent_ind[k]]
 #         } else if (ans2 == "2"){
 #           next
 #         } else if (toupper(ans2) == "S"){

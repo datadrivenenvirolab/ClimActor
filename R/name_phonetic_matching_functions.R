@@ -29,19 +29,19 @@ clean_name <- function(dataset, key.dict, clean_enc = T) {
   }
   # Check for column naming using helper function
   dataset <- .col_check(dataset, "name")
-  dataset <- .col_check(dataset, "entity.type")
+  dataset <- .col_check(dataset, "entity_type")
   dataset <- .col_check(dataset, "iso")
   if (exists("to.stop")){
-    stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
+    stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
   }
 
   # Clean database by doing an exact match with the key dictionary
   # Find indices within key dict where there is a match with the "wrong" column of the key dictionary
-  match_keydict <- na.omit(match(paste0(dataset$name, dataset$iso, dataset$entity.type),
-                                 paste0(key.dict$wrong, key.dict$iso, key.dict$entity.type)))
+  match_keydict <- na.omit(match(paste0(dataset$name, dataset$iso, dataset$entity_type),
+                                 paste0(key.dict$wrong, key.dict$iso, key.dict$entity_type)))
   # Find the corresponding indices within the dataset
-  match_df <- which(!is.na(match(paste0(dataset$name, dataset$iso, dataset$entity.type),
-                                 paste0(key.dict$wrong, key.dict$iso, key.dict$entity.type))))
+  match_df <- which(!is.na(match(paste0(dataset$name, dataset$iso, dataset$entity_type),
+                                 paste0(key.dict$wrong, key.dict$iso, key.dict$entity_type))))
   # Replace the dataset name with the right name in key dict
   if (length(match_keydict) != 0) {
     dataset$name[match_df] <- key.dict$right[match_keydict]
@@ -50,9 +50,9 @@ clean_name <- function(dataset, key.dict, clean_enc = T) {
   # Now find all row numbers that match name, iso, and entity type
   # Do this by pasting name, iso and entity type together and then matching on those
   all3_matching_rows <- which((paste0(dataset$name, dataset$iso,
-                                      dataset$entity.type) %in%
+                                      dataset$entity_type) %in%
                                  paste0(key.dict$right, key.dict$iso,
-                                        key.dict$entity.type)))
+                                        key.dict$entity_type)))
 
 
   # creating the vector of indices (in the dataset) of the names that need to be cleaned
@@ -67,8 +67,8 @@ clean_name <- function(dataset, key.dict, clean_enc = T) {
   if (exists(paste0("isoname"))){
     names(dataset)[grepl("iso", names(dataset))] <- isoname
   }
-  if (exists(paste0("entity.typename"))){
-    names(dataset)[grepl("entity.type", names(dataset))] <- entity.typename
+  if (exists(paste0("entity_typename"))){
+    names(dataset)[grepl("entity_type", names(dataset))] <- entity_typename
   }
   if (exists(paste0("namename"))){
     names(dataset)[grepl("name", names(dataset))] <- namename
@@ -299,26 +299,26 @@ phonetify_names <- function(dataset, key.dict) {
 
   # Check for column naming using helper function
   dataset <- .col_check(dataset, "name")
-  dataset <- .col_check(dataset, "entity.type")
+  dataset <- .col_check(dataset, "entity_type")
   dataset <- .col_check(dataset, "iso")
   if (exists("to.stop")){
-    stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
+    stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
   }
   # creating a vector of indices (in the dataset) of the names that need to be fuzzy matched
 
   # dataset.tmp <- dataset[!duplicated(paste0(dataset$name,
-  # dataset$iso, dataset$entity.type)), ]
+  # dataset$iso, dataset$entity_type)), ]
 
   # all3_short <- which((paste0(dataset.tmp$name, dataset.tmp$iso,
-  # dataset.tmp$entity.type) %in%
+  # dataset.tmp$entity_type) %in%
   # paste0(key.dict$right, key.dict$iso,
-  # key.dict$entity.type)))
+  # key.dict$entity_type)))
   # indices_short <-
   ## finding all the row numbers in which the dataset matches the key dictionary
   all3_matching_rows <- which((paste0(dataset$name, dataset$iso,
-                                      dataset$entity.type) %in%
+                                      dataset$entity_type) %in%
                                  paste0(key.dict$right, key.dict$iso,
-                                        key.dict$entity.type)))
+                                        key.dict$entity_type)))
 
   ## creating the vector of indices (in the dataset) of the names that need to be fuzzy matched
   if (length(all3_matching_rows) != 0) {
@@ -331,7 +331,7 @@ phonetify_names <- function(dataset, key.dict) {
   ind.short <- indices[!duplicated(dataset$name[indices])]
   if (length(ind.short) == 0){
     stop(paste0("Please check your dataset and/or the key dictionary to make sure all the",
-                "column names are correct (name, iso, entity.type). Otherwise, it seems that" ,
+                "column names are correct (name, iso, entity_type). Otherwise, it seems that" ,
                 "all the names in the dataset has already been matched with the key dictionary."))
   }
 
@@ -449,7 +449,7 @@ Please check the vector to be sure that:
 
     ## filtering out only the rows of the key dictionary that have a matching
     ## iso and entity type as the actor that is currently being fuzzy matched
-    kd.filtered <- key.dict %>% dplyr::filter(iso == dataset$iso[ind] & entity.type == dataset$entity.type[ind])
+    kd.filtered <- key.dict %>% dplyr::filter(iso == dataset$iso[ind] & entity_type == dataset$entity_type[ind])
     kd.filtered$rogerroot <- as.character(kd.filtered$rogerroot)
 
     ## calculating scores using the caverphone phonetic algorithm
@@ -535,7 +535,7 @@ Please check the vector to be sure that:
 
     # listing the top 15 best-scoring fuzzy-matched names
     cat(paste0("The original name is ", dataset$name[ind], " with iso code ",
-               dataset$iso[ind], " and entity type ", dataset$entity.type[ind], "\n"))
+               dataset$iso[ind], " and entity type ", dataset$entity_type[ind], "\n"))
     cat(paste0("Here are some possible matches we found: \n"))
 
     for (k in 1:15) {
@@ -543,7 +543,7 @@ Please check the vector to be sure that:
         next
       } else {
         cat(paste0(k, ": ", kd.filtered$right[k], "; iso: ", kd.filtered$iso[k],
-                   " and entity type: ", kd.filtered$entity.type[k], "\n"))
+                   " and entity type: ", kd.filtered$entity_type[k], "\n"))
       }
     }
 
@@ -644,8 +644,8 @@ Please check the vector to be sure that:
   if (exists(paste0("isoname"))){
     names(dataset)[grepl("iso", names(dataset))] <- isoname
   }
-  if (exists(paste0("entity.typename"))){
-    names(dataset)[grepl("entity.type", names(dataset))] <- entity.typename
+  if (exists(paste0("entity_typename"))){
+    names(dataset)[grepl("entity_type", names(dataset))] <- entity_typename
   }
   if (exists(paste0("namename"))){
     names(dataset)[grepl("name", names(dataset))] <- namename
@@ -667,10 +667,10 @@ Please check the vector to be sure that:
 update_key_dict <- function(dataset, key.dict, custom_indices) {
   # Check for column naming using helper function
   dataset <- .col_check(dataset, "name")
-  dataset <- .col_check(dataset, "entity.type")
+  dataset <- .col_check(dataset, "entity_type")
   dataset <- .col_check(dataset, "iso")
   if (exists("to.stop")){
-    stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
+    stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
   }
   # Get the complete dataset of those that needs to be updated first
   .actor_updates <- cbind(.actor_updates, dataset[.actor_updates$ind])
@@ -679,7 +679,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
   cust_df <- data.frame(right = NA,
                         wrong = .actor_updates$name[custom],
                         iso = .actor_updates$iso[custom],
-                        entity.type = .actor_updates$entity.type[custom],
+                        entity_type = .actor_updates$entity_type[custom],
                         allcaps = toupper(.actor_updates$name[custom]),
                         caverphone = phonics::caverphone(.actor_updates$name[custom], clean = FALSE),
                         caverphone.modified = phonics::caverphone(.actor_updates$name[custom], modified = TRUE, clean = FALSE),
@@ -706,7 +706,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
   update_df <- data.frame(right = .actor_updates$name,
                           wrong = .actor_updates$name_wrong,
                           iso = .actor_updates$iso,
-                          entity.type = .actor_updates$entity.type,
+                          entity_type = .actor_updates$entity_type,
                           allcaps = toupper(.actor_updates$name_wrong),
                           caverphone = phonics::caverphone(.actor_updates$name_wrong, clean = FALSE),
                           caverphone.modified = phonics::caverphone(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
@@ -750,10 +750,10 @@ contextualize_data <- function(dataset, contextual_df, contextuals = c("region",
                                                                        "initiatives_committed")){
   # Check for column naming using helper function
   dataset <- .col_check(dataset, "name")
-  dataset <- .col_check(dataset, "entity.type")
+  dataset <- .col_check(dataset, "entity_type")
   dataset <- .col_check(dataset, "iso")
   if (exists("to.stop")){
-    stop("Stopping function. Missing the \"name\", \"entity.type\", or \"iso\" columns.")
+    stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
   }
   # Incorporate check to make sure that the contextuals for merging are in the
   # contextual dataframe
@@ -761,10 +761,10 @@ contextualize_data <- function(dataset, contextual_df, contextuals = c("region",
     stop("The contextuals argument needs to match the column names in the contextual
          dataframe. See ?contextualize_data for a list of applicable column names.")
   }
-  contextuals <- c(contextuals, "name", "iso", "entity.type")
+  contextuals <- c(contextuals, "name", "iso", "entity_type")
   # Merge and keep all of the original dataset's data
   merge_df <- merge(dataset, contextual_df[ , contextuals],
-                    by = c("name", "iso", "entity.type"), all.x = T)
+                    by = c("name", "iso", "entity_type"), all.x = T)
   return(merge_df)
 
 }
