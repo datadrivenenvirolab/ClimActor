@@ -9,7 +9,7 @@ add_country_entity_type(dataset, type = NA)
 \arguments{
 \item{dataset}{Dataset to add columns to}
 
-\item{type}{Default value to set for the entity.type column}
+\item{type}{Default value to set for the entity_type column}
 }
 \value{
 Dataset with the 2 new columns
