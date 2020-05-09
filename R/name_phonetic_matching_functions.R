@@ -37,8 +37,8 @@ clean_name <- function(dataset, key.dict, clean_enc = T) {
 
   # Clean database by doing an exact match with the key dictionary
   # Find indices within key dict where there is a match with the "wrong" column of the key dictionary
-  match_keydict <- na.omit(match(paste0(toupper(dataset$name), dataset$iso, dataset$entity_type),
-                                 paste0(toupper(key.dict$wrong), key.dict$iso, key.dict$entity_type)))
+  match_keydict <- na.omit(match(paste0(trimws(toupper(dataset$name)), trimws(dataset$iso), trimws(dataset$entity_type),
+                                 paste0(trimws(toupper(key.dict$wrong)), key.dict$iso, key.dict$entity_type)))
   # Find the corresponding indices within the dataset
   match_df <- which(!is.na(match(paste0(toupper(dataset$name), dataset$iso, dataset$entity_type),
                                  paste0(toupper(key.dict$wrong), key.dict$iso, key.dict$entity_type))))
