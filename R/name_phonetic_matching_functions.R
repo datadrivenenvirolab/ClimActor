@@ -532,18 +532,39 @@ Please check the vector to be sure that:
 
     # arranging by total score in descending order so we can list the top matches (based on those scores)
     kd.filtered <- kd.filtered %>% dplyr::arrange(dplyr::desc(tot.phon.score))
+    kd.filtered <- kd.filtered[!duplicated(kd.filtered$right), ]
 
+    # Check if there were any matches
+    # if (nrow(kd.filtered) == 0){
+    #   cat(paste0("There seems to be no available matches for "))
+    # }
     # listing the top 15 best-scoring fuzzy-matched names
     cat(paste0("The original name is ", dataset$name[ind], " with iso code ",
                dataset$iso[ind], " and entity type ", dataset$entity_type[ind], "\n"))
     cat(paste0("Here are some possible matches we found: \n"))
-
-    for (k in 1:15) {
-      if (is.na(kd.filtered$right[k])) {
-        next
-      } else {
-        cat(paste0(k, ": ", kd.filtered$right[k], "; iso: ", kd.filtered$iso[k],
-                   " and entity type: ", kd.filtered$entity_type[k], "\n"))
+    if (nrow(kd.filtered) < 15){
+      for (k in seq_len(nrow(kd.filtered))){
+        if (is.na(kd.filtered$right[k])){
+          next
+        } else if (k < 10){
+          cat(paste0(k, ":  ", kd.filtered$right[k], "; iso: ", kd.filtered$iso[k],
+                     " and entity type: ", kd.filtered$entity_type[k], "\n"))
+        } else {
+          cat(paste0(k, ": ", kd.filtered$right[k], "; iso: ", kd.filtered$iso[k],
+                     " and entity type: ", kd.filtered$entity_type[k], "\n"))
+        }
+      }
+    } else {
+      for (k in 1:15) {
+        if (is.na(kd.filtered$right[k])) {
+          next
+        } else if (k < 10) {
+          cat(paste0(k, ":  ", kd.filtered$right[k], "; iso: ", kd.filtered$iso[k],
+                     " and entity type: ", kd.filtered$entity_type[k], "\n"))
+        } else {
+          cat(paste0(k, ": ", kd.filtered$right[k], "; iso: ", kd.filtered$iso[k],
+                     " and entity type: ", kd.filtered$entity_type[k], "\n"))
+        }
       }
     }
 
