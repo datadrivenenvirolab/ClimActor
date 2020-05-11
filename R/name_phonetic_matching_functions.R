@@ -718,6 +718,15 @@ Please check the vector to be sure that:
         } else{
           unmatched_indices <<- c(unmatched_indices, ind)
         }
+      } else {
+        cat("Sorry, an invalid answer was provided.\n")
+        cat(paste0("The previous name (", origname, ") will be kept.",
+                   " The index of this entry will be recorded for future inspection.\n"))
+        if (!exists("unmatched_indices")){
+          unmatched_indices <<- ind
+        } else {
+          unmatched_indices <<- c(unmatched_indices, ind)
+        }
       }
       ## if the user makes a typo or other invalid answer, the function will continue, and
       ## the index will be added to the unmatched_indices vector for the user to look at later
