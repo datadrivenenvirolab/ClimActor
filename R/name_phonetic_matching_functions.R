@@ -582,7 +582,7 @@ Please check the vector to be sure that:
     ans1 <- readline(prompt = "Answer: ")
     ## if one of the listed matches is correct (and not NA), the standardized
     ## version of the matched name will be replaced into the dataset
-    if (grepl("^[0-9*]$", ans1)){
+    if (grepl("^[0-9]{1,2}$", ans1)){
       if (!is.na(ans1) &
           (as.numeric(ans1) %in% (1:15)) &
           (!is.na(kd.filtered$right[as.numeric(ans1)]))) {
