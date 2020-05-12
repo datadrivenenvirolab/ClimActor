@@ -546,7 +546,9 @@ Please check the vector to be sure that:
     # Check if there were any matches
     if (nrow(kd.filtered) == 0){
       cat(paste0("There seems to be no available matches for ",
-                 dataset$name[ind], ".\n", "Would you like to input a custom name (Y/N)?\n"))
+                 dataset$name[ind], "; iso = ", dataset$iso,
+                 "entity type = ", dataset$entity_type,
+                 ".\n", "Would you like to input a custom name (Y/N)?\n"))
       ansn1 <- readline(prompt = "Answer: ")
       if (substr(toupper(as.character(ansn1)), 1, 1) == "Y") {
         ansn2 <- readline(prompt = "Enter in custom name: ")
@@ -562,7 +564,7 @@ Please check the vector to be sure that:
 
         # replacing all instances in the dataset of the original (raw) name
         # with the new custom name
-        samename_inds <- which(dataset$name == origname)
+        samename_inds <- which(dataset$name == origname & dataset$iso == dataset$iso[ind])
 
         if (length(samename_inds) != 0) {
           dataset$name[samename_inds] <- ansn2
@@ -664,7 +666,7 @@ Please check the vector to be sure that:
 
         # replacing all instances of the recently matched (raw) name in the dataset
         # with the standardized name
-        samename_inds <- which(dataset$name == origname)
+        samename_inds <- which(dataset$name == origname & dataset$iso == dataset$iso[ind])
 
         if (length(samename_inds) != 0) {
           dataset$name[samename_inds] <- correct.name
