@@ -119,15 +119,15 @@ After the preliminary preparation of data from the previous functions, we now mo
 ### Fill in entity types for your data using `fill_type()`
 Since the `add_entity_type()` function only allow users to input only one entity type for the entire dataset, the `fill_type()` function will allow users to update the entity type for users with datasets that contain more than one entity type. The function looks at the actor name and identifies common words within the actor's name to guess the entity type for that actor. 
 ```{r}
-table(cdp$entity.type)
+table(cdp$entity_type)
 cdp <- fill_type(cdp)
-table(cdp$entity.type)
+table(cdp$entity_type)
 # Just do a quick check for the ones listed as company
-cdp$name[which(cdp$entity.type == "Company")]
+cdp$name[which(cdp$entity_type == "Company")]
 ```
 The example here highlights the importance to conduct careful checks on the data after using the `fill_type()` function. The function picked up two actors which has the word "Corporation" in its name, but should really be cities (instead of companies). We manually fix the entity types for these actors. 
 ```{r}
-cdp$entity.type[which(cdp$entity.type == "Company")] <- "City"
+cdp$entity_type[which(cdp$entity_type == "Company")] <- "City"
 ```
 
 ### Remove fill words from actor names using `remove_extra()`
@@ -246,6 +246,15 @@ cdp <- clean_country_iso(cdp, country_dict, iso = 3, clean_enc = T) # We know th
 
 any(is.na(cdp$iso)) # All have iso now 
 ```
+
+### Resolve differences in entity types with `resolve_entity_types()`
+Often, there are many actors that can be both a state and a city (examples abound - New York can refer to either New York State, or New York City, Kansas can refer to Kansas State, or Kansas City (in the state of Missouri), and so forth). The `resolve_entity_types()` function highlights such discrepancies between the user's dataset and the key dictionary to users. The function allows users to decide whether they would like to standardize the entity types to the key dictionaries' entries, or if they would like to get a dataframe highlighting where these differences lie (such that they can make any necessary edits themselves). 
+
+Let's examine both cases, starting with the case where the user accepts the key dictionary's entity types. 
+```{r}
+cdp_resolved <- resolve_entity_types(cdp, key_dict)
+```
+
 
 ### Standardize actors' names with exact matching using `clean_name()`
 We are now finally ready to start cleaning actors' names to standardized versions for further downstream analyses. The `clean_name()` function first checks for conflicting entity types (for actors with the same name and iso) between the dataset and the key dictionary, prompting users to choose which version they think is correct. The function then checks the actors' names within the dataset for exact matches in the supplied key dictionary, and replaces it with the standardized version if the original name is already present in the supplied key dictionary. 

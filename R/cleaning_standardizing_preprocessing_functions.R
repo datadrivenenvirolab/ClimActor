@@ -232,7 +232,7 @@ resolve_entity_types <- function(dataset, key.dict, clean_enc = T){
     # Print number of conflicts
     cat(paste0("We found ", length(ent_ind), " number of entries with the same actor name ",
                "and iso but conflicting entity types. Would you like to resolve all",
-               " conflicts by accepting the key dictionary's entity type? (Y/N/Skip)"))
+               " conflicts by accepting the key dictionary's entity type? (Y/N)"))
     ans <- readline(prompt = "Answer: ")
     # Make sure user enters valid response
     # Allow users to 1) accept all key dict's entity types or 2) not resolve and export
@@ -244,6 +244,7 @@ resolve_entity_types <- function(dataset, key.dict, clean_enc = T){
     if (substr(toupper(as.character(ans)), 1, 1) == "Y"){
       # Resolve conflicts by taking all key dict's entity types
       dataset$entity_type[ent_ind] <- key.dict$entity_type[dict_ent_ind]
+      return(dataset)
     } else if (substr(toupper(as.character(ans)), 1, 1) == "N"){
       # Export a dataset consisting of conflicts
       cat(paste0("A dataframe of the actors with conflicting entity types will be",
@@ -257,7 +258,6 @@ resolve_entity_types <- function(dataset, key.dict, clean_enc = T){
 
     }
   } else {
-    cat(paste0(""))
+    cat(paste0("There are no entries with conflicting entity types."))
   }
-
 }
