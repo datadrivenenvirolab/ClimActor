@@ -18,3 +18,7 @@ Imports:
     stringr,
     stringi,
     rvest
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
