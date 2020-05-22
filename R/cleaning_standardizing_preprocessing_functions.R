@@ -255,7 +255,7 @@ resolve_entity_types <- function(dataset, key.dict, clean_enc = T){
                                       keydict_entity = key.dict$entity_type[dict_ent_ind],
                                       user_index = ent_ind,
                                       keydict_index = dict_ent_ind)
-
+      return(dataset)
     }
   } else {
     cat(paste0("There are no entries with conflicting entity types."))
