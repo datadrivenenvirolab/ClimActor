@@ -247,7 +247,7 @@ resolve_entity_types <- function(dataset, key.dict, clean_enc = T){
       return(dataset)
     } else if (substr(toupper(as.character(ans)), 1, 1) == "N"){
       # Export a dataset consisting of conflicts
-      cat(paste0("A dataframe of the actors with conflicting entity types will be",
+      cat(paste0("A dataframe of the actors with conflicting entity types will be ",
                  "created for closer inspection of the conflicts."))
       entity_conflicts <<- data.frame(name = dataset$name[ent_ind],
                                       iso = dataset$iso[ent_ind],
