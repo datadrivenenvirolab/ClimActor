@@ -844,8 +844,9 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
 #' @param contextual_df Contextuals database included in the package. Called
 #' using `r contextuals`
 #' @param contextuals Vector consisting of contextual column name to be merged
-#' into the dataset includes "region", "pop", "lat", "lng", "area",
-#' "elevation", "intiatives_committed", "num_commit", "state", "popoulation_year',
+#' into the dataset includes "region", "population", "popoulation_year", "lat",
+#' "lng", "area", "area_units"
+#' "elevation", "intiatives_committed", "num_commit", "state",
 #' "gdp", "gdp_unit", "gdp_source".
 #' Defaults to taking all the contextual information.
 #' @return Dataset with contextuals merged
