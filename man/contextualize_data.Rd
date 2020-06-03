@@ -7,17 +7,21 @@
 contextualize_data(
   dataset,
   contextual_df,
-  contextuals = c("region", "population", "lat", "lng", "area", "elevation",
+  context = c("region", "population", "lat", "lng", "area", "elevation",
     "initiatives_committed")
 )
 }
 \arguments{
 \item{dataset}{Original dataset}
 
-\item{contextual_df}{Contextuals database included in the package}
+\item{contextual_df}{Contextuals database included in the package. Called
+using `r contextuals`}
 
-\item{contextuals}{Vector consisting of contextuals to be merged into the dataset
-includes "region", "pop", "lat", "lng", "area", "elevation", "intiatives_committed".
+\item{contextuals}{Vector consisting of contextual column name to be merged
+into the dataset includes "region", "population", "popoulation_year", "lat",
+"lng", "area", "area_units"
+"elevation", "intiatives_committed", "num_commit", "state",
+"gdp", "gdp_unit", "gdp_source".
 Defaults to taking all the contextual information.}
 }
 \value{
