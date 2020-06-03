@@ -841,14 +841,17 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
 #' longitude, area, elevation, and the initiatives committed by the actor. Merging is done
 #' based on actors' name, iso, and entity type.
 #' @param dataset Original dataset
-#' @param contextual_df Contextuals database included in the package
-#' @param contextuals Vector consisting of contextuals to be merged into the dataset
-#' includes "region", "pop", "lat", "lng", "area", "elevation", "intiatives_committed".
+#' @param contextual_df Contextuals database included in the package. Called
+#' using `r contextuals`
+#' @param contextuals Vector consisting of contextual column name to be merged
+#' into the dataset includes "region", "pop", "lat", "lng", "area",
+#' "elevation", "intiatives_committed", "num_commit", "state", "popoulation_year',
+#' "gdp", "gdp_unit", "gdp_source".
 #' Defaults to taking all the contextual information.
 #' @return Dataset with contextuals merged
 #'
 #' @example \dontrun{contextualize_data(df, contextuals_df, c("pop", "region", "lat", "lng"))}
-contextualize_data <- function(dataset, contextual_df, contextuals = c("region", "population",
+contextualize_data <- function(dataset, contextual_df, context = c("region", "population",
                                                                        "lat", "lng", "area",
                                                                        "elevation",
                                                                        "initiatives_committed")){

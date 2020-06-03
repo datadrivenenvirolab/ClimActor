@@ -447,3 +447,4 @@ Apart from the usual saving and exporting of data after the cleaning process, us
 As described above, the `contextualize_data()` function allows users to merge contextual data (where available) to the actors in the user's dataset. 
 
 The functions `update_key_dict()` and `update_country_dict()` allow users to update the key and country dictionaries respectively. 
+

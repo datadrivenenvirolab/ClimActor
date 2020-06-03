@@ -6,6 +6,6 @@ key_dict <- read.csv("key_dict_new_Apr2020_withphoneticcodes.csv",
 save(key_dict, file = "../data/key_dict.rda")
 
 # Export contextuals database to RDA
-contextuals <- read.csv("contextuals_database_14May20_zy.csv",
+contextuals <- read.csv("contextuals_database_3June20_zy.csv",
                         encoding = "UTF-8", stringsAsFactors = F)
 save(contextuals, file = "../data/contextuals.rda")
