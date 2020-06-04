@@ -7,8 +7,9 @@
 contextualize_data(
   dataset,
   contextual_df,
-  context = c("region", "population", "lat", "lng", "area", "elevation",
-    "initiatives_committed")
+  context = c("region", "population", "population_year", "lat", "lng", "area",
+    "area_units", "initiatives_committed", "num_commit", "state", "gdp", "gdp_unit",
+    "gdp_year")
 )
 }
 \arguments{
@@ -18,10 +19,9 @@ contextualize_data(
 using `r contextuals`}
 
 \item{contextuals}{Vector consisting of contextual column name to be merged
-into the dataset includes "region", "population", "popoulation_year", "lat",
-"lng", "area", "area_units"
-"elevation", "intiatives_committed", "num_commit", "state",
-"gdp", "gdp_unit", "gdp_source".
+into the dataset includes "region", "population", "population_year", "lat",
+"lng", "area", "area_units", "intiatives_committed", "num_commit", "state",
+"gdp", "gdp_unit", "gdp_year".
 Defaults to taking all the contextual information.}
 }
 \value{

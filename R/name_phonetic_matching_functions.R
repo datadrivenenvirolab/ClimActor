@@ -237,7 +237,7 @@ fuzzify_country <- function(dataset, country_keydict){
 #'
 #' @example \dontrun{update_country_dict(df, country_dict, custom_count)}
 #'
-update_country_dict <- function(dataset, country.dict, custom_count){
+update_country_dict <- function(dataset, country.dict, custom_count, unmatched_count){
   # Do the usual checks for column name and indices
   dataset <- .col_check(dataset, "country")
   if (exists("to.stop")){
@@ -248,20 +248,32 @@ update_country_dict <- function(dataset, country.dict, custom_count){
                "or you have not used the fuzzify_country function yet."))
   }
   # First update those that have custom inputs
-  cust_df <- data.frame(wrong = .count_updates$name[.count_updates$ind %in% custom_count],
-                        right = NA,
-                        code = NA,
-                        iso = NA,
-                        region = NA,
-                        Landarea = NA,
-                        iso2 = NA,
-                        Population = NA,
-                        PopulationGroup = NA)
-
-  # Now remove the names that have custom inputs
-  .count_updates <- .count_updates[-which(.count_updates$ind %in% custom_count), ]
-  # Remove those that have not been cleaned as well
-  .count_updates <- .count_updates[-which(.count_updates$ind %in% unmatched_count), ]
+  if (!missing(custom_count)){
+    cust_df <- data.frame(wrong = .count_updates$name[.count_updates$ind %in% custom_count],
+                          right = NA,
+                          code = NA,
+                          iso = NA,
+                          region = NA,
+                          Landarea = NA,
+                          iso2 = NA,
+                          Population = NA,
+                          PopulationGroup = NA)
+    # Now remove the names that have custom inputs
+    .count_updates <- .count_updates[-which(.count_updates$ind %in% custom_count), ]
+  }
+  if (!missing(unmatched_count)){
+    # Include and remove those that have not been cleaned as well
+    unmatched_df <- data.frame(wrong = .count_updates$name[.count_updates$ind %in% unmatched_count],
+                               right = NA,
+                               code = NA,
+                               iso = NA,
+                               region = NA,
+                               Landarea = NA,
+                               iso2 = NA,
+                               Population = NA,
+                               PopulationGroup = NA)
+    .count_updates <- .count_updates[-which(.count_updates$ind %in% unmatched_count), ]
+  }
   .count_updates$right <- dataset$country[.count_updates$ind]
   update_dict <- data.frame(wrong = .count_update$name,
                             right = .count_updates$right,
@@ -272,11 +284,20 @@ update_country_dict <- function(dataset, country.dict, custom_count){
                             iso2 = NA,
                             Population = NA,
                             PopulationGroup = NA)
-  update_dict <- merge(update_dict, country.dict, by = "right",
-                       all.x = T, all.y = F)
-  country.dict <- rbind(country.dict, update_dict, cust_df)
-  return(country.dict)
 
+  if (exists(cust_df) & exists(unmatched_df)){
+    country.dict <- rbind(country.dict, update_dict, cust_df, unmatched_df)
+  } else if (exists(cust_df)) {
+    country.dict <- rbind(country.dict, update_dict, cust_df)
+  } else if (exists(unmatched_df)){
+    country.dict <- rbind(country.dict, update_dict, unmatched_df)
+  } else {
+    counry.dict <- rbind(country.dict, update_dict)
+  }
+  country.dict <- country.dict %>%
+    dplyr::group_by(right) %>%
+    tidyr::fill(.direction = "downup")
+  return(country.dict)
 }
 
 
@@ -873,7 +894,8 @@ contextualize_data <- function(dataset, contextual_df, context = c("region", "po
   context <- c(context, "name", "iso", "entity_type")
   # Merge and keep all of the original dataset's data
   merge_df <- merge(dataset, contextual_df[ , context],
-                    by = c("name", "iso", "entity_type"), all.x = T)
+                    by = c("name", "iso", "entity_type"), all.x = T,
+                    sort = F)
   return(merge_df)
 }
 
