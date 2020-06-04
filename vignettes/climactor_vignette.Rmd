@@ -5,12 +5,12 @@ output: rmarkdown::html_vignette
 params:
   cdpname: name
 vignette: >
-  %\VignetteIndexEntry{The ClimActor guide}
+%\VignetteIndexEntry{The ClimActor guide}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
----
+  ---
   
-```{r setup, include=FALSE}
+  ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(climactor)
 ```
@@ -433,6 +433,11 @@ Which name matches? Choose 1-15. (Type N if none match; type S to save your curr
 cat("Answer: s")
 cat("Your current progress will be returned.
 If it's not saved, be sure you saved your results in a variable with an assign function")
+
+# Export the dataframe to be used for updating the dictionary
+ind.short <- indices[1:3]
+.actor_updates <<- data.frame(ind = ind.short,
+                              name_wrong = dataset$name[ind.short])
 ```
 We can take a closer look at the unmatched and custom entries 
 ```{r}
