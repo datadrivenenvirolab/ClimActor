@@ -1,16 +1,16 @@
 ---
-title: "The climactor guide"
+title: "The ClimActor guide"
 author: "Data-Driven Lab"
 output: rmarkdown::html_vignette
 params:
   cdpname: name
 vignette: >
-%\VignetteIndexEntry{The ClimActor guide}
+  %\VignetteIndexEntry{The ClimActor guide}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
-  ---
+---
   
-  ```{r setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(climactor)
 ```
@@ -510,5 +510,11 @@ Likewise, the `update_key_dict` function takes in two compulsory arguments and t
 
 ```{r}
 local_key_dict <- update_key_dict(cdp, key_dict, custom_indices, unmatched_indices)
+```
+
+New entries to the key dict will be appended at the end of the `key_dict`. From the previous `phonetify_names` function, we can expect there to be 3 new entries to the `key_dict` (1 matched, 1 unmatched, and 1 custom name). We check the tail of the dataframe. 
+
+```{r}
+tail(local_key_dict)
 ```
 

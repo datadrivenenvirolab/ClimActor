@@ -4,7 +4,7 @@
 \alias{update_country_dict}
 \title{Updates the country dictionary}
 \usage{
-update_country_dict(dataset, country.dict, custom_count)
+update_country_dict(dataset, country.dict, custom_count, unmatched_count)
 }
 \arguments{
 \item{dataset}{Dataset by user}

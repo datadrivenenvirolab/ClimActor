@@ -4,7 +4,7 @@
 \alias{update_key_dict}
 \title{Update key dictionary}
 \usage{
-update_key_dict(dataset, key.dict, custom_indices)
+update_key_dict(dataset, key.dict, custom_indices, unmatched_indices)
 }
 \arguments{
 \item{dataset}{Dataset by user}
