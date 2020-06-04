@@ -850,11 +850,11 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
 #' Defaults to taking all the contextual information.
 #' @return Dataset with contextuals merged
 #'
-#' @example \dontrun{contextualize_data(df, contextuals_df, c("pop", "region", "lat", "lng"))}
+#' @example \dontrun{contextualize_data(df, contextuals_df, c("population", "region", "lat", "lng"))}
 contextualize_data <- function(dataset, contextual_df, context = c("region", "population",
                                                                    "population_year", "lat",
                                                                    "lng", "area", "area_units",
-                                                                   "intiatives_committed",
+                                                                   "initiatives_committed",
                                                                    "num_commit", "state",
                                                                    "gdp", "gdp_unit", "gdp_year")){
   # Check for column naming using helper function
@@ -866,8 +866,8 @@ contextualize_data <- function(dataset, contextual_df, context = c("region", "po
   }
   # Incorporate check to make sure that the contextuals for merging are in the
   # contextual dataframe
-  if (any(!(context %in% names(contextual_df)))){
-    stop("The contextuals argument needs to match the column names in the contextual
+  if (any(!context %in% names(contextual_df))){
+    stop("The context argument needs to match the column names in the contextual
          dataframe. See ?contextualize_data for a list of applicable column names.")
   }
   context <- c(context, "name", "iso", "entity_type")

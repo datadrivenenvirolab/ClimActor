@@ -471,3 +471,10 @@ The `climactor` package also includes a contextual database (named `contextuals`
 
 You can specify which of the contextuals information you would like merged into your own database using the `context` argument. 
 
+In this example, let's merge in the `initiatives_committed` and `num_commit` columns. 
+
+```{r}
+cdp_merged <- contextualize_data(cdp, contextuals, context = c("initiatives_committed",
+                                                               "num_commit"))
+```
+
