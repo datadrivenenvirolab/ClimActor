@@ -810,7 +810,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
                           wrong = .actor_updates$name[custom],
                           iso = .actor_updates$iso[custom],
                           entity_type = .actor_updates$entity_type[custom],
-                          allcaps = toupper(.actor_updates$name[custom]),
+                          coerced_wrong = .coerce_location_names(.actor_updates$name_wrong[custom]),
                           caverphone = phonics::caverphone(.actor_updates$name[custom], clean = FALSE),
                           caverphone.modified = phonics::caverphone(.actor_updates$name[custom], modified = TRUE, clean = FALSE),
                           cologne = phonics::cologne(.actor_updates$name[custom], clean = FALSE),
@@ -838,7 +838,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
                                wrong = .actor_updates$name[unmatched],
                                iso = .actor_updates$iso[unmatched],
                                entity_type = .actor_updates$entity_type[unmatched],
-                               allcaps = toupper(.actor_updates$name[unmatched]),
+                               coerced_wrong = .coerce_location_names(.actor_updates$name_wrong[unmatched]),
                                caverphone = phonics::caverphone(.actor_updates$name[unmatched], clean = FALSE),
                                caverphone.modified = phonics::caverphone(.actor_updates$name[unmatched], modified = TRUE, clean = FALSE),
                                cologne = phonics::cologne(.actor_updates$name[unmatched], clean = FALSE),
@@ -865,7 +865,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
                           wrong = .actor_updates$name_wrong,
                           iso = .actor_updates$iso,
                           entity_type = .actor_updates$entity_type,
-                          allcaps = toupper(.actor_updates$name_wrong),
+                          coerced_wrong = .coerce_location_names(.actor_updates$name_wrong),
                           caverphone = phonics::caverphone(.actor_updates$name_wrong, clean = FALSE),
                           caverphone.modified = phonics::caverphone(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
                           cologne = phonics::cologne(.actor_updates$name_wrong, clean = FALSE),
@@ -884,7 +884,16 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
                           soundex.refined = phonics::refinedSoundex(.actor_updates$name_wrong, clean = FALSE),
                           statcan = phonics::statcan(.actor_updates$name_wrong, clean = FALSE))
   # Bind rows to key.dict
-  key.dict <- rbind(key.dict, update_df, cust_df)
+  # Check forwhether dataframes exist first or not
+  if (exists(cust_df) & exists(unmatched_df)){
+    key.dict <- rbind(key.dict, update_df, cust_df, unmatched_df)
+  } else if (exists(cust_df)){
+    key.dict <- rbind(key.dict, update_df, cust_df)
+  } else if (exists(unmatched_df)){
+    key.dict <- rbind(key.dict, update_df, unmatched_df)
+  } else {
+    key.dict <- rbind(key.dict, update_df)
+  }
   return(key.dict)
 }
 
