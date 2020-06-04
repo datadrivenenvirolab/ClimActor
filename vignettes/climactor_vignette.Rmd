@@ -5,70 +5,70 @@ output: rmarkdown::html_vignette
 params:
   cdpname: name
 vignette: >
-%\VignetteIndexEntry{The climactor guide}
+  %\VignetteIndexEntry{The ClimActor guide}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
-  ---
+---
   
-  ```{r setup, include=FALSE}
-  knitr::opts_chunk$set(echo = TRUE)
-  library(climactor)
-  ```
-  
-  As more non-state actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet show up across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
-  
-  The \code{climactor} package provides a workflow to efficiently standardize actor names across different databases and clean climate commitment data when analyzing non-state actors' climate commitments. 
-  
-  ## Data
-  
-  The data used in this vignette comes from the Carbon Disclosure Project's 2018-2019 City-wide emissions data. The data can be downloaded [here](https://data.cdp.net/Emissions/2018-2019-City-wide-emissions/k7qn-m6i9). Metadata of the dataset is also documented in the link above. 
-  
-  ```{r, include = FALSE}
-  path <- system.file("extdata", "2018_-_2019_City-wide_emissions.csv", package = "climactor", mustWork = T)
-  cdp <- read.csv(path, stringsAsFactors = F,
-  as.is = T, encoding = "UTF-8")
-  ```
-  
-  With data read in (as `cdp`)
-  
-  ``` {r}
-  dim(cdp)
-  
-  # Quick peek at the data
-  knitr::kable(head(cdp[, 1:5]))
-  ```
-  
-  Apart from the data you wish to clean, two other important datasets would be the key dictionary (`key_dict`) and country dictionary (`country_dict`). These datasets can be accessed once the `climactor` package has been called with either `library(climactor)` or `require(climactor)`. For more details on the two dictionaries, you can use `?key_dict` and `?country_dict` for the full data documentation.  
-  
-  ```{r}
-  knitr::kable(head(key_dict[, 1:5]))
-  knitr::kable(head(country_dict[, 1:5]))
-  ```
-  
-  ## Data Preparation functions
-  
-  Naturally, the first step in any data cleaning pipeline would be to read in and prepare the data.
-  
-  Within the `climactor` workflow the first important step comes when the data is read in. For the later string matching aspects of the workflow to work more accurately, the data should ideally be read in or converted to **UTF-8** encoding. **UTF-8** is the preferred encoding when working with strings and both the `key_dict` and `country_dict` are encoding in UTF-8 encoding. Reading in data with the UTF-8 encoding can be done by using the `encoding` argument within the `read.csv` function. 
-  
-  If you know the encoding of your data, it is best to convert it to UTF-8 (either within R or elsewhere) before proceeding with the string matching algorithmns. If you are unsure of the encoding of your data, it is more important to read the data into R in its correct native encoding rather than to try and force the wrong encoding (eg. reading in data as UTF-8 when the data is encoded in Latin1). For those which are unfamiliar with encoding issues, an (optional) helper function within some string matching functions will try to guess the encoding of your data and fix it. For more information on the helper function, see the code in the github [here](https://github.com/datadrivenyale/climactor/blob/master/R/helper_functions.R). 
-  
-  If you would like to learn more about encoding in R, you can refer to the Appendix (*Notes on encoding*) of this vignette or refer to several articles writtin on the topic by [Kunsttube](http://kunststube.net/encoding), [Kevin Ushey](http://kevinushey.github.io/), or [Maurício Collaça](https://rstudio-pubs-static.s3.amazonaws.com/279354_f552c4c41852439f910ad620763960b6.html). 
-  
-  3 specific variables (name, country, entity type) are the most important while using the `climactor` package. Data preparation functions ensure that these variables are present and include the following functions: 
-  
-  * `rename_col()` to rename data columns to the appropriate names 
-  * `add_country()` adds the country column to the dataset
-  * `add_entity_type()` adds the entity type column to the dataset
-  * `add_country_entity_type()` adds both the country and entity type columns to the dataset
-  
-  
-  ### Rename columns with `rename_col()`
-  
-  `rename_col()` checks the dataset for the requisite names and asks the user for columns to be renamed if the dataset do not contain the requisite names. This function ensures that column names are standardized so that downstream functions will work as intended. The only argument for the function is the user's dataset that is to be cleaned. 
-  
-  ```{r}
-  # Check before 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(climactor)
+```
+
+As more non-state actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet show up across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
+
+The \code{climactor} package provides a workflow to efficiently standardize actor names across different databases and clean climate commitment data when analyzing non-state actors' climate commitments. 
+
+## Data
+
+The data used in this vignette comes from the Carbon Disclosure Project's 2018-2019 City-wide emissions data. The data can be downloaded [here](https://data.cdp.net/Emissions/2018-2019-City-wide-emissions/k7qn-m6i9). Metadata of the dataset is also documented in the link above. 
+
+```{r, include = FALSE}
+path <- system.file("extdata", "2018_-_2019_City-wide_emissions.csv", package = "climactor", mustWork = T)
+cdp <- read.csv(path, stringsAsFactors = F,
+                as.is = T, encoding = "UTF-8")
+```
+
+With data read in (as `cdp`)
+
+``` {r}
+dim(cdp)
+
+# Quick peek at the data
+knitr::kable(head(cdp[, 1:5]))
+```
+
+Apart from the data you wish to clean, two other important datasets would be the key dictionary (`key_dict`) and country dictionary (`country_dict`). These datasets can be accessed once the `climactor` package has been called with either `library(climactor)` or `require(climactor)`. For more details on the two dictionaries, you can use `?key_dict` and `?country_dict` for the full data documentation.  
+
+```{r}
+knitr::kable(head(key_dict[, 1:5]))
+knitr::kable(head(country_dict[, 1:5]))
+```
+
+## Data Preparation functions
+
+Naturally, the first step in any data cleaning pipeline would be to read in and prepare the data.
+
+Within the `climactor` workflow the first important step comes when the data is read in. For the later string matching aspects of the workflow to work more accurately, the data should ideally be read in or converted to **UTF-8** encoding. **UTF-8** is the preferred encoding when working with strings and both the `key_dict` and `country_dict` are encoding in UTF-8 encoding. Reading in data with the UTF-8 encoding can be done by using the `encoding` argument within the `read.csv` function. 
+
+If you know the encoding of your data, it is best to convert it to UTF-8 (either within R or elsewhere) before proceeding with the string matching algorithmns. If you are unsure of the encoding of your data, it is more important to read the data into R in its correct native encoding rather than to try and force the wrong encoding (eg. reading in data as UTF-8 when the data is encoded in Latin1). For those which are unfamiliar with encoding issues, an (optional) helper function within some string matching functions will try to guess the encoding of your data and fix it. For more information on the helper function, see the code in the github [here](https://github.com/datadrivenyale/climactor/blob/master/R/helper_functions.R). 
+
+If you would like to learn more about encoding in R, you can refer to the Appendix (*Notes on encoding*) of this vignette or refer to several articles writtin on the topic by [Kunsttube](http://kunststube.net/encoding), [Kevin Ushey](http://kevinushey.github.io/), or [Maurício Collaça](https://rstudio-pubs-static.s3.amazonaws.com/279354_f552c4c41852439f910ad620763960b6.html). 
+
+3 specific variables (name, country, entity type) are the most important while using the `climactor` package. Data preparation functions ensure that these variables are present and include the following functions: 
+
+* `rename_col()` to rename data columns to the appropriate names 
+* `add_country()` adds the country column to the dataset
+* `add_entity_type()` adds the entity type column to the dataset
+* `add_country_entity_type()` adds both the country and entity type columns to the dataset
+
+
+### Rename columns with `rename_col()`
+
+`rename_col()` checks the dataset for the requisite names and asks the user for columns to be renamed if the dataset do not contain the requisite names. This function ensures that column names are standardized so that downstream functions will work as intended. The only argument for the function is the user's dataset that is to be cleaned. 
+
+```{r}
+# Check before 
 names(cdp)[1:5]
 ```
 
@@ -491,6 +491,10 @@ If the user's dataset contains country names which were not included in the `cou
 The `update_country_dict` function takes in two compulsory arguments and two optional arguments. The two compulsory arguments are the dataset and the country dictionary that was used to clean the dataset, and the two optional arguments are the `custom_count` and `unmatched_count` vectors. Country names that were user's custom input and also unmatched country names will automatically be added to the `wrong` column in the updated country dictionary. 
 
 ```{r}
-# local_country_dict <- update_country_dict(cdp, country_dict)
+local_country_dict <- update_country_dict(cdp, country_dict)
+
+# Check for the newly added entries
+local_country_dict[!(local_country_dict$wrong %in% country_dict$wrong), ]
 ```
 
+### Updating the key dictionary with `update_key_dict()` 

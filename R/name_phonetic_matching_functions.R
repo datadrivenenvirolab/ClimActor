@@ -275,7 +275,7 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
     .count_updates <- .count_updates[-which(.count_updates$ind %in% unmatched_count), ]
   }
   .count_updates$right <- dataset$country[.count_updates$ind]
-  update_dict <- data.frame(wrong = .count_update$name,
+  update_dict <- data.frame(wrong = .count_updates$name,
                             right = .count_updates$right,
                             code = NA,
                             iso = NA,
@@ -285,19 +285,19 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
                             Population = NA,
                             PopulationGroup = NA)
 
-  if (exists(cust_df) & exists(unmatched_df)){
+  if (exists("cust_df") & exists("unmatched_df")){
     country.dict <- rbind(country.dict, update_dict, cust_df, unmatched_df)
-  } else if (exists(cust_df)) {
+  } else if (exists("cust_df")) {
     country.dict <- rbind(country.dict, update_dict, cust_df)
-  } else if (exists(unmatched_df)){
+  } else if (exists("unmatched_df")){
     country.dict <- rbind(country.dict, update_dict, unmatched_df)
   } else {
-    counry.dict <- rbind(country.dict, update_dict)
+    country.dict <- rbind(country.dict, update_dict)
   }
   country.dict <- country.dict %>%
     dplyr::group_by(right) %>%
-    tidyr::fill(.direction = "downup")
-  return(country.dict)
+    tidyr::fill(code:PopulationGroup, .direction = "updown")
+  return(as.data.frame(country.dict, stringsAsFactors = F))
 }
 
 
