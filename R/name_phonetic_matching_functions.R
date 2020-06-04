@@ -844,18 +844,19 @@ update_key_dict <- function(dataset, key.dict, custom_indices) {
 #' @param contextual_df Contextuals database included in the package. Called
 #' using `r contextuals`
 #' @param contextuals Vector consisting of contextual column name to be merged
-#' into the dataset includes "region", "population", "popoulation_year", "lat",
-#' "lng", "area", "area_units"
-#' "elevation", "intiatives_committed", "num_commit", "state",
-#' "gdp", "gdp_unit", "gdp_source".
+#' into the dataset includes "region", "population", "population_year", "lat",
+#' "lng", "area", "area_units", "intiatives_committed", "num_commit", "state",
+#' "gdp", "gdp_unit", "gdp_year".
 #' Defaults to taking all the contextual information.
 #' @return Dataset with contextuals merged
 #'
 #' @example \dontrun{contextualize_data(df, contextuals_df, c("pop", "region", "lat", "lng"))}
 contextualize_data <- function(dataset, contextual_df, context = c("region", "population",
-                                                                       "lat", "lng", "area",
-                                                                       "elevation",
-                                                                       "initiatives_committed")){
+                                                                   "population_year", "lat",
+                                                                   "lng", "area", "area_units",
+                                                                   "intiatives_committed",
+                                                                   "num_commit", "state",
+                                                                   "gdp", "gdp_unit", "gdp_year")){
   # Check for column naming using helper function
   dataset <- .col_check(dataset, "name")
   dataset <- .col_check(dataset, "entity_type")
@@ -865,15 +866,14 @@ contextualize_data <- function(dataset, contextual_df, context = c("region", "po
   }
   # Incorporate check to make sure that the contextuals for merging are in the
   # contextual dataframe
-  if (any(!(contextuals %in% names(contextual_df)))){
+  if (any(!(context %in% names(contextual_df)))){
     stop("The contextuals argument needs to match the column names in the contextual
          dataframe. See ?contextualize_data for a list of applicable column names.")
   }
-  contextuals <- c(contextuals, "name", "iso", "entity_type")
+  context <- c(context, "name", "iso", "entity_type")
   # Merge and keep all of the original dataset's data
-  merge_df <- merge(dataset, contextual_df[ , contextuals],
+  merge_df <- merge(dataset, contextual_df[ , context],
                     by = c("name", "iso", "entity_type"), all.x = T)
   return(merge_df)
-
 }
 

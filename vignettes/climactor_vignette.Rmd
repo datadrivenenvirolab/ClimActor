@@ -448,3 +448,26 @@ As described above, the `contextualize_data()` function allows users to merge co
 
 The functions `update_key_dict()` and `update_country_dict()` allow users to update the key and country dictionaries respectively. 
 
+### Include contextuals information with `contextualize_data()`
+The `climactor` package also includes a contextual database (named `contextuals`) that includes contextual information for some of the subnational actors that has made climate commitments. The contextual database contains the following data:
+
+- `name`: Name of the actor
+- `iso`: 3-letter ISO of the country of actor
+- `entity_type`: Entity type of the actor 
+- `country`: Country of actor
+- `region`: Broader geographical region the actor resides in 
+- `area`: Size (geographical area) of the actor
+- `area_units`: Units for the `area` column (km$^2$, etc.)
+- `initiatives_committed`: Names of climate initiatives which actor commits to (separated by a semi-colon)
+- `num_commit`: Number of initiatives actor commits to
+- `lat`: Geographical latitude of actor (in decimal degrees)
+- `lng`: Geographical longitude of actor (in decimal degrees)
+- `population`: Population of actor
+- `population_year`: Year of recorded population 
+- `state`: State/Province which actor is in 
+- `gdp`: GDP of actor
+- `gdp_unit`: Units which GDP data is in 
+- `gdp_year`: Year of recorded GDP 
+
+You can specify which of the contextuals information you would like merged into your own database using the `context` argument. 
+
