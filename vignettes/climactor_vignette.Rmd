@@ -437,7 +437,7 @@ If it's not saved, be sure you saved your results in a variable with an assign f
 # Export the dataframe to be used for updating the dictionary
 ind.short <- indices[1:3]
 .actor_updates <<- data.frame(ind = ind.short,
-                              name_wrong = dataset$name[ind.short])
+                              name_wrong = cdp$name[ind.short])
 ```
 We can take a closer look at the unmatched and custom entries 
 ```{r}
@@ -503,3 +503,12 @@ local_country_dict[!(local_country_dict$wrong %in% country_dict$wrong), ]
 ```
 
 ### Updating the key dictionary with `update_key_dict()` 
+
+Similarly, if the user's dataset contains actor names that were not included in the `key_dict`, a local version of the `key_dict` can be created for use in future data cleaning iterations. 
+
+Likewise, the `update_key_dict` function takes in two compulsory arguments and two optional arguments. The two compulsory arguments are the dataset and the key dictionary that was used to clean the dataset, and the two optional arguments are the `custom_indices` and `unmatched_indices` vectors. Actor names that were user's custom input and also unmatched actor names will automatically be added to the `wrong` column in the updated key dictionary. 
+
+```{r}
+local_key_dict <- update_key_dict(cdp, key_dict, custom_indices, unmatched_indices)
+```
+

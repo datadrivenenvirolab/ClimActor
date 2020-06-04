@@ -802,7 +802,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
                "or you have not used the phonetify_names function yet."))
   }
   # Get the complete dataset of those that needs to be updated first
-  .actor_updates <- cbind(.actor_updates, dataset[.actor_updates$ind])
+  .actor_updates <- cbind(.actor_updates, dataset[.actor_updates$ind, ])
   # Update the custom names first
   if (!missing(custom_indices)){
     custom <- .actor_updates$ind %in% custom_indices
