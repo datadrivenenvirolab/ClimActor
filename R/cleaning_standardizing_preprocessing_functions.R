@@ -167,8 +167,8 @@ remove_extra <- function(dataset){
     stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
                 "column."))
   }
-  words <- c("council|adjuntament|corporation|government|urban|district|mayor|
-           the|of|city|autonomous|state|province|provincial|county|municipality|
+  words <- c("council|adjuntament|corporation|government|urban|district|mayor|city|
+           autonomous|state|province|provincial|county|municipality|
            municipalidad de|municipalidad|municipio|kommune|municipal|prefecture|
            prefectural|metropolitana|metropolis|m??tropole|metropolitan|metropole|town|
            community|communat|communat??|Ayuntamiento|Gemeente|Comune di|Comune|Kommune|
