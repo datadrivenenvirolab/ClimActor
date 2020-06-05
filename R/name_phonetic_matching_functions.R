@@ -28,9 +28,9 @@ clean_name <- function(dataset, key.dict, clean_enc = T) {
     dataset$name <- .check_and_convert(dataset$name)
   }
   # Check for column naming using helper function
-  dataset <- .col_check(dataset, "name")
-  dataset <- .col_check(dataset, "entity_type")
-  dataset <- .col_check(dataset, "iso")
+  dataset <- .col_check(dataset, "name", environment())
+  dataset <- .col_check(dataset, "entity_type", environment())
+  dataset <- .col_check(dataset, "iso", environment())
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
   }
@@ -102,7 +102,7 @@ fuzzify_country <- function(dataset, country_keydict){
   if (length(country_ind) == 0){
     stop("The countries within the dataset have already been cleaned")
   }
-  dataset <- .col_check(dataset, "country")
+  dataset <- .col_check(dataset, "country", environment())
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"country\" columns.")
   }
@@ -241,7 +241,7 @@ fuzzify_country <- function(dataset, country_keydict){
 #'
 update_country_dict <- function(dataset, country.dict, custom_count, unmatched_count){
   # Do the usual checks for column name and indices
-  dataset <- .col_check(dataset, "country")
+  dataset <- .col_check(dataset, "country", environment())
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"country\" columns.")
   }
@@ -321,9 +321,9 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
 phonetify_names <- function(dataset, key.dict) {
 
   # Check for column naming using helper function
-  dataset <- .col_check(dataset, "name")
-  dataset <- .col_check(dataset, "entity_type")
-  dataset <- .col_check(dataset, "iso")
+  dataset <- .col_check(dataset, "name", environment())
+  dataset <- .col_check(dataset, "entity_type", environment())
+  dataset <- .col_check(dataset, "iso", environment())
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
   }
@@ -781,9 +781,9 @@ Please check the vector to be sure that:
 #' @example \dontrun{update_key_dict(df, key_dict, custom_indices)}
 update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices) {
   # Check for column naming using helper function
-  dataset <- .col_check(dataset, "name")
-  dataset <- .col_check(dataset, "entity_type")
-  dataset <- .col_check(dataset, "iso")
+  dataset <- .col_check(dataset, "name", environment())
+  dataset <- .col_check(dataset, "entity_type", environment())
+  dataset <- .col_check(dataset, "iso", environment())
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
   }
@@ -908,9 +908,9 @@ contextualize_data <- function(dataset, contextual_df, context = c("region", "po
                                                                    "num_commit", "state",
                                                                    "gdp", "gdp_unit", "gdp_year")){
   # Check for column naming using helper function
-  dataset <- .col_check(dataset, "name")
-  dataset <- .col_check(dataset, "entity_type")
-  dataset <- .col_check(dataset, "iso")
+  dataset <- .col_check(dataset, "name", environment())
+  dataset <- .col_check(dataset, "entity_type", environment())
+  dataset <- .col_check(dataset, "iso", environment())
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
   }

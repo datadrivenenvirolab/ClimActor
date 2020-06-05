@@ -21,7 +21,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
     stop("clean_enc argument requires a logical (True/False) input.")
   }
   # Check for column naming using helper function
-  dataset <- .col_check(dataset, "country")
+  dataset <- .col_check(dataset, "country", environment())
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"country\" ",
          "column.")
@@ -77,7 +77,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
 fill_type <- function(dataset) {
   # Check for column naming
   col <- "entity_type"
-  dataset <- .col_check(dataset, col)
+  dataset <- .col_check(dataset, col, environment())
   if (exists("to.stop")){
     stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
                 "column."))
@@ -162,7 +162,7 @@ remove_extra <- function(dataset){
   # this list of words can be updated in the future
   # Check for column naming using helper function
   col <- "name"
-  dataset <- .col_check(dataset, col)
+  dataset <- .col_check(dataset, col, environment())
   if (exists("to.stop")){
     stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
                 "column."))
@@ -210,9 +210,9 @@ resolve_entity_types <- function(dataset, key.dict, clean_enc = T){
     dataset$name <- .check_and_convert(dataset$name)
   }
   # Check for column naming using helper function
-  dataset <- .col_check(dataset, "name")
-  dataset <- .col_check(dataset, "entity_type")
-  dataset <- .col_check(dataset, "iso")
+  dataset <- .col_check(dataset, "name", environment())
+  dataset <- .col_check(dataset, "entity_type", environment())
+  dataset <- .col_check(dataset, "iso", environment())
   if (exists("to.stop")){
     stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
   }

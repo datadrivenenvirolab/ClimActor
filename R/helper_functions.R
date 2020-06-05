@@ -5,7 +5,7 @@
 #
 # @param dataset
 # @param col
-.col_check <- function(dataset, col) {
+.col_check <- function(dataset, col, env) {
   if (!any(grepl(col, tolower(names(dataset))))){
     cat(paste0("No \"" , col, "\"",
                " column is detected in the dataset.",
@@ -28,7 +28,7 @@
     origcol <- names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)]
     names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)] <- col
   }
-  on.exit(assign(paste0(col, "name"), origcol, inherits = T), add = T)
+  assign(paste0(col, "name"), origcol, envir = env)
   return(dataset)
 
 }
