@@ -11,7 +11,10 @@ update_key_dict(dataset, key.dict, custom_indices, unmatched_indices)
 
 \item{key.dict}{Key dictionary}
 
-\item{custom_indices}{Vector of numbers containing which indices were new custom names added by the user}
+\item{custom_indices}{Vector of numbers containing which indices where new custom names added by the user}
+
+\item{unmatched_indices}{Vector of numbers containing indices where names in the dataset were unmatched
+in the key dictionary}
 }
 \value{
 Key dictionary with updated entries

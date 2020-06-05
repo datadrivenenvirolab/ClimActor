@@ -18,7 +18,7 @@ contextualize_data(
 \item{contextual_df}{Contextuals database included in the package. Called
 using `r contextuals`}
 
-\item{contextuals}{Vector consisting of contextual column name to be merged
+\item{context}{Vector consisting of contextual column name to be merged
 into the dataset includes "region", "population", "population_year", "lat",
 "lng", "area", "area_units", "intiatives_committed", "num_commit", "state",
 "gdp", "gdp_unit", "gdp_year".

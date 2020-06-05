@@ -17,8 +17,10 @@ Imports:
     stringdist,
     stringr,
     stringi,
-    rvest
+    rvest,
+    tidyr
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    qpdf
 VignetteBuilder: knitr

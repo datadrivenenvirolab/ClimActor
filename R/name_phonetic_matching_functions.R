@@ -231,8 +231,10 @@ fuzzify_country <- function(dataset, country_keydict){
 #' user and the countries that were not in the country dictionary.
 #' @param dataset Dataset by user
 #' @param country.dict country dictionary
-#' @param custom_count Vector of numbers containing which indices were new custom
+#' @param custom_count Vector of numbers containing indices where new custom
 #' countries added by the user
+#' @param unmatched_count Vector of numbers containing indices where countries were
+#' unmatched with the country dictionary
 #' @return Country dictionary with updated entries
 #'
 #' @example \dontrun{update_country_dict(df, country_dict, custom_count)}
@@ -771,7 +773,9 @@ Please check the vector to be sure that:
 #' the names that were not in the key dictionary.
 #' @param dataset Dataset by user
 #' @param key.dict Key dictionary
-#' @param custom_indices Vector of numbers containing which indices were new custom names added by the user
+#' @param custom_indices Vector of numbers containing which indices where new custom names added by the user
+#' @param unmatched_indices Vector of numbers containing indices where names in the dataset were unmatched
+#' in the key dictionary
 #' @return Key dictionary with updated entries
 #'
 #' @example \dontrun{update_key_dict(df, key_dict, custom_indices)}
@@ -889,7 +893,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
 #' @param dataset Original dataset
 #' @param contextual_df Contextuals database included in the package. Called
 #' using `r contextuals`
-#' @param contextuals Vector consisting of contextual column name to be merged
+#' @param context Vector consisting of contextual column name to be merged
 #' into the dataset includes "region", "population", "population_year", "lat",
 #' "lng", "area", "area_units", "intiatives_committed", "num_commit", "state",
 #' "gdp", "gdp_unit", "gdp_year".

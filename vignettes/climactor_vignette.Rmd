@@ -351,9 +351,7 @@ Here are some possible matches we found:
 10: Rondônia; iso: BRA and entity type: Region
 11: Tocantins; iso: BRA and entity type: Region
 12: Amazonas, Brazil; iso: BRA and entity type: Region
-Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress) ")
-cat("Answer: n")
-cat("Do you want to enter a custom name instead? (Y/N)")
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name) ")
 cat("Answer: n")
 cat("The previous name (Prefeitura de Rio Verde) will be kept.")
 unmatched_indices <- indices[1]
@@ -377,7 +375,7 @@ Here are some possible matches we found:
 13: Bakersfield, CA; iso: USA and entity type: City
 14: Bellevue, ID; iso: USA and entity type: City
 15: Bayfield, WI; iso: USA and entity type: City
-Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress)")
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name) ")
 cat("Answer: 1")
 cat("Broward County, FL has been selected and will replace Broward , FL in the database.")
 cdp$name[grep("Broward , FL", cdp$name)] <- "Broward County, FL"
@@ -398,16 +396,13 @@ Here are some possible matches we found:
 10: Amapa; iso: BRA and entity type: Region
 11: Rondônia; iso: BRA and entity type: Region
 12: Amazonas, Brazil; iso: BRA and entity type: Region
-Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress)")
-cat("Answer: n")
-cat("Do you want to enter a custom name instead? (Y/N)")
-cat("Answer: y")
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name) ")
+cat("Answer: c")
 cat("Enter in custom name: Canoas")
 cat("The name (Canoas) will be kept in the dataset.
 The name has not been added to the key dictionary yet but can be added with the update_key_dict function.
 The row number of the custom name has been added to a vector called custom_indices.")
 custom_indices <- indices[3]
-head(indices)
 ```
 The index of the entry will then be recorded for user's future inspection. 
 To stop the `phonetify_names()` function, we can simply input the letter s.
@@ -429,7 +424,7 @@ Here are some possible matches we found:
 13: Coruche; iso: PRT and entity type: City
 14: Montalegre; iso: PRT and entity type: City
 15: Município da Batalha; iso: PRT and entity type: City
-Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress) ")
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name)")
 cat("Answer: s")
 cat("Your current progress will be returned.
 If it's not saved, be sure you saved your results in a variable with an assign function")
@@ -446,6 +441,8 @@ cdp[custom_indices, c("name", "iso", "entity_type")]
 ```
 
 To resume cleaning of the data, users can simply ensure that the `unmatched_indices` and `custom_indices` vector are loaded into the R workspace. The presence of these vectors will allow users to pick up where they left off in cleaning the dataset. As such, should users need to close the R file and continue cleaning the data in the future, users should ensure that the two vectors are saved (either as csv files or RDS data files) to be loaded for future use. 
+
+To continue the cleaning of the data then, users simply need to run the `phonetify_name()` function again (with the data and the `unmatched_indices` and `custom_indices`) in the global environment to continue where they left off. 
 
 ## Post Processing Functions
 Congratulations! Your dataset should be cleaned by this step. 

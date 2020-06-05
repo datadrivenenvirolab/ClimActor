@@ -11,8 +11,11 @@ update_country_dict(dataset, country.dict, custom_count, unmatched_count)
 
 \item{country.dict}{country dictionary}
 
-\item{custom_count}{Vector of numbers containing which indices were new custom
+\item{custom_count}{Vector of numbers containing indices where new custom
 countries added by the user}
+
+\item{unmatched_count}{Vector of numbers containing indices where countries were
+unmatched with the country dictionary}
 }
 \value{
 Country dictionary with updated entries
