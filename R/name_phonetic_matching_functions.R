@@ -657,7 +657,7 @@ Please check the vector to be sure that:
     # one (unmatched_indices) tracks all indices with unchanged/unmatched names and
     # the other vector (custom_indices) tracks all the indices that had custom names
 
-    cat("Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress) \n")
+    cat("Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name) \n")
     ans1 <- readline(prompt = "Answer: ")
     ## if one of the listed matches is correct (and not NA), the standardized
     ## version of the matched name will be replaced into the dataset
@@ -704,57 +704,43 @@ Please check the vector to be sure that:
       return(dataset)
 
     } else if (substr(toupper(as.character(ans1)), 1, 1) == "N") {
-      cat("Do you want to enter a custom name instead? (Y/N)\n")
-      ans2 <- readline(prompt = "Answer: ")
-
+      ### if the user chooses that none of the names match, the original name
+      ### will be kept, and the index will be added to the unmatched_indices vector
+      cat(paste0("The previous name (", origname, ") will be kept.\n"))
+      if (!exists("unmatched_indices")){
+        unmatched_indices <<- ind
+      } else{
+        unmatched_indices <<- c(unmatched_indices, ind)
+      }
+    } else if (substr(toupper(as.character(ans1)), 1, 1) == "C") {
       ### if the user enters a custom name, the name will be replaced in the dataset,
       ### and the index will be added to the custom_indices vector to make it easier
       ### for the user to look back at the name later and fix, if necessary
       ### if the user wants to add the custom names to the key dictionary,
       ### the update_key_dict function can be used
-      if (substr(toupper(as.character(ans2)), 1, 1) == "Y") {
-        ans3 <- readline(prompt = "Enter in custom name: ")
-        ans3 <- as.character(ans3)
-        cat(paste0("The name (", ans3, ") will be kept in the dataset.\n",
-                   "The name has not been added to the key dictionary yet but can be added with the update_key_dict function.\n",
-                   "The row number of the custom name has been added to a vector called custom_indices.\n"))
-        if (!exists("custom_indices")){
-          custom_indices <<- ind
-        } else {
-          custom_indices <<- c(custom_indices, ind)
-        }
-
-        # replacing all instances in the dataset of the original (raw) name
-        # with the new custom name
-        samename_inds <- which(dataset$name == origname)
-
-        if (length(samename_inds) != 0) {
-          dataset$name[samename_inds] <- ans3
-          indices <<- indices[!(indices %in% samename_inds)]
-        }
-        ### if the user chooses not to enter a custom name, the original name
-        ### will be kept, and the index will be added to the unmatched_indices vector
-      } else if (substr(toupper(as.character(ans2)), 1, 1) == "N") {
-        cat(paste0("The previous name (", origname, ") will be kept.\n"))
-        if (!exists("unmatched_indices")){
-          unmatched_indices <<- ind
-        } else{
-          unmatched_indices <<- c(unmatched_indices, ind)
-        }
+      ans3 <- readline(prompt = "Enter in custom name: ")
+      ans3 <- as.character(ans3)
+      cat(paste0("The name (", ans3, ") will be kept in the dataset.\n",
+                 "The name has not been added to the key dictionary yet but can be added with the update_key_dict function.\n",
+                 "The row number of the custom name has been added to a vector called custom_indices.\n"))
+      if (!exists("custom_indices")){
+        custom_indices <<- ind
       } else {
-        cat("Sorry, an invalid answer was provided.\n")
-        cat(paste0("The previous name (", origname, ") will be kept.",
-                   " The index of this entry will be recorded for future inspection.\n"))
-        if (!exists("unmatched_indices")){
-          unmatched_indices <<- ind
-        } else {
-          unmatched_indices <<- c(unmatched_indices, ind)
-        }
+        custom_indices <<- c(custom_indices, ind)
       }
+
+      # replacing all instances in the dataset of the original (raw) name
+      # with the new custom name
+      samename_inds <- which(dataset$name == origname)
+
+      if (length(samename_inds) != 0) {
+        dataset$name[samename_inds] <- ans3
+        indices <<- indices[!(indices %in% samename_inds)]
+      }
+    } else {
       ## if the user makes a typo or other invalid answer, the function will continue, and
       ## the index will be added to the unmatched_indices vector for the user to look at later
       ## (or restart the function again later)
-    } else {
       cat("Sorry, an invalid answer was provided.\n")
       cat(paste0("The previous name (", origname, ") will be kept.",
                  " The index of this entry will be recorded for future inspection.\n"))
