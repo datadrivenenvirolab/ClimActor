@@ -242,14 +242,17 @@ resolve_entity_types <- function(dataset, key.dict, clean_enc = T){
     stop("Stopping function. Missing the \"name\", \"entity_type\", or \"iso\" columns.")
   }
   # Find actors that have the correct names and iso but not the correct entity type
+  # Match for both right and wrong columns in the key_dict
   # Subset data for those that have correct names and iso first
-  name_iso_right <- which(paste0(dataset$name, dataset$iso) %in% paste0(key.dict$right, key.dict$iso))
-  name_iso_right_short <- which(unique(paste0(dataset$name, dataset$iso)) %in% paste0(key.dict$right, key.dict$iso))
+  name_iso_right <- which(paste0(dataset$name, dataset$iso) %in% paste0(key.dict$right, key.dict$iso) |
+                            paste0(dataset$name, dataset$iso) %in% paste0(key.dict$wrong, key.dict$iso))
+  name_iso_right_short <- which(unique(paste0(dataset$name, dataset$iso)) %in% paste0(key.dict$right, key.dict$iso)|
+                                  unique(paste0(dataset$name, dataset$iso)) %in% paste0(key.dict$wrong, key.dict$iso))
   # Coerce NA entity types to random character
   dataset$entity_type[intersect(which(is.na(dataset$entity_type)), name_iso_right)] <- ","
   # Check for wrong entity types in those that have correct names and iso
-  dict_ind <- na.omit(match(paste0(dataset$name[name_iso_right], dataset$iso[name_iso_right]),
-                            paste0(key.dict$right, key.dict$iso)))
+  dict_ind <- which(paste0(key.dict$right, key.dict$iso) %in% paste0(dataset$name[name_iso_right], dataset$iso[name_iso_right]) |
+                      paste0(key.dict$wrong, key.dict$iso) %in% paste0(dataset$name[name_iso_right], dataset$iso[name_iso_right]))
   ent_ind <- name_iso_right[dataset$entity_type[name_iso_right] != key.dict$entity_type[dict_ind]]
   dict_ent_ind <- dict_ind[dataset$entity_type[name_iso_right] != key.dict$entity_type[dict_ind]]
   # Let users decide which entity type conflicts they want to resolve
