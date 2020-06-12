@@ -569,8 +569,8 @@ Please check the vector to be sure that:
     # Check if there were any matches
     if (nrow(kd.filtered) == 0){
       cat(paste0("There seems to be no available matches for ",
-                 dataset$name[ind], "; iso = ", dataset$iso,
-                 "entity type = ", dataset$entity_type,
+                 dataset$name[ind], "; iso = ", dataset$iso[ind],
+                 "entity type = ", dataset$entity_type[ind],
                  ".\n", "Would you like to input a custom name (Y/N)?\n"))
       ansn1 <- readline(prompt = "Answer: ")
       if (substr(toupper(as.character(ansn1)), 1, 1) == "Y") {
