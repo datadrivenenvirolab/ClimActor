@@ -9,4 +9,4 @@ save(key_dict, file = "../data/key_dict.rda")
 contextuals <- read.csv("contextuals_database_10June20_zy.csv",
                         encoding = "UTF-8", stringsAsFactors = F)
 # save(contextuals, file = "../data/contextuals.rda")
-usethis::use_data("contextuals", overwrite = T)
+usethis::use_data(contextuals, overwrite = T)
