@@ -1,6 +1,6 @@
 # Documentation for data
 
-#' @title Country Dictionary for \code{climactor}
+#' @title Country Dictionary for \code{ClimActor}
 #' @description A list of commonly found country names and their standardized equivalent
 #' for use in the cleaning of non-state actor names. Other information on these
 #' countries provided include ISO2 and ISO3, land area, population, and region.

@@ -3,7 +3,7 @@
 \docType{data}
 \name{country_dict}
 \alias{country_dict}
-\title{Country Dictionary for \code{climactor}}
+\title{Country Dictionary for \code{ClimActor}}
 \format{
 country_dict is a data frame with 456 commonly country names (rows) and 9 variables
 (columns)
