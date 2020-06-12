@@ -6,7 +6,7 @@ Author: Data-Driven Lab
 Maintainer: Data-Driven Lab <datdrivenlab@gmail.com>
 Description: When working with climate actor data, data often come from a variety of sources. However, names for the same actor (both subnationals and businesses) can differ across different data sources. The climactor package provides a workflow for the cleaning and standardizing of climate actor data across different data sources. 
     Data collected by Data-Driven Lab are also made available in the package. These data include an actor key dictionary (detailing different versions of actor names and a standardized version for data cleaning), a country key dictionary (detailing different versions of country names and a standardized version), and also a contextuals database for actors with climate commitments (that includes contextual data such as population, lat/lng data, etc.). 
-Depends: R (>= 3.50)
+Depends: R (>= 3.5.0)
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
