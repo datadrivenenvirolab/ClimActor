@@ -10,13 +10,11 @@
 #'     \item{\code{wrong}}{char Commonly found country names across different datasets.
 #'     One row of each country consists of the standardized version of the name}
 #'     \item{\code{right}}{char Standardized version of the country name}
-#'     \item{\code{code}}{double}
 #'     \item{\code{iso}}{char 3 letter ISO codes for the country}
 #'     \item{\code{region}}{char}
 #'     \item{\code{Landarea}}{double Land area of the country}
 #'     \item{\code{iso2}}{char 2 letter ISO codes for the country}
 #'     \item{\code{Population}}{double Population for the country}
-#'     \item{\code{PopulationGroup}}{char Population group for the country}
 #'     }
 "country_dict"
 
@@ -55,7 +53,6 @@
 #'     \item{\code{area}}{double Total unit area of the actor}
 #'     \item{\code{area_units}}{char Units which the area of the actor are expressed
 #'     in}
-#'     \item{\code{gdp}}{double GDP of the subnational actor}
 #'     \item{\code{initiatives_committed}}{char Climate initiatives to which the actor pledged
 #'     commitments to}
 #'     \item{\code{num_commit}}{int Number of initiatives to which actor pledged commitments

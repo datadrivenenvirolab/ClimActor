@@ -17,7 +17,6 @@ contextuals is a dataframe with contextuals information for 10462 unique actors
     \item{\code{area}}{double Total unit area of the actor}
     \item{\code{area_units}}{char Units which the area of the actor are expressed
     in}
-    \item{\code{gdp}}{double GDP of the subnational actor}
     \item{\code{initiatives_committed}}{char Climate initiatives to which the actor pledged
     commitments to}
     \item{\code{num_commit}}{int Number of initiatives to which actor pledged commitments

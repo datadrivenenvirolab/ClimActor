@@ -6,7 +6,7 @@
 # @param dataset
 # @param col
 .col_check <- function(dataset, col, env) {
-  if (!any(grepl(col, tolower(names(dataset))))){
+  if (!any(grepl(paste0("^", col, "?"), tolower(names(dataset))))){
     cat(paste0("No \"" , col, "\"",
                " column is detected in the dataset.",
                " Would you like to specify a column to rename?"))
@@ -25,8 +25,9 @@
   # Check for similar versions of "col"
   col.names <- gsub("[[:punct:]]", "", tolower(names(dataset)))
   if (any(grepl(gsub("[[:punct:]]", "", tolower(col)), col.names))){
-    origcol <- names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)]
-    names(dataset)[grepl(gsub("[[:punct:]]", "", col), col.names)] <- col
+    origcol <- names(dataset)[grepl(paste0("^",gsub("[[:punct:]]", "", col), "?"),
+                                    col.names)]
+    names(dataset)[grepl(paste0("^",gsub("[[:punct:]]", "", col), "?"), col.names)] <- col
   }
   assign(paste0(col, "name"), origcol, envir = env)
   return(dataset)
