@@ -292,7 +292,7 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
   }
   country.dict <- country.dict %>%
     dplyr::group_by(right) %>%
-    tidyr::fill(code:PopulationGroup, .direction = "updown")
+    tidyr::fill(region:Population, .direction = "updown")
   return(as.data.frame(country.dict, stringsAsFactors = F))
 }
 

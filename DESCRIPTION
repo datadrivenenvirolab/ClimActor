@@ -1,13 +1,13 @@
-Package: climactor
+Package: ClimActor
 Type: Package
 Title: Data cleaning workflow for climate actor data
 Version: 0.0.0.9005
 Author: Data-Driven Lab
 Maintainer: Data-Driven Lab <datdrivenlab@gmail.com>
 Description: When working with climate actor data, data often come from a variety of sources. However, names for the same actor (both subnationals and businesses) can differ across different data sources. The climactor package provides a workflow for the cleaning and standardizing of climate actor data across different data sources. 
-    Data collected by Data-Driven Lab is also made available in the package. These data include an actor key dictionary (detailing different versions of actor names and a standardized version for data cleaning), a country key dictionary (detailing different versions of country names and a standardized version), and also a contextuals database for actors with climate commitments (that includes contextual data such as population, lat/lng data, etc.). 
-Depends: R (>= 2.10)
-License: GPL-3
+    Data collected by Data-Driven Lab are also made available in the package. These data include an actor key dictionary (detailing different versions of actor names and a standardized version for data cleaning), a country key dictionary (detailing different versions of country names and a standardized version), and also a contextuals database for actors with climate commitments (that includes contextual data such as population, lat/lng data, etc.). 
+Depends: R (>= 3.50)
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
