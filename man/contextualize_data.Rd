@@ -8,8 +8,7 @@ contextualize_data(
   dataset,
   contextual_df,
   context = c("region", "population", "population_year", "lat", "lng", "area",
-    "area_units", "initiatives_committed", "num_commit", "state", "gdp", "gdp_unit",
-    "gdp_year")
+    "area_units", "initiatives_committed", "num_commit", "state")
 )
 }
 \arguments{

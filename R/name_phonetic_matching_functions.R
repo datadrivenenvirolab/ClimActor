@@ -253,13 +253,11 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
   if (!missing(custom_count)){
     cust_df <- data.frame(wrong = .count_updates$name[.count_updates$ind %in% custom_count],
                           right = NA,
-                          code = NA,
                           iso = NA,
                           region = NA,
                           Landarea = NA,
                           iso2 = NA,
-                          Population = NA,
-                          PopulationGroup = NA)
+                          Population = NA)
     # Now remove the names that have custom inputs
     .count_updates <- .count_updates[-which(.count_updates$ind %in% custom_count), ]
   }
@@ -267,25 +265,21 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
     # Include and remove those that have not been cleaned as well
     unmatched_df <- data.frame(wrong = .count_updates$name[.count_updates$ind %in% unmatched_count],
                                right = NA,
-                               code = NA,
                                iso = NA,
                                region = NA,
                                Landarea = NA,
                                iso2 = NA,
-                               Population = NA,
-                               PopulationGroup = NA)
+                               Population = NA)
     .count_updates <- .count_updates[-which(.count_updates$ind %in% unmatched_count), ]
   }
   .count_updates$right <- dataset$country[.count_updates$ind]
   update_dict <- data.frame(wrong = .count_updates$name,
                             right = .count_updates$right,
-                            code = NA,
                             iso = NA,
                             region = NA,
                             Landarea = NA,
                             iso2 = NA,
-                            Population = NA,
-                            PopulationGroup = NA)
+                            Population = NA)
 
   if (exists("cust_df") & exists("unmatched_df")){
     country.dict <- rbind(country.dict, update_dict, cust_df, unmatched_df)
@@ -905,8 +899,7 @@ contextualize_data <- function(dataset, contextual_df, context = c("region", "po
                                                                    "population_year", "lat",
                                                                    "lng", "area", "area_units",
                                                                    "initiatives_committed",
-                                                                   "num_commit", "state",
-                                                                   "gdp", "gdp_unit", "gdp_year")){
+                                                                   "num_commit", "state")){
   # Check for column naming using helper function
   dataset <- .col_check(dataset, "name", environment())
   dataset <- .col_check(dataset, "entity_type", environment())
