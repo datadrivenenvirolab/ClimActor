@@ -3,6 +3,7 @@
 # Export dictionaries to RDA
 key_dict <- read.csv("key_dict_Apr2020.csv",
                      encoding = "UTF-8", stringsAsFactors = F)
+
 save(key_dict, file = "../data/key_dict.rda")
 
 # Country dict

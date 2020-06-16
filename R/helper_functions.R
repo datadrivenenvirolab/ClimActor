@@ -16,7 +16,7 @@
     }
     if (toupper(ans) == "Y"){
       ans2 <- readline(prompt = "Please input column name to be renamed:")
-      names(dataset)[grepl(tolower(ans2), tolower(names(dataset)))] <- col
+      names(dataset)[grepl(paste0("^", tolower(ans2), "$"), tolower(names(dataset)))] <- col
     } else if (toupper(ans) == "N"){
       stop()
       on.exit(assign("to.stop", T), add = T)
