@@ -65,13 +65,13 @@ clean_name <- function(dataset, key.dict, clean_enc = T) {
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
   if (exists(paste0("isoname"))){
-    names(dataset)[grepl("iso", names(dataset))] <- isoname
+    names(dataset)[grepl("^iso$", names(dataset))] <- isoname
   }
   if (exists(paste0("entity_typename"))){
-    names(dataset)[grepl("entity_type", names(dataset))] <- entity_typename
+    names(dataset)[grepl("^entity_type$", names(dataset))] <- entity_typename
   }
   if (exists(paste0("namename"))){
-    names(dataset)[grepl("name", names(dataset))] <- namename
+    names(dataset)[grepl("^name$", names(dataset))] <- namename
   }
   return(dataset)
 }
@@ -220,7 +220,7 @@ fuzzify_country <- function(dataset, country_keydict){
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
   if (exists(paste0("countryname"))){
-    names(dataset)[grepl("country", names(dataset))] <- countryname
+    names(dataset)[grepl("^country$", names(dataset))] <- countryname
   }
   return(dataset)
 }
@@ -294,6 +294,9 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
     dplyr::group_by(right) %>%
     tidyr::fill(region:Population, .direction = "updown")
   return(as.data.frame(country.dict, stringsAsFactors = F))
+  if (exists(paste0("countryname"))){
+    names(dataset)[grepl("^country$", names(dataset))] <- countryname
+  }
 }
 
 
@@ -749,13 +752,13 @@ Please check the vector to be sure that:
   }
 
   if (exists(paste0("isoname"))){
-    names(dataset)[grepl("iso", names(dataset))] <- isoname
+    names(dataset)[grepl("^iso$", names(dataset))] <- isoname
   }
   if (exists(paste0("entity_typename"))){
-    names(dataset)[grepl("entity_type", names(dataset))] <- entity_typename
+    names(dataset)[grepl("^entity_type$", names(dataset))] <- entity_typename
   }
   if (exists(paste0("namename"))){
-    names(dataset)[grepl("name", names(dataset))] <- namename
+    names(dataset)[grepl("^name$", names(dataset))] <- namename
   }
   # the final (hopefully cleaner) dataset!
   return(dataset)
@@ -875,6 +878,15 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
   } else {
     key.dict <- rbind(key.dict, update_df)
   }
+  if (exists(paste0("isoname"))){
+    names(dataset)[grepl("^iso$", names(dataset))] <- isoname
+  }
+  if (exists(paste0("entity_typename"))){
+    names(dataset)[grepl("^entity_type$", names(dataset))] <- entity_typename
+  }
+  if (exists(paste0("namename"))){
+    names(dataset)[grepl("^name$", names(dataset))] <- namename
+  }
   return(key.dict)
 }
 
@@ -918,6 +930,15 @@ contextualize_data <- function(dataset, contextual_df, context = c("region", "po
   merge_df <- merge(dataset, contextual_df[ , context],
                     by = c("name", "iso", "entity_type"), all.x = T,
                     sort = F)
+  if (exists(paste0("isoname"))){
+    names(dataset)[grepl("^iso$", names(dataset))] <- isoname
+  }
+  if (exists(paste0("entity_typename"))){
+    names(dataset)[grepl("^entity_type$", names(dataset))] <- entity_typename
+  }
+  if (exists(paste0("namename"))){
+    names(dataset)[grepl("^name$", names(dataset))] <- namename
+  }
   return(merge_df)
 }
 

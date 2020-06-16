@@ -60,7 +60,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
   if (exists("countryname")){
-    names(dataset)[grepl("country", names(dataset))] <- countryname
+    names(dataset)[grepl("^country$", names(dataset))] <- countryname
   }
   return(dataset)
 }
@@ -141,7 +141,7 @@ fill_type <- function(dataset) {
   # Helper function returns output that checks if the name is slightly different
   # Change back to capitalized version if the check is true
   if (exists(paste0("entity_typename"))){
-    names(dataset)[grepl("entity_type", names(dataset))] <- entity_typename
+    names(dataset)[grepl("^entity_type$", names(dataset))] <- entity_typename
   }
   return(dataset)
 }
@@ -206,7 +206,7 @@ remove_extra <- function(dataset){
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
   if (exists(paste0("namename"))){
-    names(dataset)[grepl("name", names(dataset))] <- namename
+    names(dataset)[grepl("^name$", names(dataset))] <- namename
   }
   return(dataset)
 }
@@ -284,5 +284,14 @@ resolve_entity_types <- function(dataset, key.dict, clean_enc = T){
     }
   } else {
     cat(paste0("There are no entries with conflicting entity types."))
+  }
+  if (exists(paste0("namename"))){
+    names(dataset)[grepl("^name$", names(dataset))] <- namename
+  }
+  if (exists(paste0("entity_typename"))){
+    names(dataset)[grepl("^entity_type$", names(dataset))] <- entity_typename
+  }
+  if (exists(paste0("isoname"))){
+    names(dataset)[grepl("^iso$", names(dataset))] <- isoname
   }
 }
