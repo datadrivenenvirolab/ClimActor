@@ -7,8 +7,8 @@
 #' @importFrom utils adist
 
 #' @export
-#' @title Cleans name using exact matches
-#' @description Cleans the datasets' actors names based on the key dictionary using
+#' @title Clean actor names using exact matches
+#' @description Cleans the datasets' actor names based on the key dictionary using
 #' exact string matching
 #'
 #' @param dataset Dataset to clean the actors' names for
@@ -16,7 +16,7 @@
 #' @param clean_enc Is the data read in with the correct encoding?
 #' If unknown, set as FALSE. Defaults to TRUE.
 #' @return Returns a dataset with actors names' cleaned using exact string matching.
-#' @return Also creates a vector of indices of names that require cleaning.
+#' Also creates a vector of indices of names that require cleaning.
 #'
 #' @example \dontrun{clean_name(df, key_dict, clean_enc = F)}
 clean_name <- function(dataset, key.dict, clean_enc = T) {
@@ -773,7 +773,8 @@ Please check the vector to be sure that:
 #' @param custom_indices Vector of numbers containing which indices where new custom names added by the user
 #' @param unmatched_indices Vector of numbers containing indices where names in the dataset were unmatched
 #' in the key dictionary
-#' @return Key dictionary with updated entries
+#' @return Key dictionary with updated entries, and their respective phonetic
+#' representations
 #'
 #' @example \dontrun{update_key_dict(df, key_dict, custom_indices)}
 update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices) {
@@ -901,8 +902,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
 #' using `r contextuals`
 #' @param context Vector consisting of contextual column name to be merged
 #' into the dataset includes "region", "population", "population_year", "lat",
-#' "lng", "area", "area_units", "intiatives_committed", "num_commit", "state",
-#' "gdp", "gdp_unit", "gdp_year".
+#' "lng", "area", "area_units", "intiatives_committed", "num_commit", "state".
 #' Defaults to taking all the contextual information.
 #' @return Dataset with contextuals merged
 #'

@@ -2,7 +2,7 @@
 # Functions used for adding columns in the pre-processing of data for fuzzy matching
 
 #' @export
-#' @title Renames the columns within the dataset
+#' @title Renames columns within the dataset
 #' @description Checks the dataset for the correct names necessary for further data
 #' processing. If the requisite data names are not in the dataset, then prompts
 #' the user for the columns to be renamed to the requisite names.

@@ -4,8 +4,9 @@
 
 #' @export
 #' @title Cleans the dataset's country names and adds iso.
-#' @description Cleans the dataset actors' countries based on the package's country
-#' dictionary and adds the corresponding iso to the dataset.
+#' @description Cleans the dataset actors' countries using exact matches based
+#' on the package's country dictionary and adds corresponding iso information to
+#' the dataset. For more information on `clean_enc`, see the vignette.
 #'
 #' @param dataset Dataset to clean the country names for
 #' @param country.dict Country dictionary to clean the dataset against
@@ -67,9 +68,11 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
 
 
 #' @export
-#' @title Fills in the corresponding actor entity type for the dataset based on the actor name
+#' @title Fills in the corresponding actor entity type for the dataset based on the
+#' actor name
 #' @description Guesses the entity type for the actors within the dataset based on commonly
-#' used words for the respective entity types.
+#' used words for the respective entity types. See vignette for a more detailed
+#' explanation on how the function works.
 #' @param dataset Dataset to fill in the entity type for
 #' @return The original dataset with entity types filled for the actors
 #'
@@ -178,7 +181,8 @@ fill_type <- function(dataset) {
 #' @export
 #' @title Remove extraneous words from actors' names
 #' @description Removes extraneous words such as "council", "district", etc. from the
-#' names of actors. See vignette for the full list of "extraneous" words
+#' names of actors to improve phonetic matching accuracy. See vignette
+#' for the full list of "extraneous" words.
 #'
 #' @param dataset Dataset containing actors' names
 #' @return Dataset with extraneous words removed from actors' names
@@ -222,8 +226,9 @@ remove_extra <- function(dataset){
 #' @title Resolve conflicting entity types
 #' @description Resolve entity type conflicts between user's dataset and the key
 #' dictionary. The function checks for entries that have the same name and are from the
-#' same country between the user's dataset and the key dictionary but have different entity
-#' types.
+#' same country but have different entity types.between the user's dataset and
+#' the key dictionary. Users can decide whether they would like to accept the key
+#' dictionary's entity types or export a dataframe of the differences for inspection.
 #'
 #' @param dataset Dataset containing actors' names
 #' @param key.dict Key dictionary
