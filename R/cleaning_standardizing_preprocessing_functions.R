@@ -192,17 +192,24 @@ remove_extra <- function(dataset){
     stop(paste0("Stopping function. Please create or rename a \"", col, "\"",
                 "column."))
   }
-  words <- c("council|adjuntament|corporation|government|urban|district|mayor|city|
-           autonomous|state|province|provincial|county|municipality|
-           municipalidad de|municipalidad|municipio|kommune|municipal|prefecture|
-           prefectural|metropolitana|metropolis|m??tropole|metropolitan|metropole|town|
-           community|communat|communat??|Ayuntamiento|Gemeente|Comune di|Comune|Kommune|
-           Republic")
-  dataset$name <- stringr::str_replace_all(dataset$name,
-                                           stringr::regex(words, ignore_case = T),
-                                           "")
+  words <- c("council", "adjuntament", "corporation", "government", "district",
+             "mayor", "city", "autonomous", "state", "province", "provincial",
+             "county", "municipality", "municipalidadde", "municipalidad",
+             "municipio", "kommune", "municipal", "prefecture", "prefectural",
+             "metropolitana", "metropolis", "metropolitan", "metropole",
+             "town", "community", "communat", "communat", "Ayuntamiento",
+             "Gemeente", "Comunedi", "Comune", "Kommune", "Republic",
+             "city of", "municipality of", "town of", "province of",
+             "comune di", "municipalidad de", "prefeitura de" ,
+             "município de")
+  words_rm <- paste0(c(paste("\\s", trimws(words), "\\s", sep = ""),
+                       paste("\\s", trimws(words), "$", sep = ""),
+                       paste("^", trimws(words), "\\s", sep = "")),
+                     collapse = "|")
 
-  dataset$name <- trimws(dataset$name)
+  dataset$name <- trimws(gsub(words_rm, " ", dataset$name,
+                              ignore.case = T))
+
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
   if (exists(paste0("namename"))){
