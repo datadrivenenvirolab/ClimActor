@@ -131,8 +131,16 @@ The example here highlights the importance to conduct careful checks on the data
 cdp$entity_type[which(cdp$entity_type == "Company")] <- "City"
 ```
 
-### Remove fill words from actor names using `remove_extra()`
+### Remove stop words from actor names using `remove_extra()`
 The `remove_extra()` function removes extraneous words from the actors' names such as "Council", "District", "Province", etc etc. This helps to streamline the matching process used in downstream functions and provides better matches with the key dictionary. However, some of these words are used in the `fill_type()` function to determine the entity type of the actor, hence it is recommended that the `remove_extra()` function be used after the `fill_type()` function. 
+
+The list of words that are removed are: council, adjuntament, corporation, government, district, mayor, city, autonomous, state, province, provincial, county, municipality, municipalidadde, municipalidad, municipio, kommune, municipal, prefecture, prefectural, metropolitana, metropolis, metropolitan, metropole, town, community, communat, ayuntamiento, gemeente, gomune, kommune, republic, city of, municipality of, town of, province of, comune di, municipalidad de, prefeitura de, município de.
+
+To prevent removing parts of names that might contain some of the words listed above (for example, the word "estate" contains the word "state", but we do not want to remove it), the function also makes sure to remove these words when one of the following three conditions are fulfilled 
+
+- The stop word is at the start of the name, followed by a space (eg. "City of New York")
+- The stop word is at the end of the name, preceded by a space (eg. Glasgow Council)
+- The stop word is preceded and followed by a space (eg. the word "State" in Delta State Government)
 
 ```{r}
 # Make a copy of the original names 
