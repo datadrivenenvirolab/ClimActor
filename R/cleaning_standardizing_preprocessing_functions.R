@@ -198,7 +198,7 @@ remove_extra <- function(dataset){
              "municipio", "kommune", "municipal", "prefecture", "prefectural",
              "metropolitana", "metropolis", "metropolitan", "metropole",
              "town", "community", "communat", "communat", "Ayuntamiento",
-             "Gemeente", "Comunedi", "Comune", "Kommune", "Republic",
+             "Gemeente", "Comune", "Kommune", "Republic",
              "city of", "municipality of", "town of", "province of",
              "comune di", "municipalidad de", "prefeitura de" ,
              "município de")
