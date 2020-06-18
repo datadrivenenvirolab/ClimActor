@@ -587,7 +587,7 @@ Please check the vector to be sure that:
 
         # replacing all instances in the dataset of the original (raw) name
         # with the new custom name
-        samename_inds <- which(dataset$name == origname & dataset$iso == dataset$iso[ind])
+        samename_inds <- which(dataset$name == origname & dataset$iso == dataset$iso[ind] & dataset$entity_type == dataset$entity_type[ind])
 
         if (length(samename_inds) != 0) {
           dataset$name[samename_inds] <- ansn2
