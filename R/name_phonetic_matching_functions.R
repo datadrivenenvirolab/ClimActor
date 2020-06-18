@@ -341,7 +341,7 @@ phonetify_names <- function(dataset, key.dict) {
                                         key.dict$entity_type)))
 
   ## creating the vector of indices (in the dataset) of the names that need to be fuzzy matched
-  if (!exists("indices")){
+  if (!exists("indices", where = globalenv())){
     if (length(all3_matching_rows) != 0) {
       indices <<- 1:nrow(dataset)
       indices <<- indices[-all3_matching_rows]
@@ -349,7 +349,6 @@ phonetify_names <- function(dataset, key.dict) {
       indices <<- 1:nrow(dataset)
     }
   }
-
 
   ind.short <- indices[!duplicated(dataset$name[indices])]
   if (length(ind.short) == 0){
@@ -689,7 +688,7 @@ Please check the vector to be sure that:
 
         # replacing all instances of the recently matched (raw) name in the dataset
         # with the standardized name
-        samename_inds <- which(dataset$name == origname & dataset$iso == dataset$iso[ind])
+        samename_inds <- which(dataset$name == origname & dataset$iso == dataset$iso[ind] & dataset$entity_type == dataset$entity_type[ind])
 
         if (length(samename_inds) != 0) {
           dataset$name[samename_inds] <- correct.name
@@ -733,7 +732,7 @@ Please check the vector to be sure that:
 
       # replacing all instances in the dataset of the original (raw) name
       # with the new custom name
-      samename_inds <- which(dataset$name == origname)
+      samename_inds <- which(dataset$name == origname & dataset$iso == dataset$iso[ind] & dataset$entity_type == dataset$entity_type[ind])
 
       if (length(samename_inds) != 0) {
         dataset$name[samename_inds] <- ans3
