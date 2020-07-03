@@ -1,7 +1,9 @@
 ---
 title: "The ClimActor guide"
-author: "Data-Driven Lab"
-output: rmarkdown::html_vignette
+author: "Data-Driven EnviroLab"
+output: 
+  rmarkdown::html_vignette:
+    fig_crop: no
 params:
   cdpname: name
 vignette: >
@@ -11,13 +13,18 @@ vignette: >
 ---
   
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 library(ClimActor)
 ```
 
-As more non-state actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet show up across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
+As more non-state (i.e., cities, regions, and companies) actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet appear across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
 
-The \code{ClimActor} package provides a workflow to efficiently standardize actor names across different databases and clean climate commitment data when analyzing non-state actors' climate commitments. 
+This package provides a workflow to efficiently standardize actor names across different databases and clean climate commitment data when analyzing non-state actors' climate commitments. 
+
+```{r, fig.align = "center", echo = F,fig.fullwidth=T, out.width="140%",fig.cap="R Package User Workflow"}
+knitr::include_graphics("r_package_workflow.png")
+
+```
 
 ## Data
 
@@ -38,7 +45,7 @@ dim(cdp)
 knitr::kable(head(cdp[, 1:5]))
 ```
 
-Apart from the data you wish to clean, two other important datasets would be the key dictionary (`key_dict`) and country dictionary (`country_dict`). These datasets can be accessed once the `ClimActor` package has been called with either `library(ClimActor)` or `require(ClimActor)`. For more details on the two dictionaries, you can use `?key_dict` and `?country_dict` for the full data documentation.  
+Apart from the data you wish to clean, two other important datasets included in the ClimActor package are the key dictionary (`key_dict`) and country dictionary (`country_dict`). These datasets can be accessed once the `ClimActor` package has been called with either `library(ClimActor)` or `require(ClimActor)`. For more details on the two dictionaries, you can use `?key_dict` and `?country_dict` for the full data documentation.  
 
 ```{r}
 knitr::kable(head(key_dict[, 1:5]))
@@ -47,15 +54,15 @@ knitr::kable(head(country_dict[, 1:5]))
 
 ## Data Preparation functions
 
-Naturally, the first step in any data cleaning pipeline would be to read in and prepare the data.
+Naturally, the first step in any data cleaning pipeline is to read in and prepare the data.
 
-Within the `ClimActor` workflow the first important step comes when the data is read in. For the later string matching aspects of the workflow to work more accurately, the data should ideally be read in or converted to **UTF-8** encoding. **UTF-8** is the preferred encoding when working with strings and both the `key_dict` and `country_dict` are encoding in UTF-8 encoding. Reading in data with the UTF-8 encoding can be done by using the `encoding` argument within the `read.csv` function. 
+Within the `ClimActor` workflow the first important step comes when the data is read in. For the later string matching aspects of the workflow to work more accurately, the data should ideally be read in or converted to **UTF-8** encoding. **UTF-8** is the preferred encoding when working with strings and both the `key_dict` and `country_dict` are encoded in UTF-8 encoding. Reading in data with the UTF-8 encoding can be done by using the `encoding` argument within the `read.csv` function. 
 
-If you know the encoding of your data, it is best to convert it to UTF-8 (either within R or elsewhere) before proceeding with the string matching algorithmns. If you are unsure of the encoding of your data, it is more important to read the data into R in its correct native encoding rather than to try and force the wrong encoding (eg. reading in data as UTF-8 when the data is encoded in Latin1). For those which are unfamiliar with encoding issues, an (optional) helper function within some string matching functions will try to guess the encoding of your data and fix it. For more information on the helper function, see the code in the github [here](https://github.com/datadrivenyale/ClimActor/blob/master/R/helper_functions.R). 
+If you know the encoding of your data, it is best to convert it to UTF-8 (either within R or elsewhere) before proceeding with the string matching algorithms. If you are unsure of the encoding of your data, it is more important to read the data into R in its correct native encoding rather than to try and force the wrong encoding (eg. reading in data as UTF-8 when the data is encoded in Latin1). For those who are unfamiliar with encoding issues, an (optional) helper function within some string matching functions will try to guess the encoding of your data and fix it. For more information on the helper function, see the code in the github [here](https://github.com/datadrivenyale/ClimActor/blob/master/R/helper_functions.R). 
 
-If you would like to learn more about encoding in R, you can refer to the Appendix (*Notes on encoding*) of this vignette or refer to several articles writtin on the topic by [Kunsttube](http://kunststube.net/encoding), [Kevin Ushey](http://kevinushey.github.io/), or [Maurício Collaça](https://rstudio-pubs-static.s3.amazonaws.com/279354_f552c4c41852439f910ad620763960b6.html). 
+If you would like to learn more about encoding in R, you can refer to the Appendix (*Notes on encoding*) of this vignette or refer to several articles written on the topic by [Kunsttube](http://kunststube.net/encoding), [Kevin Ushey](http://kevinushey.github.io/), or [Maurício Collaça](https://rstudio-pubs-static.s3.amazonaws.com/279354_f552c4c41852439f910ad620763960b6.html). 
 
-3 specific variables (name, country, entity type) are the most important while using the `ClimActor` package. Data preparation functions ensure that these variables are present and include the following functions: 
+3 specific variables (name, country, entity type) are the most important data fields while using the `ClimActor` package. Data preparation functions ensure that these variables are present and include the following functions: 
 
 * `rename_col()` to rename data columns to the appropriate names 
 * `add_country()` adds the country column to the dataset
@@ -100,7 +107,7 @@ cdp <- add_country(cdp)
 ```
 
 ### Add the entity type column with `add_entity_type()`
-`add_entity_type()` first checks the dataset for the entity type column within the dataset provided. If the dataset does not contain and entity type column, then an entity type column will be initiatlized with a user specified input. In this case, we set the input as "City", since a majority of the actors within the CDP dataset are cities. 
+`add_entity_type()` first checks the dataset for the entity type column within the dataset provided. If the dataset does not contain an entity type column, then an entity type column will be initialized with a user specified input. In this case, we set the input as "City", since a majority of the actors within the CDP dataset are cities. 
 ```{r}
 cdp <- add_entity_type(cdp, "City")
 # Check the last few columns of the dataset
@@ -115,7 +122,27 @@ ncol(cdp)
 ```
 
 ## Standardizing and preprocessing of data
-After the preliminary preparation of data from the previous functions, we now move on to functions that start standardizing and preprocess the dataset from the user. This family of functions provide easy ways to further standardize the structure of your data and to make inferences based on your dataset that will help with steps in cleaning and matching your dataset to the key dictionaries in later functions.
+After the preliminary preparation of data from the previous functions, we now move on to functions that start standardizing and preprocessing the dataset from the user. This family of functions provide easy ways to further standardize the structure of your data and to make inferences based on your dataset that will help with steps in cleaning and matching your dataset to the key dictionaries in later functions.
+
+### Clean country names and add ISO data using `clean_country_iso()`
+`clean_country_iso()` checks the countries in the supplied dataset and a supplied country dictionary using direct string matching and standardizes the country names according to the version in the country dictionary. The function allows users to input their own country dictionary (in the event that the user has a locally updated country dictionary, or their own one) but it is recommended that users use the package's included country dictionary which can be called using `country_dict`. ISO2 and ISO3 data is available for including in one's own dataset, with users being able to select which version they prefer (with ISO3 being the default). Lastly, `clean_enc = F` checks the encoding of the country column of the user's dataset, guesses the correct encoding of the data, and tries to repair it if the data was read in with the wrong encoding. The default for this argument is `T` (checks not conducted), but the user should set it to `F` if they are unsure if they have read in the data in the correct encoding. A tell-tale sign is usually when unrecognized symbols or accents appear in the country names of the dataset. 
+Apart from the dataset with the standardized country names, the `clean_country_iso()` also returns a `country_ind` vector which specifies which rows in the dataset will require further downstream cleaning of countries (countries not exactly matched to any entry in the country dictionary). 
+
+```{r}
+# Set clean_enc = F (not sure if encoding is "clean" for the sake of this example)
+# Use package's country dictionary
+# As usual, we store an original copy of the country names for comparison later on
+origcountry <- cdp$Country
+cdp <- clean_country_iso(cdp, country_dict, iso = 3, clean_enc = F)
+
+```
+We see that there are 21 countries in the cdp dataset that do not have an exact match in the country dictionary. The `country_ind` vector was created to show which rows in the datasets have countries where there was no exact matches in the country_dictionary. Let's examine these countries using the `country_ind` vector. 
+
+```{r}
+cdp$Country[country_ind]
+```
+It seems like there are two countries where there were no exact matches (Taiwan and Côte d'Ivoire).
+These names will be matched in a later function, as detailed below. 
 
 ### Fill in entity types for your data using `fill_type()`
 Since the `add_entity_type()` function only allow users to input only one entity type for the entire dataset, the `fill_type()` function will allow users to update the entity type for users with datasets that contain more than one entity type. The function looks at the actor name and identifies common words within the actor's name to guess the entity type for that actor. 
@@ -126,10 +153,63 @@ table(cdp$entity_type)
 # Just do a quick check for the ones listed as company
 cdp$name[which(cdp$entity_type == "Company")]
 ```
-The example here highlights the importance to conduct careful checks on the data after using the `fill_type()` function. The function picked up two actors which has the word "Corporation" in its name, but should really be cities (instead of companies). We manually fix the entity types for these actors. 
+The example here highlights the importance to conduct careful checks on the data after using the `fill_type()` function. The function picked up two actors that have the word "Corporation" in its name, but should really be cities (instead of companies). We manually fix the entity types for these actors. 
 ```{r}
 cdp$entity_type[which(cdp$entity_type == "Company")] <- "City"
 ```
+
+### Resolve differences in entity types with `resolve_entity_types()`
+Often, there are many actors that can be both a state and a city (examples abound - New York can refer to either New York State, or New York City, Kansas can refer to Kansas State, or Kansas City (in the state of Missouri), and so forth). The `resolve_entity_types()` function highlights such discrepancies between the user's dataset and the key dictionary to users. The function allows users to decide whether they would like to standardize the entity types to the key dictionaries' entries, or if they would like to get a dataframe highlighting where these differences lie (such that they can make any necessary edits themselves). 
+
+Let's examine both cases, starting with the case where the user accepts the key dictionary's entity types. 
+```{r, eval = F}
+cdp_resolved <- resolve_entity_types(cdp, key_dict)
+```
+```{r, echo = F, comment = ""}
+# Code to allow vignette to compile while showcasing the function 
+name_iso_right <- which(paste0(cdp$name, cdp$iso) %in% paste0(key_dict$right, key_dict$iso))
+name_iso_right_short <- which(unique(paste0(cdp$name, cdp$iso)) %in% paste0(key_dict$right, key_dict$iso))
+
+# Coerce NA entity types to random character
+cdp$entity_type[intersect(which(is.na(cdp$entity_type)), name_iso_right)] <- ","
+# Check for wrong entity types in those that have correct names and iso
+dict_ind <- na.omit(match(paste0(cdp$name[name_iso_right], cdp$iso[name_iso_right]),
+                          paste0(key_dict$right, key_dict$iso)))
+ent_ind <- name_iso_right[cdp$entity_type[name_iso_right] != key_dict$entity_type[dict_ind]]
+dict_ent_ind <- dict_ind[cdp$entity_type[name_iso_right] != key_dict$entity_type[dict_ind]]
+cat(paste0("We found ", length(ent_ind), " number of entries with the same actor name ",
+           "and iso but conflicting entity types. Would you like to resolve all",
+           " conflicts by accepting the key dictionary's entity type? (Y/N)"))
+cat("Answer: Y")
+cdp_resolved <- cdp
+cdp_resolved$entity_type[ent_ind] <- key_dict$entity_type[dict_ent_ind]
+```
+We will examine the resolved entity types later on. For now, let's see what the returned dataframe looks like if the user opts to not accept all of the key dictionary's entity types. 
+```{r, eval = F}
+cdp <- resolve_entity_types(cdp, key_dict)
+```
+
+```{r, echo = F, comment = ""}
+cat(paste0("We found ", length(ent_ind), " number of entries with the same actor name ",
+           "and iso but conflicting entity types. Would you like to resolve all",
+           " conflicts by accepting the key dictionary's entity type? (Y/N)"))
+cat("Answer: N")
+cat(paste0("A dataframe of the actors with conflicting entity types will be ",
+           "created for closer inspection of the conflicts."))
+entity_conflicts <- data.frame(name = cdp$name[ent_ind],
+                               iso = cdp$iso[ent_ind],
+                               user_entity = cdp$entity_type[ent_ind],
+                               keydict_entity = key_dict$entity_type[dict_ent_ind],
+                               user_index = ent_ind,
+                               keydict_index = dict_ent_ind)
+```
+Now let's examine the outputs of the function 
+
+```{r}
+head(entity_conflicts)
+head(cdp_resolved[entity_conflicts$user_index, c("name", "iso", "entity_type")])
+```
+Note that in the `cdp_resolved` dataset, the entity types have been changed to become the key dictionaries' entity type. In this case, we note that the entity type in the key dictionary is not necessarily what we want. We continue our data cleaning with the original cdp dataset's entity type.  
 
 ### Remove stop words from actor names using `remove_extra()`
 The `remove_extra()` function removes extraneous words from the actors' names such as "Council", "District", "Province", etc etc. This helps to streamline the matching process used in downstream functions and provides better matches with the key dictionary. However, some of these words are used in the `fill_type()` function to determine the entity type of the actor, hence it is recommended that the `remove_extra()` function be used after the `fill_type()` function. 
@@ -158,26 +238,6 @@ head(orignames[!orignames %in% cdp$name])
 head(cdp$name[!cdp$name %in% orignames])
 
 ```
-
-### Clean country names and add ISO data using `clean_country_iso()`
-`clean_country_iso()` checks the countries in the supplied dataset and a supplied country dictionary using direct string matching and standardizes the country names according to the version in the country dictionary. The function allows users to input their own country dictionary (in the event that the user has a locally updated country dictionary, or their own one) but the package's included country dictionary can be called using `country_dict`. ISO2 and ISO3 data is available for including in one's own dataset, with users being able to select which version they prefer (with ISO3 being the default). Lastly, `clean_enc = F` checks the encoding of the country column of the user's dataset, guesses the correct encoding of the data, and tries to repair it if the data was read in with the wrong encoding. The default for this argument is `T` (checks not conducted), but the user should set it to `F` if they are unsure if they have read in the data in the correct encoding. A tell-tale sign is usually when unrecognized symbols or accents appear in the country names of the dataset. 
-Apart from the dataset with the standardized country names, the `clean_country_iso()` also returns a `country_ind` vector which specifies which rows in the dataset will require further downstream cleaning of countries (countries not exactly matched to any entry in the country dictionary). 
-
-```{r}
-# Set clean_enc = F (not sure if encoding is "clean" for the sake of this example)
-# Use package's country dictionary
-# As usual, we store an original copy of the country names for comparison later on
-origcountry <- cdp$Country
-cdp <- clean_country_iso(cdp, country_dict, iso = 3, clean_enc = F)
-
-```
-We see that there are 21 countries in the cdp dataset that do not have an exact match in the country dictionary. The `country_ind` vector was created to show which rows in the datasets have countries where there was no exact matches in the country_dictionary. Let's examine these countries using the `country_ind` vector. 
-
-```{r}
-cdp$Country[country_ind]
-```
-It seems like there are two countries where there wasn't exact matches (Taiwan and Côte d'Ivoire).
-These names will be matched in a later function, as detailed below. 
 
 ## String/Phonetic matching functions and cleaning of actor names 
 We now almost have all that we need to start the process of cleaning actors' names in the dataset (the primary goal of the package). To do that, we first need to start with making sure all the country names in our dataset are standardized. This picks up from the previous section where we used exact string matching to clean the country names within the dataset. Now, we use fuzzy string matching to standardize and clean whatever country names are left to be cleaned. Then, the functions following which will attempt to clean the actors' names first through exact matching, then through phonetic string matching. 
@@ -259,56 +319,6 @@ cdp <- clean_country_iso(cdp, country_dict, iso = 3, clean_enc = T) # We know th
 any(is.na(cdp$iso)) # All have iso now 
 ```
 
-### Resolve differences in entity types with `resolve_entity_types()`
-Often, there are many actors that can be both a state and a city (examples abound - New York can refer to either New York State, or New York City, Kansas can refer to Kansas State, or Kansas City (in the state of Missouri), and so forth). The `resolve_entity_types()` function highlights such discrepancies between the user's dataset and the key dictionary to users. The function allows users to decide whether they would like to standardize the entity types to the key dictionaries' entries, or if they would like to get a dataframe highlighting where these differences lie (such that they can make any necessary edits themselves). 
-
-Let's examine both cases, starting with the case where the user accepts the key dictionary's entity types. 
-```{r, eval = F}
-cdp_resolved <- resolve_entity_types(cdp, key_dict)
-```
-```{r, echo = F, comment = ""}
-# Code to allow vignette to compile while showcasing the function 
-name_iso_right <- which(paste0(cdp$name, cdp$iso) %in% paste0(key_dict$right, key_dict$iso))
-name_iso_right_short <- which(unique(paste0(cdp$name, cdp$iso)) %in% paste0(key_dict$right, key_dict$iso))
-
-# Coerce NA entity types to random character
-cdp$entity_type[intersect(which(is.na(cdp$entity_type)), name_iso_right)] <- ","
-# Check for wrong entity types in those that have correct names and iso
-dict_ind <- na.omit(match(paste0(cdp$name[name_iso_right], cdp$iso[name_iso_right]),
-                          paste0(key_dict$right, key_dict$iso)))
-ent_ind <- name_iso_right[cdp$entity_type[name_iso_right] != key_dict$entity_type[dict_ind]]
-dict_ent_ind <- dict_ind[cdp$entity_type[name_iso_right] != key_dict$entity_type[dict_ind]]
-cat(paste0("We found ", length(ent_ind), " number of entries with the same actor name ",
-           "and iso but conflicting entity types. Would you like to resolve all",
-           " conflicts by accepting the key dictionary's entity type? (Y/N)"))
-cat("Answer: Y")
-cdp_resolved <- cdp
-cdp_resolved$entity_type[ent_ind] <- key_dict$entity_type[dict_ent_ind]
-```
-We will examine the resolved entity types later on. For now, let's see what the returned dataframe looks like if the user opts to not accept all of the key dictionary's entity types. 
-```{r, eval = F}
-cdp <- resolve_entity_types(cdp, key_dict)
-```
-```{r, echo = F, comment = ""}
-cat(paste0("We found ", length(ent_ind), " number of entries with the same actor name ",
-           "and iso but conflicting entity types. Would you like to resolve all",
-           " conflicts by accepting the key dictionary's entity type? (Y/N)"))
-cat("Answer: N")
-cat(paste0("A dataframe of the actors with conflicting entity types will be",
-           "created for closer inspection of the conflicts."))
-entity_conflicts <<- data.frame(name = cdp$name[ent_ind],
-                                iso = cdp$iso[ent_ind],
-                                user_entity = cdp$entity_type[ent_ind],
-                                keydict_entity = key_dict$entity_type[dict_ent_ind],
-                                user_index = ent_ind,
-                                keydict_index = dict_ent_ind)
-```
-Now let's examine the outputs of the function 
-```{r}
-head(entity_conflicts)
-head(cdp_resolved[entity_conflicts$user_index, c("name", "iso", "entity_type")])
-```
-Note that in the `cdp_resolved` dataset, the entity types have been changed to become the key dictionaries' entity type. In this case, we note that the entity type in the key dictionary is not necessarily what we want. We continue our data cleaning with the original cdp dataset's entity type.  
 
 ### Standardize actors' names with exact matching using `clean_name()`
 We are now finally ready to start cleaning actors' names to standardized versions for further downstream analyses. The `clean_name()` function first checks for conflicting entity types (for actors with the same name and iso) between the dataset and the key dictionary, prompting users to choose which version they think is correct. The function then checks the actors' names within the dataset for exact matches in the supplied key dictionary, and replaces it with the standardized version if the original name is already present in the supplied key dictionary. 
@@ -323,7 +333,7 @@ sum(!precleaned_names %in% cdp$name) # 344 cleaned names
 head(precleaned_names[!precleaned_names %in% cdp$name]) 
 head(cdp$name[!precleaned_names %in% cdp$name])
 ```
-Note also that the function created a new vector named `indices` in the global environment. This vector denotes the indices of those actors' names which were not cleaned (due to the lack of an exact match in the key dictionary) by the `clean_name()` function. This vector will be used later on to determine which names need to be cleaned using phonetic matching in the `phonetify_names()` function. 
+Note also that the function created a new vector named `indices` in the global environment. This vector denotes the indices of those actors' names that were not cleaned (due to the lack of an exact match in the key dictionary) by the `clean_name()` function. This vector will be used later on to determine which names need to be cleaned using phonetic matching in the `phonetify_names()` function. 
 
 ### Standardize actors' names with phonetic string matching using `phonetify_names()` 
 The final step of the cleaning process involves the use of phonetic string matching algorithms to standardize actors' names with names that are similar but not exact to the actors present in our key dictionary. The function works by first taking the indices vector created from the `clean_name()` function (or creating one if no such vector exists), that indicates which actors' names require cleaning. 
@@ -455,7 +465,7 @@ To continue the cleaning of the data then, users simply need to run the `phoneti
 ## Post Processing Functions
 Congratulations! Your dataset should be cleaned by this step. 
 
-Apart from the usual saving and exporting of data after the cleaning process, users can also opt to merge in contextual data for their actors from the contextuals database curated by Data-Driven Lab (see `?contextualize_data()` for details on what contextual data is available). Furthermore, users can also choose to update the key and country dictionaries with the actors from their database that were not present in the respective dictionaries. These functions then allow users to store a local, expanded copy of the dictionaries for future use. Users can also submit the updated dictionaries to **datadrivenlab@gmail.com** for incorporation into the package dictionaries for use by others. 
+Apart from the usual saving and exporting of data after the cleaning process, users can also opt to merge in contextual data for their actors from the contextuals database curated by Data-Driven Lab (see `?contextualize_data()` for details on what contextual data is available). Furthermore, users can also choose to update the key and country dictionaries with the actors from their database that were not present in the respective dictionaries. These functions then allow users to store a local, expanded copy of the dictionaries for future use. Users can also submit the updated dictionaries to **datdrivenlab@gmail.com** for incorporation into the package dictionaries for use by others. 
 
 As described above, the `contextualize_data()` function allows users to merge contextual data (where available) to the actors in the user's dataset. 
 
@@ -478,9 +488,6 @@ The `ClimActor` package also includes a contextual database (named `contextuals`
 - `population`: Population of actor
 - `population_year`: Year of recorded population 
 - `state`: State/Province which actor is in 
-- `gdp`: GDP of actor
-- `gdp_unit`: Units which GDP data is in 
-- `gdp_year`: Year of recorded GDP 
 
 The user can specify which of the contextuals information you would like merged into your own database using the `context` argument. 
 
@@ -494,9 +501,18 @@ head(cdp_merged[, c("name", "iso", "entity_type", "initiatives_committed",
                     "num_commit")])
 ```
 
+Examples of plots made using data from the contextuals database:
+```{r, echo = F, out.width="100%", figures-side, fig.show = "hold"}
+knitr::include_graphics("l3_barplot.png")
+knitr::include_graphics("l3_map_plot_withactors_img.png")
+
+```
+
+
+
 ### Updating the country dictionary with `update_country_dict()`
 
-If the user's dataset contains country names which were not included in the `country_dict`, a local version of the `country_dict` can be created for use in future data cleaning iterations. This version of the `country_dict` can also be sent to the Data-Driven Lab team at **datadrivenlab@gmail.com**, where the team will check the updated dictionary and update the dictionary accordingly. 
+If the user's dataset contains country names which were not included in the `country_dict`, a local version of the `country_dict` can be created for use in future data cleaning iterations. This version of the `country_dict` can also be sent to the Data-Driven Lab team at **datdrivenlab@gmail.com**, where the team will check the updated dictionary and update the dictionary accordingly. 
 
 The `update_country_dict` function takes in two compulsory arguments and two optional arguments. The two compulsory arguments are the dataset and the country dictionary that was used to clean the dataset, and the two optional arguments are the `custom_count` and `unmatched_count` vectors. Country names that were user's custom input and also unmatched country names will automatically be added to the `wrong` column in the updated country dictionary. 
 
@@ -522,4 +538,20 @@ New entries to the key dict will be appended at the end of the `key_dict`. From 
 ```{r}
 tail(local_key_dict)
 ```
+
+
+## Appendix - Notes on encoding issues
+
+### Introduction
+This appendix details some of the encoding issues that users might encounter while using the `ClimActor` package and some underlying principles of encoding which might help users understand why the encoding issues occur and how they might be able to resolve those issues. 
+
+The appendix is structured in the following way: 
+
+- Reading in data: We discuss why, as mentioned previously in the vignette, it is important to read in data using the right encoding settings 
+- The bits of encoding: We delve a little deeper into the representation of characters and strings in R, specifically non-ASCII characters 
+- String matching with encoding: We discuss how the different representation of characters and strings affect string matching in R, be it exact, fuzzy, or phonetic matching. 
+- Workarounds: Based on how encoding affects string matching, we explain some of the workarounds the package use to deal with mis-encoding or cases where users are unclear what the encoding their data is in
+- Acknowledgements and further readings 
+
+### Reading in data 
 
