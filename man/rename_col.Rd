@@ -2,7 +2,7 @@
 % Please edit documentation in R/adding_preprocessing_functions.R
 \name{rename_col}
 \alias{rename_col}
-\title{Renames the columns within the dataset}
+\title{Renames columns within the dataset}
 \usage{
 rename_col(dataset)
 }

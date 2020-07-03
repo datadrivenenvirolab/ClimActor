@@ -19,8 +19,7 @@ using `r contextuals`}
 
 \item{context}{Vector consisting of contextual column name to be merged
 into the dataset includes "region", "population", "population_year", "lat",
-"lng", "area", "area_units", "intiatives_committed", "num_commit", "state",
-"gdp", "gdp_unit", "gdp_year".
+"lng", "area", "area_units", "intiatives_committed", "num_commit", "state".
 Defaults to taking all the contextual information.}
 }
 \value{

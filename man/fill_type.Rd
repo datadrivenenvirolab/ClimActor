@@ -3,7 +3,8 @@
 %   R/cleaning_standardizing_preprocessing_functions.R
 \name{fill_type}
 \alias{fill_type}
-\title{Fills in the corresponding actor entity type for the dataset based on the actor name}
+\title{Fills in the corresponding actor entity type for the dataset based on the
+actor name}
 \usage{
 fill_type(dataset)
 }
@@ -15,5 +16,6 @@ The original dataset with entity types filled for the actors
 }
 \description{
 Guesses the entity type for the actors within the dataset based on commonly
-used words for the respective entity types.
+used words for the respective entity types. See vignette for a more detailed
+explanation on how the function works.
 }

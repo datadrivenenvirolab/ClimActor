@@ -21,6 +21,7 @@ If unknown, set as FALSE. Defaults to TRUE}
 The original dataset with the country names cleaned
 }
 \description{
-Cleans the dataset actors' countries based on the package's country
-dictionary and adds the corresponding iso to the dataset.
+Cleans the dataset actors' countries using exact matches based
+on the package's country dictionary and adds corresponding iso information to
+the dataset. For more information on `clean_enc`, see the vignette.
 }

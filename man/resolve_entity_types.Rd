@@ -23,6 +23,7 @@ Also returns a dataset that contains the different conflicts (if applicable)
 \description{
 Resolve entity type conflicts between user's dataset and the key
 dictionary. The function checks for entries that have the same name and are from the
-same country between the user's dataset and the key dictionary but have different entity
-types.
+same country but have different entity types.between the user's dataset and
+the key dictionary. Users can decide whether they would like to accept the key
+dictionary's entity types or export a dataframe of the differences for inspection.
 }

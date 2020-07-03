@@ -15,5 +15,6 @@ Dataset with extraneous words removed from actors' names
 }
 \description{
 Removes extraneous words such as "council", "district", etc. from the
-names of actors. See vignette for the full list of "extraneous" words
+names of actors to improve phonetic matching accuracy. See vignette
+for the full list of "extraneous" words.
 }

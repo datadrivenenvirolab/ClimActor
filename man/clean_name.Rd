@@ -2,7 +2,7 @@
 % Please edit documentation in R/name_phonetic_matching_functions.R
 \name{clean_name}
 \alias{clean_name}
-\title{Cleans name using exact matches}
+\title{Clean actor names using exact matches}
 \usage{
 clean_name(dataset, key.dict, clean_enc = T)
 }
@@ -16,10 +16,9 @@ If unknown, set as FALSE. Defaults to TRUE.}
 }
 \value{
 Returns a dataset with actors names' cleaned using exact string matching.
-
 Also creates a vector of indices of names that require cleaning.
 }
 \description{
-Cleans the datasets' actors names based on the key dictionary using
+Cleans the datasets' actor names based on the key dictionary using
 exact string matching
 }

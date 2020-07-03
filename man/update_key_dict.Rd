@@ -17,7 +17,8 @@ update_key_dict(dataset, key.dict, custom_indices, unmatched_indices)
 in the key dictionary}
 }
 \value{
-Key dictionary with updated entries
+Key dictionary with updated entries, and their respective phonetic
+representations
 }
 \description{
 Update the key dictionary with the custom names given by the user and
