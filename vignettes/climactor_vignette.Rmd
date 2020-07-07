@@ -16,11 +16,11 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 library(ClimActor)
 ```
-
-As more non-state (i.e., cities, regions, and companies) actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet appear across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
-
-This package provides a workflow to efficiently standardize actor names across different databases and clean climate commitment data when analyzing non-state actors' climate commitments. 
-
+  
+  As more non-state (i.e., cities, regions, and companies) actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet appear across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
+  
+  This package provides a workflow to efficiently standardize actor names across different databases and clean climate commitment data when analyzing non-state actors' climate commitments. 
+  
 ```{r, fig.align = "center", echo = F,fig.fullwidth=T, out.width="140%",fig.cap="R Package User Workflow"}
 knitr::include_graphics("r_package_workflow.png")
 
@@ -555,12 +555,224 @@ The appendix is structured in the following way:
 
 ### Reading in data 
 
+Let's start by reading in our key dictionaries. We do this using the `read.csv` function, and set 3 different encoding options (*Latin1*, *UTF-8*, and *default*). We set an argument `dict_path` which denotes the path where the `key_dict` csv is in. 
+
 ```{r, echo = F}
 dict_path <- system.file("extdata", "key_dict_new_June2020.csv", package = "ClimActor", mustWork = T)
 ```
+
 ```{r}
-key_dict <- read.csv(dict_path, stringsAsFactors = F,
-                as.is = T, encoding = "UTF-8")
-head(key_dict)
+key.dict <- read.csv(dict_path, stringsAsFactors = F)
+key.dictutf8 <- read.csv(dict_path, stringsAsFactors = F, encoding = "UTF-8")
+key.dictl1 <- read.csv(dict_path, stringsAsFactors = F, encoding = "Latin-1")
+```
+We manually select a vector of names that contain non-ASCII characters to conduct further tests on and print out the list of names within each dataframe for comparison.
+
+```{r}
+ind <- c(8, 14, 15, 31, 33, 39, 49, 52, 69, 77)
+
+# Default encoding: 
+print(key.dict$right[ind])
+
+# Latin-1 encoding:
+print(key.dictl1$right[ind])
+
+# UTF-8 encoding: 
+print(key.dictutf8$right[ind])
+
 ```
 
+This simple example illustrates the importance of reading in data using the right encoding. In this case, the package's key dictionary is encoded in `UTF-8` encoding. Thus, specifying `UTF-8` in the `read.csv` function results in the correct output being displayed while the `default` and `Latin-1` encoding results in errorneous outputs.
+
+The easiest way to avoid any issues with encoding is therefore to read in the data using the correct encoding specification. For users who are unsure of the encoding of their dataset, certain functions within the `ClimActor` package will allow users to select if their data was read in with the correct encoding (with the function argument `clean_enc`). If users state that they are unsure whether their data was read in with the correct encoding, a helper function checks the strings within the column of interest and attempts to convert the strings to their correct encoding (using the `rvest` package's `repair_encoding` function).
+
+### Understanding the bits of encoding 
+To understand why the specification of encoding while reading in data is key, we turn to understanding the different bits of encoding in this section of the appendix. Specifying the correct encoding while reading in data is important because the data was already written (in bits) in a certain way. Providing the encoding type when reading in the data from R indicates the "key" used to decrypt the data. Here's a short example
+
+```{r message = FALSE}
+# Data read in with Latin 1 encoding
+print(key.dictl1$right[31])
+pryr::bits(key.dictl1$right[31])
+
+# Data read in with UTF-8 encoding 
+print(key.dictutf8$right[31])
+pryr::bits(key.dictutf8$right[31])
+
+# Are they equal? 
+pryr::bits(key.dictutf8$right[31]) == pryr::bits(key.dictl1$right[31])
+```
+
+Thus, we see that the bits of the data are actually the same, but that the key R uses to decode the bits are different, resulting in correct/wrong displays. 
+
+What about the default encoding? How does that get decided? In this case, it seems like the default is the Latin1 encoding. 
+
+```{r}
+# Check if the default encoding is the same as latin1
+all(key.dict$right == key.dictl1$right)
+
+# Check just to make sure that it's not all the same
+all(key.dict$right == key.dictutf8$right)
+all(key.dictl1$right == key.dictutf8$right)
+```
+
+
+You can use the `l10n_info()` function to determine the native encoding locale used by R. 
+
+```{r}
+l10n_info()
+```
+
+What if we tried converting the data from one encoding type to another? 
+
+```{r}
+# First start working with the data that was originally read in as UTF-8
+# Convert to Latin 1 encoding 
+iconv(key.dictutf8$right[31], from = "UTF-8", to = "latin1")
+# Check the bits of the 2 different encodings 
+pryr::bits(key.dictutf8$right[31])
+pryr::bits(iconv(key.dictutf8$right[31], "UTF-8", "latin1"))
+# The bits are not the same 
+# What if we supplied the wrong source encoding?
+iconv(key.dictutf8$right[31], from = "latin1", "UTF-8") # Returns the wrong input
+pryr::bits(iconv(key.dictutf8$right[31], from = "latin1", "UTF-8")) # Bits also get changed wrongly
+
+```
+
+Now we try to work with the data that was read in with the wrong encoding.
+
+```{r}
+iconv(key.dictl1$right[31], from = "latin1", to = "UTF-8")
+pryr::bits(iconv(key.dictl1$right[31], from = "latin1", to = "UTF-8"))
+# Same as above when we tried converting the UTF-8 version from latin1 to UTF-8
+
+# Now try converting from what we know is the correct encoding (UTF-8) to another encoding
+iconv(key.dictl1$right[31], from = "UTF-8", to = "latin1") # Correct output now
+pryr::bits(iconv(key.dictl1$right[31], from = "UTF-8", to = "latin1")) 
+# Same as when we converted the UTF-8 version to latin1 version 
+
+```
+
+This short exercise shows that we need to know the correct encoding of the data in order to do the encoding conversions to the desired encoding. Supplying the wrong source encoding even if the data was read in correctly would also result in an erroneous conversion. 
+
+### Phonetic matching with encoding
+After the brief examples working with encodings above, we now turn to the most important part for our package - how does that affect the matching of actors' names (both exact and phonetic matching)?
+
+We start by examining exact matches - is the same name (encoded differently) considered a match? 
+Recall that the bits of a name are the same, regardless of the way they were read in (assuming they have not been converted yet).
+
+That is, 
+
+```{r}
+pryr::bits(key.dictl1$right[31]) == pryr::bits(key.dictutf8$right[31])
+```
+But are the output names the same? 
+```{r}
+key.dictl1$right[31] == key.dictutf8$right[31]
+
+# Try it after converting the latin 1 output to the correct UTF-8 output 
+iconv(key.dictl1$right[31], from = "UTF-8", to = "UTF-8") == key.dictutf8$right[31]
+```
+
+It seems like the answer is no, they are not. From this we can assume that R matches the character when we use the equality sign. What about functions like match, or `%in%`?
+```{r}
+key.dictl1$right[31] %in% key.dictutf8$right[31]
+match(key.dictl1$right[31], key.dictutf8$right[31])
+```
+
+Similarly, both these functions match on the *representations of the characters*, and are unable to recognize that these are fundamentally the same text but encoded differently. This might present issues while trying to do the exact string matching with the key dictionary. What if we tried using the `.coerce_location_names` helper function? 
+
+```{r, echo = F}
+source("../R/helper_functions.R")
+```
+
+```{r}
+# Try for the entire vector 
+coercedl1 <- .coerce_location_names(key.dictl1$right[ind])
+coercedutf8 <- .coerce_location_names(key.dictutf8$right[ind])
+print(coercedl1)
+print(coercedutf8)
+```
+
+From here, we can see that even with the `coerce_location_names` function, the two vectors of names are still different because of the different letters being replaced.
+
+What about the creating of phonetic codes for the different names? 
+
+It is to be noted here that the `phonics` package that we use to create the phonetic codes only recognize *ASCII* characters, and not characters with accents/are non-ASCII. Thus, the below section experiments with the phonetic codes to see if there are any differences between versions. 
+
+```{r, warning = F}
+# First we try the original latin 1 version
+# Run all tests using the caverphone function 
+phonics::caverphone(key.dictl1$right[ind])
+phonics::caverphone(key.dictutf8$right[ind])
+# The "clean" argument allows users to decide whether or not the word should be cleaned
+# before creating the phonetic codes
+# Set clean = F for both 
+phonics::caverphone(key.dictl1$right[ind], clean = F)
+phonics::caverphone(key.dictutf8$right[ind], clean = F)
+# Surprisingly the 2 are the same, probably because the same characters are removed 
+phonics::caverphone(key.dictl1$right[ind], clean = F) ==
+  phonics::caverphone(key.dictutf8$right[ind], clean = F)
+
+
+# Package also does not recognize spaces, so we set clean = F again
+phonics::caverphone(coercedl1, clean = F)
+# Some very slight differences with the non-coerced version  
+```
+
+The above shows that the phonetic algorithm could potentially help with resolving issues with exact matching. However, there are also issues with the phonetic matching given the potential differences in phonetic codes between data of different encodings.
+
+### Workarounds for encoding issues in the `ClimActor` package
+As mentioned previously, certain functions within the `ClimActor` package allows users to specify if they know the encoding of the data that they read in. For users who are unsure of the encoding of their data, the `ClimActor` makes use of several functions (from other packages) to try to repair the encoding of the user's strings so as to ensure better matching results. 
+
+Firstly, the `stri_enc_mark()` function in the `stringi` package is used to detect strings that have non-ASCII characters (in order to reduce processing time for subsequent functions)
+
+```{r}
+nonascii <- key.dict$wrong[stringi::stri_enc_mark(key.dict$wrong) != "ASCII"]  
+head(nonascii)
+head(key.dictutf8$wrong[stringi::stri_enc_mark(key.dictutf8$wrong) != "ASCII"])
+head(key.dictl1$wrong[stringi::stri_enc_mark(key.dictl1$wrong) != "ASCII"])
+```
+
+Subsequently, the `repair_encoding()` function in the `rvest` package is used to try to fix those that have non-ASCII characters in the name.    
+
+```{r, error = TRUE}
+head(rvest::guess_encoding(nonascii))
+fixed <- rvest::repair_encoding(nonascii)
+```
+
+However, when presented with a large vector of strings, the `repair_encoding()` might not work and will return an error because the `guess_encoding()` might not return any encoding that had a more than 50% confidence. To prevent that error, the `ClimActor` package's helper function breaks the `nonascii` vector into smaller chunks to get more accurate predictions for encoding. 
+
+```{r}
+# Now let's see if the fixed version is still equivalent to the non-fixed one
+head(fixed) == head(nonascii) # Nope
+# What about the bits? 
+pryr::bits(head(fixed)) == pryr::bits(head(nonascii))
+# Let's see if the fixed version is equivalent to the UTF-8 versions 
+utfnonascii <-  key.dictutf8$wrong[stringi::stri_enc_mark(key.dictutf8$wrong) != "ASCII"]
+head(utfnonascii) 
+head(fixed) == head(utfnonascii)
+# What about the bits? 
+pryr::bits(head(fixed)) == pryr::bits(head(utfnonascii))
+
+```
+
+The mini-experiments above proved one important thing about the `==` operator in R - the operator matches based on the _representation_ of the string, instead of the actual string itself. Why is that important? Let us now consider the `.coerce_location_names` helper function used in the climactor package.    
+```{r}
+tail(fixed)
+tail(.coerce_location_names(fixed))
+tail(utfnonascii)
+tail(.coerce_location_names(utfnonascii))
+tail(nonascii)
+tail(.coerce_location_names(nonascii))
+```
+We see that the `.coerce_location_names` helper function worked for both the strings in  `fixed1` and in `utfnonascii` (even though one of them is in Latin1 encoding and the other is in UTF-8 encoding), but did not work for the strings in `nonascii1` (in corrupted Latin1 encoding). This shows that for the exact string matching to work, even for unicode symbols (which the `.coerce_location_names` function is written in), the representations of the strings need to be the same (but the string/bits behind the string does not).
+
+Hence, our package focuses on trying to fix the encoding for the input data instead of trying to coerce the non-ASCII characters to ASCII characters. 
+
+### Acknowledgements and further reading 
+
+This appendix takes reference from the following sources, and recommends that users who are interested in delving deeper into understanding encoding issues read these articles as well. The articles are also relatively beginner-friendly.
+
+* Kuntstube's article on [**what every programmer needs to know about encoding**](http://kunststube.net/encoding/)
+* Article explaining [**differences in encoding between different computer systems (code written in R)**](http://kevinushey.github.io/blog/2018/02/21/string-encoding-and-r/)
+* Maurício Collaça's R Markdown exploring specifically [**encoding behaviours in R**](https://rstudio-pubs-static.s3.amazonaws.com/279354_f552c4c41852439f910ad620763960b6.html)
