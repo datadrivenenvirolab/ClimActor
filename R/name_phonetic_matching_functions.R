@@ -791,7 +791,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
                "or you have not used the phonetify_names function yet."))
   }
   # Get the complete dataset of those that needs to be updated first
-  if (exists(name_ind) & length(name_ind) != 0){
+  if (exists("name_ind") & length(name_ind) != 0){
     .actor_updates <- .actor_updates[!.actor_updates$ind %in% name_ind, ]
   }
   .actor_updates <- cbind(.actor_updates, dataset[.actor_updates$ind, ])
