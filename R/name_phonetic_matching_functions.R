@@ -791,9 +791,6 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
                "or you have not used the phonetify_names function yet."))
   }
   # Get the complete dataset of those that needs to be updated first
-  if (exists("name_ind") & length(name_ind) != 0){
-    .actor_updates <- .actor_updates[!.actor_updates$ind %in% name_ind, ]
-  }
   .actor_updates <- cbind(.actor_updates, dataset[.actor_updates$ind, ])
   # Update the custom names first
   if (!missing(custom_indices)){
@@ -851,6 +848,9 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
   }
   # Now update the rest
   # Create the rows to be binded to key.dict
+  if (exists("name_ind") & length(name_ind) != 0){
+    .actor_updates <- .actor_updates[!.actor_updates$ind %in% name_ind, ]
+  }
   update_df <- data.frame(right = .actor_updates$name,
                           wrong = .actor_updates$name_wrong,
                           iso = .actor_updates$iso,
@@ -931,17 +931,17 @@ contextualize_data <- function(dataset, contextual_df, context = c("region", "po
   }
   context <- c(context, "name", "iso", "entity_type")
   # Merge and keep all of the original dataset's data
-  merge_df <- merge(dataset, contextual_df[ , context],
-                    by = c("name", "iso", "entity_type"), all.x = T,
-                    sort = F)
+  merge_df <- dplyr::left_join(dataset, contextual_df[ , context],
+                    by = c("name", "iso", "entity_type"),
+                    sort = FALSE)
   if (exists(paste0("isoname"))){
-    names(dataset)[grepl("^iso$", names(dataset))] <- isoname
+    names(merge_df)[grepl("^iso$", names(merge_df))] <- isoname
   }
   if (exists(paste0("entity_typename"))){
-    names(dataset)[grepl("^entity_type$", names(dataset))] <- entity_typename
+    names(merge_df)[grepl("^entity_type$", names(merge_df))] <- entity_typename
   }
   if (exists(paste0("namename"))){
-    names(dataset)[grepl("^name$", names(dataset))] <- namename
+    names(merge_df)[grepl("^name$", names(merge_df))] <- namename
   }
   return(merge_df)
 }
