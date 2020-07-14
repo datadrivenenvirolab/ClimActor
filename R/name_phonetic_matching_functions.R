@@ -292,7 +292,7 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
   }
   country.dict <- country.dict %>%
     dplyr::group_by(right) %>%
-    tidyr::fill(region:Population, .direction = "updown")
+    tidyr::fill(iso:Population, .direction = "updown")
   return(as.data.frame(country.dict, stringsAsFactors = F))
   if (exists(paste0("countryname"))){
     names(dataset)[grepl("^country$", names(dataset))] <- countryname
@@ -791,6 +791,9 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
                "or you have not used the phonetify_names function yet."))
   }
   # Get the complete dataset of those that needs to be updated first
+  if (exists(name_ind) & length(name_ind) != 0){
+    .actor_updates <- .actor_updates[!.actor_updates$ind %in% name_ind, ]
+  }
   .actor_updates <- cbind(.actor_updates, dataset[.actor_updates$ind, ])
   # Update the custom names first
   if (!missing(custom_indices)){
