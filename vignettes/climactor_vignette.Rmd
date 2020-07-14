@@ -322,7 +322,7 @@ any(is.na(cdp$iso)) # All have iso now
 
 ### Standardize actors' names with exact matching using `clean_name()`
 We are now finally ready to start cleaning actors' names to standardized versions for further downstream analyses. The `clean_name()` function first checks for conflicting entity types (for actors with the same name and iso) between the dataset and the key dictionary, prompting users to choose which version they think is correct. The function then checks the actors' names within the dataset for exact matches in the supplied key dictionary, and replaces it with the standardized version if the original name is already present in the supplied key dictionary. 
-Similar to the `clean_country_iso()` function, users can supply their own version of the key dictionary (in the event that they have a locally updated version, for example). Otherwise, the package's included key dictionary can be called using `key_dict`.  The `clean_enc` argument also works similarly to the `clean_country_iso()` function, where if it is `F` (false), then the function checks the encoding of the name column within the user's dataset, guesses the correct encoding, and tries to repair it if the data was read in with the wrong encoding. The argument defaults to `T` (true). Apart from the dataset with the standardized actors' names, the `clean_name()` function also returns an `indices` vector, which specifies which rows in the dataset will require further downstream data cleaning (actors' names cannot be exactly matched to key dictionary). 
+Similar to the `clean_country_iso()` function, users can supply their own version of the key dictionary (in the event that they have a locally updated version, for example). Otherwise, the package's included key dictionary can be called using `key_dict`.  The `clean_enc` argument also works similarly to the `clean_country_iso()` function, where if it is `F` (false), then the function checks the encoding of the name column within the user's dataset, guesses the correct encoding, and tries to repair it if the data was read in with the wrong encoding. The argument defaults to `T` (true). Apart from the dataset with the standardized actors' names, the `clean_name()` function also returns an `name_ind` vector, which specifies which rows in the dataset will require further downstream data cleaning (actors' names cannot be exactly matched to key dictionary). 
 
 ```{r}
 precleaned_names <- cdp$name
@@ -333,7 +333,7 @@ sum(!precleaned_names %in% cdp$name) # 344 cleaned names
 head(precleaned_names[!precleaned_names %in% cdp$name]) 
 head(cdp$name[!precleaned_names %in% cdp$name])
 ```
-Note also that the function created a new vector named `indices` in the global environment. This vector denotes the indices of those actors' names that were not cleaned (due to the lack of an exact match in the key dictionary) by the `clean_name()` function. This vector will be used later on to determine which names need to be cleaned using phonetic matching in the `phonetify_names()` function. 
+Note also that the function created a new vector named `name_ind` in the global environment. This vector denotes the indices of those actors' names that were not cleaned (due to the lack of an exact match in the key dictionary) by the `clean_name()` function. This vector will be used later on to determine which names need to be cleaned using phonetic matching in the `phonetify_names()` function. 
 
 ### Standardize actors' names with phonetic string matching using `phonetify_names()` 
 The final step of the cleaning process involves the use of phonetic string matching algorithms to standardize actors' names with names that are similar but not exact to the actors present in our key dictionary. The function works by first taking the indices vector created from the `clean_name()` function (or creating one if no such vector exists), that indicates which actors' names require cleaning. 
@@ -372,7 +372,7 @@ Here are some possible matches we found:
 Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name) ")
 cat("Answer: n")
 cat("The previous name (Prefeitura de Rio Verde) will be kept.")
-unmatched_indices <- indices[1]
+unmatched_indices <- name_ind[1]
 ```
 The second example considers when a match is found within the key dictionary for the actor being cleaned. 
 ```{r, echo = F, comment = ""}
@@ -420,7 +420,7 @@ cat("Enter in custom name: Canoas")
 cat("The name (Canoas) will be kept in the dataset.
 The name has not been added to the key dictionary yet but can be added with the update_key_dict function.
 The row number of the custom name has been added to a vector called custom_indices.")
-custom_indices <- indices[3]
+custom_indices <- name_ind[3]
 ```
 The index of the entry will then be recorded for user's future inspection. 
 To stop the `phonetify_names()` function, we can simply input the letter s.
@@ -448,7 +448,7 @@ cat("Your current progress will be returned.
 If it's not saved, be sure you saved your results in a variable with an assign function")
 
 # Export the dataframe to be used for updating the dictionary
-ind.short <- indices[1:3]
+ind.short <- name_ind[1:3]
 .actor_updates <<- data.frame(ind = ind.short,
                               name_wrong = cdp$name[ind.short])
 ```

@@ -57,10 +57,10 @@ clean_name <- function(dataset, key.dict, clean_enc = T) {
 
   # creating the vector of indices (in the dataset) of the names that need to be cleaned
   if (length(all3_matching_rows) != 0) {
-    indices <<- 1:nrow(dataset)
-    indices <<- indices[-all3_matching_rows]
+    name_ind <<- 1:nrow(dataset)
+    name_ind <<- name_ind[-all3_matching_rows]
   } else {
-    indices <<- 1:nrow(dataset)
+    name_ind <<- 1:nrow(dataset)
   }
   # Helper function returns output that checks if the name is capitalized
   # Change back to capitalized version if the check is true
@@ -333,7 +333,6 @@ phonetify_names <- function(dataset, key.dict) {
   # dataset.tmp$entity_type) %in%
   # paste0(key.dict$right, key.dict$iso,
   # key.dict$entity_type)))
-  # indices_short <-
   ## finding all the row numbers in which the dataset matches the key dictionary
   all3_matching_rows <- which((paste0(dataset$name, dataset$iso,
                                       dataset$entity_type) %in%
@@ -343,14 +342,14 @@ phonetify_names <- function(dataset, key.dict) {
   ## creating the vector of indices (in the dataset) of the names that need to be fuzzy matched
   if (!exists("indices", where = globalenv())){
     if (length(all3_matching_rows) != 0) {
-      indices <<- 1:nrow(dataset)
-      indices <<- indices[-all3_matching_rows]
+      name_ind <<- 1:nrow(dataset)
+      name_ind <<- name_ind[-all3_matching_rows]
     } else {
-      indices <<- 1:nrow(dataset)
+      name_ind <<- 1:nrow(dataset)
     }
   }
 
-  ind.short <- indices[!duplicated(dataset$name[indices])]
+  ind.short <- name_ind[!duplicated(dataset$name[name_ind])]
   if (length(ind.short) == 0){
     stop(paste0("Please check your dataset and/or the key dictionary to make sure all the",
                 "column names are correct (name, iso, entity_type). Otherwise, it seems that" ,
@@ -569,7 +568,7 @@ Please check the vector to be sure that:
     if (nrow(kd.filtered) == 0){
       cat(paste0("There seems to be no available matches for ",
                  dataset$name[ind], "; iso = ", dataset$iso[ind],
-                 "entity type = ", dataset$entity_type[ind],
+                 " entity type = ", dataset$entity_type[ind],
                  ".\n", "Would you like to input a custom name (Y/N)?\n"))
       ansn1 <- readline(prompt = "Answer: ")
       if (substr(toupper(as.character(ansn1)), 1, 1) == "Y") {
@@ -692,7 +691,7 @@ Please check the vector to be sure that:
 
         if (length(samename_inds) != 0) {
           dataset$name[samename_inds] <- correct.name
-          indices <<- indices[!(indices %in% samename_inds)]
+          name_ind <<- name_ind[!(name_ind %in% samename_inds)]
         }
         ## if the user response was numeric but not one of the listed matches,
         ## the original name will be kept and that index will be added to the unmatched_indices vector
@@ -736,7 +735,7 @@ Please check the vector to be sure that:
 
       if (length(samename_inds) != 0) {
         dataset$name[samename_inds] <- ans3
-        indices <<- indices[!(indices %in% samename_inds)]
+        name_ind <<- name_ind[!(name_ind %in% samename_inds)]
       }
     } else {
       ## if the user makes a typo or other invalid answer, the function will continue, and
