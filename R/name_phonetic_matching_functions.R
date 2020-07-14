@@ -851,37 +851,46 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
   if (exists("name_ind") & length(name_ind) != 0){
     .actor_updates <- .actor_updates[!.actor_updates$ind %in% name_ind, ]
   }
-  update_df <- data.frame(right = .actor_updates$name,
-                          wrong = .actor_updates$name_wrong,
-                          iso = .actor_updates$iso,
-                          entity_type = .actor_updates$entity_type,
-                          coerced_wrong = .coerce_location_names(.actor_updates$name_wrong),
-                          caverphone = phonics::caverphone(.actor_updates$name_wrong, clean = FALSE),
-                          caverphone.modified = phonics::caverphone(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
-                          cologne = phonics::cologne(.actor_updates$name_wrong, clean = FALSE),
-                          lein = phonics::lein(.actor_updates$name_wrong, clean = FALSE),
-                          metaphone = phonics::metaphone(.actor_updates$name_wrong, clean = FALSE),
-                          nysiis = phonics::nysiis(.actor_updates$name_wrong, clean = FALSE),
-                          nysiis.modified = phonics::nysiis(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
-                          onca = phonics::onca(.actor_updates$name_wrong, clean = FALSE),
-                          onca.modified = phonics::onca(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
-                          onca.refined = phonics::onca(.actor_updates$name_wrong, refined = TRUE, clean = FALSE),
-                          onca.modified.refined = phonics::onca(.actor_updates$name_wrong, modified = TRUE, refined = TRUE, clean = FALSE),
-                          phonex = phonics::phonex(.actor_updates$name_wrong, clean = FALSE),
-                          rogerroot = phonics::rogerroot(.actor_updates$name_wrong, clean = FALSE),
-                          soundex = phonics::soundex(.actor_updates$name_wrong, clean = FALSE),
-                          soundex.refined = phonics::refinedSoundex(.actor_updates$name_wrong, clean = FALSE),
-                          statcan = phonics::statcan(.actor_updates$name_wrong, clean = FALSE))
+  if (nrow(.actor_updates) != 0){
+    update_df <- data.frame(right = .actor_updates$name,
+                            wrong = .actor_updates$name_wrong,
+                            iso = .actor_updates$iso,
+                            entity_type = .actor_updates$entity_type,
+                            coerced_wrong = .coerce_location_names(.actor_updates$name_wrong),
+                            caverphone = phonics::caverphone(.actor_updates$name_wrong, clean = FALSE),
+                            caverphone.modified = phonics::caverphone(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
+                            cologne = phonics::cologne(.actor_updates$name_wrong, clean = FALSE),
+                            lein = phonics::lein(.actor_updates$name_wrong, clean = FALSE),
+                            metaphone = phonics::metaphone(.actor_updates$name_wrong, clean = FALSE),
+                            nysiis = phonics::nysiis(.actor_updates$name_wrong, clean = FALSE),
+                            nysiis.modified = phonics::nysiis(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
+                            onca = phonics::onca(.actor_updates$name_wrong, clean = FALSE),
+                            onca.modified = phonics::onca(.actor_updates$name_wrong, modified = TRUE, clean = FALSE),
+                            onca.refined = phonics::onca(.actor_updates$name_wrong, refined = TRUE, clean = FALSE),
+                            onca.modified.refined = phonics::onca(.actor_updates$name_wrong, modified = TRUE, refined = TRUE, clean = FALSE),
+                            phonex = phonics::phonex(.actor_updates$name_wrong, clean = FALSE),
+                            rogerroot = phonics::rogerroot(.actor_updates$name_wrong, clean = FALSE),
+                            soundex = phonics::soundex(.actor_updates$name_wrong, clean = FALSE),
+                            soundex.refined = phonics::refinedSoundex(.actor_updates$name_wrong, clean = FALSE),
+                            statcan = phonics::statcan(.actor_updates$name_wrong, clean = FALSE))
+
+  }
   # Bind rows to key.dict
-  # Check forwhether dataframes exist first or not
-  if (exists("cust_df") & exists("unmatched_df")){
+  # Check for whether dataframes exist first or not
+  if (exists("cust_df") & exists("unmatched_df") & exists("update_df")){
     key.dict <- rbind(key.dict, update_df, cust_df, unmatched_df)
-  } else if (exists("cust_df")){
+  } else if (exists("cust_df" & exists("update_df"))){
     key.dict <- rbind(key.dict, update_df, cust_df)
-  } else if (exists("unmatched_df")){
+  } else if (exists("unmatched_df" & exists("update_df"))){
     key.dict <- rbind(key.dict, update_df, unmatched_df)
-  } else {
+  } else if (exists("update_df")){
     key.dict <- rbind(key.dict, update_df)
+  } else if (exists("unmatched_df") & exists("cust_df")){
+    key.dict <- rbind(key.dict, unmatched_df, cust_df)
+  } else if (exists("cust_df")){
+    key.dict <- rbind(key.dict, cust_df)
+  } else if (exists("unmatched_df")){
+    key.dict <- rbind(key.dict, unmatched_df)
   }
   if (exists(paste0("isoname"))){
     names(dataset)[grepl("^iso$", names(dataset))] <- isoname
