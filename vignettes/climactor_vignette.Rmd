@@ -17,9 +17,9 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 library(ClimActor)
 ```
   
-  As more non-state (i.e., cities, regions, and companies) actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet appear across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
+As more non-state (i.e., cities, regions, and companies) actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet appear across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
   
-  This package provides a workflow to efficiently standardize actor names across different databases and clean climate commitment data when analyzing non-state actors' climate commitments. 
+This package provides a workflow to efficiently standardize actor names across different databases and clean climate commitment data when analyzing non-state actors' climate commitments. 
   
 ```{r, fig.align = "center", echo = F,fig.fullwidth=T, out.width="140%",fig.cap="R Package User Workflow"}
 knitr::include_graphics("r_package_workflow.png")
@@ -81,8 +81,9 @@ names(cdp)[1:5]
 
 ```{r, eval = F}
 cdp <- rename_col(cdp)
-
+names(cdp)
 ```
+
 ```{r, echo = F, comment = ""}
 # Note that because R Markdown does not really support interactive input, the 
 # output that a user can expect for this dataset is printed here for user's reference 
@@ -164,7 +165,9 @@ Often, there are many actors that can be both a state and a city (examples aboun
 Let's examine both cases, starting with the case where the user accepts the key dictionary's entity types. 
 ```{r, eval = F}
 cdp_resolved <- resolve_entity_types(cdp, key_dict)
+
 ```
+
 ```{r, echo = F, comment = ""}
 # Code to allow vignette to compile while showcasing the function 
 name_iso_right <- which(paste0(cdp$name, cdp$iso) %in% paste0(key_dict$right, key_dict$iso))
@@ -231,7 +234,7 @@ cdp <- remove_extra(cdp)
 
 # Check for differences 
 length(setdiff(orignames, cdp$name))
-# 632 differences 
+# 718 differences 
 
 # For comparison's sake, look at some of the differences 
 head(orignames[!orignames %in% cdp$name])
@@ -355,52 +358,52 @@ cdp <- phonetify_names(cdp, key_dict)
 
 The first example considers an actor which is currently not in the key dict, with which the user does not want to enter a custom name for. 
 ```{r, echo = F, comment = ""}
-cat("The original name is Prefeitura de Rio Verde with iso code BRA and entity type Region
+cat("The original name is Rio Verde with iso code BRA and entity type Region
 Here are some possible matches we found: 
-1:  Pernambuco; iso: BRA and entity type: Region
-2:  Rio de Janeiro (State); iso: BRA and entity type: Region
-3:  São Paulo State; iso: BRA and entity type: Region
-4:  Minas Gerais; iso: BRA and entity type: Region
-5:  Rio Grande do Sul; iso: BRA and entity type: Region
-6:  Ceara; iso: BRA and entity type: Region
-7:  Acre; iso: BRA and entity type: Region
-8:  Amapa; iso: BRA and entity type: Region
-9:  Mato Grosso; iso: BRA and entity type: Region
-10: Rondônia; iso: BRA and entity type: Region
+1:  Rio de Janeiro (State); iso: BRA and entity type: Region
+2:  Rondônia; iso: BRA and entity type: Region
+3:  Rio Grande do Sul; iso: BRA and entity type: Region
+4:  Ceara; iso: BRA and entity type: Region
+5:  Acre; iso: BRA and entity type: Region
+6:  Mato Grosso; iso: BRA and entity type: Region
+7:  Minas Gerais; iso: BRA and entity type: Region
+8:  São Paulo State; iso: BRA and entity type: Region
+9:  Pernambuco; iso: BRA and entity type: Region
+10: Amapa; iso: BRA and entity type: Region
 11: Tocantins; iso: BRA and entity type: Region
 12: Amazonas, Brazil; iso: BRA and entity type: Region
-Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name) ")
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name)")
 cat("Answer: n")
-cat("The previous name (Prefeitura de Rio Verde) will be kept.")
+cat("The previous name (Rio Verde) will be kept.")
 unmatched_indices <- name_ind[1]
 ```
 The second example considers when a match is found within the key dictionary for the actor being cleaned. 
 ```{r, echo = F, comment = ""}
-cat("The original name is Broward , FL with iso code USA and entity type City
+cat("The original name is de Chihuahua with iso code MEX and entity type City
 Here are some possible matches we found: 
-1:  Broward County, FL; iso: USA and entity type: City
-2:  Brighton, NY; iso: USA and entity type: City
-3:  Bedford, NY; iso: USA and entity type: City
-4:  Bridgeport, CT; iso: USA and entity type: City
-5:  Brisbane, CA; iso: USA and entity type: City
-6:  Providence, RI; iso: USA and entity type: City
-7:  Brownsville, TX; iso: USA and entity type: City
-8:  West Chester, PA; iso: USA and entity type: City
-9:  Beaufort, SC; iso: USA and entity type: City
-10: Boulder, CO; iso: USA and entity type: City
-11: Beaverton, OR; iso: USA and entity type: City
-12: Burnsville, MN; iso: USA and entity type: City
-13: Bakersfield, CA; iso: USA and entity type: City
-14: Bellevue, ID; iso: USA and entity type: City
-15: Bayfield, WI; iso: USA and entity type: City
-Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name) ")
+1:  Chihuahua; iso: MEX and entity type: City
+2:  Celaya; iso: MEX and entity type: City
+3:  Tamiahua; iso: MEX and entity type: City
+4:  Tekax; iso: MEX and entity type: City
+5:  San Miguel de Allende; iso: MEX and entity type: City
+6:  Teocelo; iso: MEX and entity type: City
+7:  Córdoba; iso: MEX and entity type: City
+8:  Apodaca; iso: MEX and entity type: City
+9:  Tuxcueca; iso: MEX and entity type: City
+10: Tapalpa; iso: MEX and entity type: City
+11: Totatiche; iso: MEX and entity type: City
+12: Degollado; iso: MEX and entity type: City
+13: Queretaro; iso: MEX and entity type: City
+14: Juárez; iso: MEX and entity type: City
+15: Xalapa; iso: MEX and entity type: City
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name)")
 cat("Answer: 1")
-cat("Broward County, FL has been selected and will replace Broward , FL in the database.")
-cdp$name[grep("Broward , FL", cdp$name)] <- "Broward County, FL"
+cat("Chihuahua has been selected and will replace de Chihuahua in the database.")
+cdp$name[grep("de Chihuahua", cdp$name)] <- "Chihuahua"
 ```
 If we wanted to include a custom name that was not listed as an option, we could also do so. 
 ```{r, echo = F, comment = ""}
-cat("The original name is Prefeitura  de Canoas with iso code BRA and entity type Region
+cat("The original name is Prefeitura de Canoas with iso code BRA and entity type Region
 Here are some possible matches we found: 
 1:  Pernambuco; iso: BRA and entity type: Region
 2:  Rio de Janeiro (State); iso: BRA and entity type: Region
@@ -420,7 +423,7 @@ cat("Enter in custom name: Canoas")
 cat("The name (Canoas) will be kept in the dataset.
 The name has not been added to the key dictionary yet but can be added with the update_key_dict function.
 The row number of the custom name has been added to a vector called custom_indices.")
-custom_indices <- name_ind[3]
+custom_indices <- name_ind[2]
 ```
 The index of the entry will then be recorded for user's future inspection. 
 To stop the `phonetify_names()` function, we can simply input the letter s.
@@ -451,6 +454,7 @@ If it's not saved, be sure you saved your results in a variable with an assign f
 ind.short <- name_ind[1:3]
 .actor_updates <<- data.frame(ind = ind.short,
                               name_wrong = cdp$name[ind.short])
+head(.actor_updates)
 ```
 We can take a closer look at the unmatched and custom entries 
 ```{r}
@@ -536,7 +540,7 @@ local_key_dict <- update_key_dict(cdp, key_dict, custom_indices, unmatched_indic
 New entries to the key dict will be appended at the end of the `key_dict`. From the previous `phonetify_names` function, we can expect there to be 3 new entries to the `key_dict` (1 matched, 1 unmatched, and 1 custom name). We check the tail of the dataframe. 
 
 ```{r}
-tail(local_key_dict)
+# tail(local_key_dict)
 ```
 
 
