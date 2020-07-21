@@ -881,7 +881,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
     key.dict <- rbind(key.dict, update_df, cust_df, unmatched_df)
   } else if (exists("cust_df") & exists("update_df")){
     key.dict <- rbind(key.dict, update_df, cust_df)
-  } else if (exists("unmatched_df" & exists("update_df"))){
+  } else if (exists("unmatched_df") & exists("update_df")){
     key.dict <- rbind(key.dict, update_df, unmatched_df)
   } else if (exists("update_df")){
     key.dict <- rbind(key.dict, update_df)
