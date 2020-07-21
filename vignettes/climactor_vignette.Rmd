@@ -16,11 +16,12 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 library(ClimActor)
 ```
-  
+
 As more non-state (i.e., cities, regions, and companies) actors commit to climate action, new initiatives and databases recording such commitments have also become more commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet appear across databases with slightly different names. This discrepancy makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor's climate commitments if not dealt with appropriately. 
-  
+
 This package provides a workflow to efficiently standardize actor names across different databases and clean climate commitment data when analyzing non-state actors' climate commitments. 
-  
+
+
 ```{r, fig.align = "center", echo = F,fig.fullwidth=T, out.width="140%",fig.cap="R Package User Workflow"}
 knitr::include_graphics("r_package_workflow.png")
 
@@ -45,12 +46,21 @@ dim(cdp)
 knitr::kable(head(cdp[, 1:5]))
 ```
 
-Apart from the data you wish to clean, two other important datasets included in the ClimActor package are the key dictionary (`key_dict`) and country dictionary (`country_dict`). These datasets can be accessed once the `ClimActor` package has been called with either `library(ClimActor)` or `require(ClimActor)`. For more details on the two dictionaries, you can use `?key_dict` and `?country_dict` for the full data documentation.  
+Apart from the data to be clean, two other important datasets included in the ClimActor package are crucial to the data cleaning process. These datasets are the key dictionary (`key_dict`) and country dictionary (`country_dict`), and can be accessed once the `ClimActor` package has been called with either `library(ClimActor)` or `require(ClimActor)`. For more details on the two dictionaries, you can use `?key_dict` and `?country_dict` for the full data documentation.  
 
 ```{r}
 knitr::kable(head(key_dict[, 1:5]))
 knitr::kable(head(country_dict[, 1:5]))
 ```
+
+Finally, the `ClimActor` package also comes with a subnational contextuals database which contains contextuals information such as population, lat/lng, and information on which initiatives actors have committed to. This dataset can be accessed by calling `contextuals`. 
+
+```{r}
+knitr::kable(head(contextuals[, c("name", "iso", 
+                                  "entity_type", "initiatives_committed",
+                                  "num_commit")]))
+```
+
 
 ## Data Preparation functions
 
@@ -170,16 +180,20 @@ cdp_resolved <- resolve_entity_types(cdp, key_dict)
 
 ```{r, echo = F, comment = ""}
 # Code to allow vignette to compile while showcasing the function 
-name_iso_right <- which(paste0(cdp$name, cdp$iso) %in% paste0(key_dict$right, key_dict$iso))
-name_iso_right_short <- which(unique(paste0(cdp$name, cdp$iso)) %in% paste0(key_dict$right, key_dict$iso))
+name_iso_right <- which(paste0(cdp$name, cdp$iso) %in% paste0(key_dict$wrong, key_dict$iso))
+name_iso_right_short <- which(unique(paste0(cdp$name, cdp$iso)) %in% paste0(key_dict$wrong,
+                                                                            key_dict$iso))
 
 # Coerce NA entity types to random character
 cdp$entity_type[intersect(which(is.na(cdp$entity_type)), name_iso_right)] <- ","
 # Check for wrong entity types in those that have correct names and iso
-dict_ind <- na.omit(match(paste0(cdp$name[name_iso_right], cdp$iso[name_iso_right]),
-                          paste0(key_dict$right, key_dict$iso)))
-ent_ind <- name_iso_right[cdp$entity_type[name_iso_right] != key_dict$entity_type[dict_ind]]
-dict_ent_ind <- dict_ind[cdp$entity_type[name_iso_right] != key_dict$entity_type[dict_ind]]
+dict_ind <- match(paste0(cdp$name[name_iso_right], cdp$iso[name_iso_right]),
+                  paste0(key_dict$wrong, key_dict$iso))
+ent_ind <- name_iso_right[cdp$entity_type[name_iso_right] != 
+                            key_dict$entity_type[dict_ind]]
+dict_ent_ind <- dict_ind[cdp$entity_type[name_iso_right] != 
+                           key_dict$entity_type[dict_ind]]
+  
 cat(paste0("We found ", length(ent_ind), " number of entries with the same actor name ",
            "and iso but conflicting entity types. Would you like to resolve all",
            " conflicts by accepting the key dictionary's entity type? (Y/N)"))
@@ -331,7 +345,7 @@ Similar to the `clean_country_iso()` function, users can supply their own versio
 precleaned_names <- cdp$name
 cdp <- clean_name(cdp, key_dict, clean_enc = F)
 
-sum(!precleaned_names %in% cdp$name) # 344 cleaned names 
+sum(!precleaned_names %in% cdp$name) # 501 cleaned names 
 # Compare the differences between the pre-cleaned and cleaned names  
 head(precleaned_names[!precleaned_names %in% cdp$name]) 
 head(cdp$name[!precleaned_names %in% cdp$name])
@@ -451,10 +465,9 @@ cat("Your current progress will be returned.
 If it's not saved, be sure you saved your results in a variable with an assign function")
 
 # Export the dataframe to be used for updating the dictionary
-ind.short <- name_ind[1:3]
+ind.short <- c(name_ind[18], custom_indices, unmatched_indices)
 .actor_updates <<- data.frame(ind = ind.short,
                               name_wrong = cdp$name[ind.short])
-head(.actor_updates)
 ```
 We can take a closer look at the unmatched and custom entries 
 ```{r}
@@ -540,7 +553,7 @@ local_key_dict <- update_key_dict(cdp, key_dict, custom_indices, unmatched_indic
 New entries to the key dict will be appended at the end of the `key_dict`. From the previous `phonetify_names` function, we can expect there to be 3 new entries to the `key_dict` (1 matched, 1 unmatched, and 1 custom name). We check the tail of the dataframe. 
 
 ```{r}
-# tail(local_key_dict)
+tail(local_key_dict)
 ```
 
 
