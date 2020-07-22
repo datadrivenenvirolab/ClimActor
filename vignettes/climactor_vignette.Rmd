@@ -32,7 +32,8 @@ knitr::include_graphics("r_package_workflow.png")
 The data used in this vignette comes from the Carbon Disclosure Project's 2018-2019 City-wide emissions data. The data can be downloaded [here](https://data.cdp.net/Emissions/2018-2019-City-wide-emissions/k7qn-m6i9). Metadata of the dataset is also documented in the link above. 
 
 ```{r, include = FALSE}
-path <- system.file("extdata", "2018_-_2019_City-wide_emissions.csv", package = "ClimActor", mustWork = T)
+path <- system.file("extdata", "2018_-_2019_City-wide_emissions.csv", 
+                    package = "ClimActor", mustWork = T)
 cdp <- read.csv(path, stringsAsFactors = F,
                 as.is = T, encoding = "UTF-8")
 ```
@@ -105,6 +106,7 @@ cat("Input:skip")
 
 names(cdp)[grep("Organization", names(cdp))] <- "name"
 ```
+
 ```{r}
 # Check names after
 names(cdp)[1:5]
@@ -193,7 +195,7 @@ ent_ind <- name_iso_right[cdp$entity_type[name_iso_right] !=
                             key_dict$entity_type[dict_ind]]
 dict_ent_ind <- dict_ind[cdp$entity_type[name_iso_right] != 
                            key_dict$entity_type[dict_ind]]
-  
+
 cat(paste0("We found ", length(ent_ind), " number of entries with the same actor name ",
            "and iso but conflicting entity types. Would you like to resolve all",
            " conflicts by accepting the key dictionary's entity type? (Y/N)"))
@@ -338,7 +340,7 @@ any(is.na(cdp$iso)) # All have iso now
 
 
 ### Standardize actors' names with exact matching using `clean_name()`
-We are now finally ready to start cleaning actors' names to standardized versions for further downstream analyses. The `clean_name()` function first checks for conflicting entity types (for actors with the same name and iso) between the dataset and the key dictionary, prompting users to choose which version they think is correct. The function then checks the actors' names within the dataset for exact matches in the supplied key dictionary, and replaces it with the standardized version if the original name is already present in the supplied key dictionary. 
+We are now finally ready to start cleaning actors' names to standardized versions for further downstream analyses. The `clean_name()` function checks the actors' names within the dataset for exact matches in the supplied key dictionary, and replaces it with the standardized version if the original name is already present in the supplied key dictionary. 
 Similar to the `clean_country_iso()` function, users can supply their own version of the key dictionary (in the event that they have a locally updated version, for example). Otherwise, the package's included key dictionary can be called using `key_dict`.  The `clean_enc` argument also works similarly to the `clean_country_iso()` function, where if it is `F` (false), then the function checks the encoding of the name column within the user's dataset, guesses the correct encoding, and tries to repair it if the data was read in with the wrong encoding. The argument defaults to `T` (true). Apart from the dataset with the standardized actors' names, the `clean_name()` function also returns an `name_ind` vector, which specifies which rows in the dataset will require further downstream data cleaning (actors' names cannot be exactly matched to key dictionary). 
 
 ```{r}
@@ -390,6 +392,8 @@ Which name matches? Choose 1-15. (Type N if none match; type S to save your curr
 cat("Answer: n")
 cat("The previous name (Rio Verde) will be kept.")
 unmatched_indices <- name_ind[1]
+.actor_updates <- data.frame(ind = unmatched_indices,
+                             name_wrong = cdp$name[unmatched_indices])
 ```
 The second example considers when a match is found within the key dictionary for the actor being cleaned. 
 ```{r, echo = F, comment = ""}
@@ -413,6 +417,10 @@ Here are some possible matches we found:
 Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name)")
 cat("Answer: 1")
 cat("Chihuahua has been selected and will replace de Chihuahua in the database.")
+# Export dataset to be used for updating key dict
+.actor_updates <- rbind(.actor_updates, data.frame(ind = name_ind[18],
+                                                   name_wrong = cdp$name[name_ind[18]]))
+name_ind <- name_ind[-18]
 cdp$name[grep("de Chihuahua", cdp$name)] <- "Chihuahua"
 ```
 If we wanted to include a custom name that was not listed as an option, we could also do so. 
@@ -438,6 +446,10 @@ cat("The name (Canoas) will be kept in the dataset.
 The name has not been added to the key dictionary yet but can be added with the update_key_dict function.
 The row number of the custom name has been added to a vector called custom_indices.")
 custom_indices <- name_ind[2]
+cdp$name[grep("Canoas", cdp$name)] <- "Canoas"
+.actor_updates <- rbind(.actor_updates, data.frame(ind = custom_indices,
+                                                   name_wrong = cdp$name[custom_indices]))
+
 ```
 The index of the entry will then be recorded for user's future inspection. 
 To stop the `phonetify_names()` function, we can simply input the letter s.
@@ -464,10 +476,6 @@ cat("Answer: s")
 cat("Your current progress will be returned.
 If it's not saved, be sure you saved your results in a variable with an assign function")
 
-# Export the dataframe to be used for updating the dictionary
-ind.short <- c(name_ind[18], custom_indices, unmatched_indices)
-.actor_updates <<- data.frame(ind = ind.short,
-                              name_wrong = cdp$name[ind.short])
 ```
 We can take a closer look at the unmatched and custom entries 
 ```{r}

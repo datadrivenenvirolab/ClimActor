@@ -576,7 +576,7 @@ Please check the vector to be sure that:
         ansn2 <- as.character(ansn2)
         cat(paste0("The name (", ansn2, ") will be kept in the dataset.\n",
                    "The name has not been added to the key dictionary yet but can be added with the update_key_dict function.\n",
-                   "The row number of the custom name has been added to a vector called custom_indices.\n"))
+                   "The row number of the custom name has been added to a vector called custom_indices.\n\n"))
         if (!exists("custom_indices")){
           custom_indices <<- ind
         } else {
@@ -595,7 +595,7 @@ Please check the vector to be sure that:
         ### if the user chooses not to enter a custom name, the original name
         ### will be kept, and the index will be added to the unmatched_indices vector
       } else if (substr(toupper(as.character(ansn1)), 1, 1) == "N") {
-        cat(paste0("The previous name (", origname, ") will be kept.\n"))
+        cat(paste0("The previous name (", origname, ") will be kept.\n\n"))
         if (!exists("unmatched_indices")){
           unmatched_indices <<- ind
         } else{
@@ -608,7 +608,7 @@ Please check the vector to be sure that:
         ## (or restart the function again later)
         cat("Sorry, an invalid answer was provided.\n")
         cat(paste0("The previous name (", origname, ") will be kept.",
-                   " The index of this entry will be recorded for future inspection.\n"))
+                   " The index of this entry will be recorded for future inspection.\n\n"))
         if (!exists("unmatched_indices")){
           unmatched_indices <<- ind
         } else {
@@ -669,7 +669,7 @@ Please check the vector to be sure that:
         if (!grepl("^[0-9]{1,2}$", tmpans)){
           cat("Sorry, an invalid answer was provided.\n")
           cat(paste0("The previous name (", origname, ") will be kept.",
-                     " The index of this entry will be recorded for future inspection.\n"))
+                     " The index of this entry will be recorded for future inspection.\n\n"))
           if (!exists("unmatched_indices")){
             unmatched_indices <<- ind
           } else {
@@ -683,7 +683,7 @@ Please check the vector to be sure that:
           (!is.na(kd.filtered$right[as.numeric(ans1)]))) {
         correct.name <- kd.filtered$right[as.numeric(ans1)]
         cat(paste0(correct.name, " has been selected and will replace ", dataset$name[ind],
-                   " in the database. \n"))
+                   " in the database. \n\n"))
 
         # replacing all instances of the recently matched (raw) name in the dataset
         # with the standardized name
@@ -706,7 +706,7 @@ Please check the vector to be sure that:
     } else if (substr(toupper(as.character(ans1)), 1, 1) == "N") {
       ### if the user chooses that none of the names match, the original name
       ### will be kept, and the index will be added to the unmatched_indices vector
-      cat(paste0("The previous name (", origname, ") will be kept.\n"))
+      cat(paste0("The previous name (", origname, ") will be kept.\n\n"))
       if (!exists("unmatched_indices")){
         unmatched_indices <<- ind
       } else{
@@ -722,7 +722,7 @@ Please check the vector to be sure that:
       ans3 <- as.character(ans3)
       cat(paste0("The name (", ans3, ") will be kept in the dataset.\n",
                  "The name has not been added to the key dictionary yet but can be added with the update_key_dict function.\n",
-                 "The row number of the custom name has been added to a vector called custom_indices.\n"))
+                 "The row number of the custom name has been added to a vector called custom_indices.\n\n"))
       if (!exists("custom_indices")){
         custom_indices <<- ind
       } else {
@@ -743,7 +743,7 @@ Please check the vector to be sure that:
       ## (or restart the function again later)
       cat("Sorry, an invalid answer was provided.\n")
       cat(paste0("The previous name (", origname, ") will be kept.",
-                 " The index of this entry will be recorded for future inspection.\n"))
+                 " The index of this entry will be recorded for future inspection.\n\n"))
       if (!exists("unmatched_indices")){
         unmatched_indices <<- ind
       } else {
