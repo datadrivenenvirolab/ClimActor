@@ -140,7 +140,7 @@ fuzzify_country <- function(dataset, country_keydict){
           (!is.na(tmp[as.numeric(ans1)]))) {
         correct.name <- tmp[as.numeric(ans1)]
         cat(paste0(correct.name, " has been selected and will replace ",
-                   dataset$country[i], " in the database.\n"))
+                   dataset$country[i], " in the database.\n\n"))
 
         # replacing all instances of the recently matched (raw) name in the dataset
         # with the standardized name
@@ -170,7 +170,7 @@ fuzzify_country <- function(dataset, country_keydict){
         ans3 <- as.character(ans3)
         cat(paste0("The name (", ans3, ") will be kept in the dataset.\n",
                    "The name has not been added to the key dictionary yet but can be added with the update_country_dict function.\n",
-                   "The row number of the custom name has been added to the vector custom_count"))
+                   "The row number of the custom name has been added to the vector custom_count.\n\n"))
         if (!exists("custom_count")){
           custom_count <<- i
         } else {
@@ -188,7 +188,7 @@ fuzzify_country <- function(dataset, country_keydict){
         ### if the user chooses not to enter a custom name, the original name
         ### will be kept, and the index will be added to the unmatched_indices vector
       } else if (toupper(as.character(ans2)) == "N") {
-        cat(paste0("The previous name (", origname, ") will be kept.\n"))
+        cat(paste0("The previous name (", origname, ") will be kept.\n\n"))
         if (!(exists("unmatched_count"))){
           unmatched_count <<- i
         } else {
@@ -201,7 +201,7 @@ fuzzify_country <- function(dataset, country_keydict){
     } else {
       cat("Sorry, an invalid answer was provided.\n")
       cat(paste0("The previous name (", origname, ") will be kept.",
-                 " The index of this entry will be recorded for future inspection.\n"))
+                 " The index of this entry will be recorded for future inspection.\n\n"))
       if (!(exists("unmatched_count"))){
         unmatched_count <<- i
       } else {
