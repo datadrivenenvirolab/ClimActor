@@ -25,7 +25,7 @@ The vignette presents a recommended workflow for using the `ClimActor` package, 
 
 ```{r} 
 browseVignettes("ClimActor")
-
 ```
 ## Frequently Asked Questions
 
+- I got an error 
