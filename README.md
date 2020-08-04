@@ -29,9 +29,16 @@ browseVignettes("ClimActor")
 ## Frequently Asked Questions
 
 - I got an error while trying to install the package 
+
 It is likely that the error is due to a missing package which is required for `ClimActor` but which you have not installed (especially if you are trying to install the vignette as well). Try checking the `DESCRIPTION` file for a list of required packages. 
+
 - Do I have to follow the order of functions described in the vignette/flow diagram?
-It is recommended that you follow of the order 
+
+It is recommended that you follow of the order of the vignette/flow diagram as certain functions require outputs that would be created from previous functions.  
+
+- Do I have to run all the functions within the package to clean my dataset? 
+
+No - the functions are meant to be comprehensive and cover all key aspects of data cleaning while working with non-state climate actors. However, you may find that your dataset  have existing data which requires no cleaning, and thus will not require certain functions.   
 
 ## Bug Reports / Requests
 Please file any bugs or requests for the package [here](https://github.com/datadrivenenvirolab/ClimActor/issues).
