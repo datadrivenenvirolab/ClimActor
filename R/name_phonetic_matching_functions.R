@@ -139,15 +139,19 @@ fuzzify_country <- function(dataset, country_keydict){
           (as.numeric(ans1) %in% 1:15) &
           (!is.na(tmp[as.numeric(ans1)]))) {
         correct.name <- tmp[as.numeric(ans1)]
+        correct.iso <- unique(country_keydict$iso[country_keydict$right == correct.name])
         cat(paste0(correct.name, " has been selected and will replace ",
                    dataset$country[i], " in the database.\n\n"))
 
+        # Add ISO
+
         # replacing all instances of the recently matched (raw) name in the dataset
-        # with the standardized name
+        # with the standardized name and also add iso
         samecount_inds <- which(dataset$country == origname)
 
         if (length(samecount_inds) != 0) {
           dataset$country[samecount_inds] <- correct.name
+          dataset$iso[samecount_inds] <- correct.iso
           country_ind <<- country_ind[!(country_ind %in% samecount_inds)]
         }
       }
