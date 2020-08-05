@@ -291,7 +291,7 @@ cat("[1] \"The original country is Taiwan, Greater China (Actor name: Yilan)\"
  15. Bosnia and Herzegovina
 Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress)")
 cat("Answer: 1")
-cat("[1] \"Taiwan has been selected and will replace Taiwan, Greater China in the database.\"")
+cat("[1] \"Taiwan has been selected and will replace Taiwan, Greater China in the database.\"\n")
 cat("[1] \"The original country is Côte d'Ivoire (Actor name: Commune de Bouaké)\"
 [1] \"Here are some possible matches we found: \"
 1. Cote d'Ivoire
@@ -318,6 +318,9 @@ country_short <- country_ind[!duplicated(cdp$Country[country_ind]) & !is.na(cdp$
 
 cdp$Country[cdp$Country == "Taiwan, Greater China"] <- "Taiwan"
 cdp$Country[cdp$Country == "Côte d'Ivoire"] <- "Cote d'Ivoire"
+cdp$iso[cdp$Country == "Taiwan"] <- "TWN"
+cdp$iso[cdp$Country == "Cote d'Ivoire"] <- "CIV"
+
 country_ind <- which(!(cdp$country %in% country_dict$right))
 ```
 
@@ -327,17 +330,10 @@ sum(cdp$Country %in% country_dict$right)
 # Quick check on country_ind 
 country_ind
 ```
-Now, with all the countries of the actors in the dataset all cleaned, we can go back to the clean_country_iso function again to add in the iso for the countries which were missed out because it was not cleaned. 
+The `fuzzify_country` function also automatically includes the 3-letter ISO to the cleaned countries. We can do a quick check to make sure the ISOs are included. 
 ```{r}
-# Check ISO first 
 any(is.na(cdp$iso))
-cdp$Country[is.na(cdp$iso)]
-
-cdp <- clean_country_iso(cdp, country_dict, iso = 3, clean_enc = T) # We know the encoding is fine
-
-any(is.na(cdp$iso)) # All have iso now 
 ```
-
 
 ### Standardize actors' names with exact matching using `clean_name()`
 We are now finally ready to start cleaning actors' names to standardized versions for further downstream analyses. The `clean_name()` function checks the actors' names within the dataset for exact matches in the supplied key dictionary, and replaces it with the standardized version if the original name is already present in the supplied key dictionary. 
@@ -390,38 +386,38 @@ Here are some possible matches we found:
 12: Amazonas, Brazil; iso: BRA and entity type: Region
 Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name)")
 cat("Answer: n")
-cat("The previous name (Rio Verde) will be kept.")
+cat("The previous name (Rio Verde) will be kept.\n")
 unmatched_indices <- name_ind[1]
 .actor_updates <- data.frame(ind = unmatched_indices,
                              name_wrong = cdp$name[unmatched_indices])
 ```
 The second example considers when a match is found within the key dictionary for the actor being cleaned. 
 ```{r, echo = F, comment = ""}
-cat("The original name is de Chihuahua with iso code MEX and entity type City
+cat("The original name is Eskişehir Municipality with iso code TUR and entity type City
 Here are some possible matches we found: 
-1:  Chihuahua; iso: MEX and entity type: City
-2:  Celaya; iso: MEX and entity type: City
-3:  Tamiahua; iso: MEX and entity type: City
-4:  Tekax; iso: MEX and entity type: City
-5:  San Miguel de Allende; iso: MEX and entity type: City
-6:  Teocelo; iso: MEX and entity type: City
-7:  Córdoba; iso: MEX and entity type: City
-8:  Apodaca; iso: MEX and entity type: City
-9:  Tuxcueca; iso: MEX and entity type: City
-10: Tapalpa; iso: MEX and entity type: City
-11: Totatiche; iso: MEX and entity type: City
-12: Degollado; iso: MEX and entity type: City
-13: Queretaro; iso: MEX and entity type: City
-14: Juárez; iso: MEX and entity type: City
-15: Xalapa; iso: MEX and entity type: City
+1:  Eskisehir; iso: TUR and entity type: City
+2:  Tepebasi, Eskisehir; iso: TUR and entity type: City
+3:  Nevsehir; iso: TUR and entity type: City
+4:  Izmir; iso: TUR and entity type: City
+5:  Yenisehir; iso: TUR and entity type: City
+6:  Çankaya; iso: TUR and entity type: City
+7:  Ankara; iso: TUR and entity type: City
+8:  Kadikoy; iso: TUR and entity type: City
+9:  Tuzla; iso: TUR and entity type: City
+10: Bursa; iso: TUR and entity type: City
+11: Istanbul; iso: TUR and entity type: City
+12: Kocaeli; iso: TUR and entity type: City
+13: Karsiyaka - Izmir; iso: TUR and entity type: City
+14: Gaziantep; iso: TUR and entity type: City
+15: Besiktas; iso: TUR and entity type: City
 Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name)")
 cat("Answer: 1")
-cat("Chihuahua has been selected and will replace de Chihuahua in the database.")
+cat("Eskisehir has been selected and will replace Eskişehir Municipality in the database.")
 # Export dataset to be used for updating key dict
-.actor_updates <- rbind(.actor_updates, data.frame(ind = name_ind[18],
-                                                   name_wrong = cdp$name[name_ind[18]]))
-name_ind <- name_ind[-18]
-cdp$name[grep("de Chihuahua", cdp$name)] <- "Chihuahua"
+.actor_updates <- rbind(.actor_updates, data.frame(ind = name_ind[5],
+                                                   name_wrong = cdp$name[name_ind[5]]))
+name_ind <- name_ind[-5]
+cdp$name[grep("Eskişehir Municipality", cdp$name)] <- "Eskisehir"
 ```
 If we wanted to include a custom name that was not listed as an option, we could also do so. 
 ```{r, echo = F, comment = ""}
