@@ -1,7 +1,7 @@
 ## code to update key dictionaries goes here
 
 # Export dictionaries to RDA
-key_dict <- read.csv("key_dict_new_August2020.csv",
+key_dict <- read.csv("key_dict_new_Aug2020.csv",
                      encoding = "UTF-8", stringsAsFactors = F)
 
 # save(key_dict, file = "../data/key_dict.rda")
