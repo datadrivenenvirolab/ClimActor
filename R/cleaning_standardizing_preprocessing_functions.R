@@ -6,17 +6,17 @@
 #' @title Cleans the dataset's country names and adds iso.
 #' @description Cleans the dataset actors' countries using exact matches based
 #' on the package's country dictionary and adds corresponding iso information to
-#' the dataset. For more information on `clean_enc`, see the vignette.
+#' the dataset. For more information on \code{clean_enc}, see the vignette.
 #'
-#' @details The `clean_enc` argument is used for users to denote whether the data is
-#' read in with the correct encoding. Use `clean_enc = T` if users are sure of the encoding
+#' @details The \code{clean_enc} argument is used for users to denote whether the data is
+#' read in with the correct encoding. Use \code{clean_enc = T} if users are sure of the encoding
 #' that the data is in and is sure data is read in with the right encoding and
-#' `clean_enc = F` if users are unsure of data's encoding or if unsure if data is read in
+#' \code{clean_enc = F} if users are unsure of data's encoding or if unsure if data is read in
 #' with the correct encoding.
 #'
-#' If `clean_enc = F`, then the function will check the encoding of the country column in
+#' If \code{clean_enc = F}, then the function will check the encoding of the country column in
 #' the user's dataset and tries to fix it if the data was read in with the wrong encoding
-#' (with `rvest::repair_encoding()`).
+#' (with \code{rvest::repair_encoding()}).
 #' @param dataset Dataset to clean the country names for
 #' @param country.dict Country dictionary to clean the dataset against
 #' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
@@ -165,7 +165,7 @@ fill_type <- function(dataset) {
 
 # #' @export
 # #' @title Standardizes existing entity types within the dataset
-# #' @description Similar to function \code{fill_type}, guesses the entity type of actors based
+# #' @description Similar to function \code{fill_type()}, guesses the entity type of actors based
 # #' based on commonly used words. However, this function applies specifically
 # #' to differentiate between different subnational actors (City vs Region)
 # #' @param dataset Dataset to standardize and clean the entity type for
@@ -198,8 +198,8 @@ fill_type <- function(dataset) {
 #' names of actors to improve phonetic matching accuracy. See vignette
 #' for the full list of "extraneous" words.
 #'
-#' @details It is recommended that you use this function after the `fill_type()` and
-#' `resolve_entity_types` functions, as those functions require the presence of these
+#' @details It is recommended that you use this function after the \code{fill_type()} and
+#' \code{resolve_entity_types()} functions, as those functions require the presence of these
 #' "extraneous" words to be fully effective.
 #'
 #' @param dataset Dataset containing actors' names

@@ -78,7 +78,7 @@ clean_name <- function(dataset, key.dict, clean_enc = T) {
 
 #' @export
 #' @title Matches country names based on fuzzy matching
-#' @description \code{fuzzify_country} cleans the "country" column in the user's dataset
+#' @description \code{fuzzify_country()} cleans the "country" column in the user's dataset
 #' for those names that did not find an exact match in the existing country_dictionary.
 #' Given the small size of the country dictionary and the relatively fewer number of
 #' countries (as compared to climate actors), a fuzzy string matching algorithm using
@@ -306,7 +306,7 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
 
 #' @export
 #' @title Cleans name using phonetic matching
-#' @description \code{phonetify_names} searches for actors' names which are not standardized
+#' @description \code{phonetify_names()} searches for actors' names which are not standardized
 #' and standardizes them according to the key dictionary. Users get to choose which name
 #' is correct based on a selection narrowed down by using phonetic matching. Users can
 #' choose to input custom names should the names not be in the key dictionary.
