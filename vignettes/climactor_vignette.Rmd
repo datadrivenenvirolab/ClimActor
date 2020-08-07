@@ -368,32 +368,11 @@ cdp <- phonetify_names(cdp, key_dict)
 
 ```
 
-The first example considers an actor which is currently not in the key dict, with which the user does not want to enter a custom name for. 
+The first example considers when a match is found within the key dictionary for the actor being cleaned.
+
 ```{r, echo = F, comment = ""}
-cat("The original name is Rio Verde with iso code BRA and entity type Region
-Here are some possible matches we found: 
-1:  Rio de Janeiro (State); iso: BRA and entity type: Region
-2:  Rondônia; iso: BRA and entity type: Region
-3:  Rio Grande do Sul; iso: BRA and entity type: Region
-4:  Ceara; iso: BRA and entity type: Region
-5:  Acre; iso: BRA and entity type: Region
-6:  Mato Grosso; iso: BRA and entity type: Region
-7:  Minas Gerais; iso: BRA and entity type: Region
-8:  São Paulo State; iso: BRA and entity type: Region
-9:  Pernambuco; iso: BRA and entity type: Region
-10: Amapa; iso: BRA and entity type: Region
-11: Tocantins; iso: BRA and entity type: Region
-12: Amazonas, Brazil; iso: BRA and entity type: Region
-Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name)")
-cat("Answer: n")
-cat("The previous name (Rio Verde) will be kept.\n")
-unmatched_indices <- name_ind[1]
-.actor_updates <- data.frame(ind = unmatched_indices,
-                             name_wrong = cdp$name[unmatched_indices])
-```
-The second example considers when a match is found within the key dictionary for the actor being cleaned. 
-```{r, echo = F, comment = ""}
-cat("The original name is Eskişehir Municipality with iso code TUR and entity type City
+cat("Currently cleaning actor 1 of 60 (0%) completed.
+The original name is Eskişehir Municipality with iso code TUR and entity type City
 Here are some possible matches we found: 
 1:  Eskisehir; iso: TUR and entity type: City
 2:  Tepebasi, Eskisehir; iso: TUR and entity type: City
@@ -414,59 +393,94 @@ Which name matches? Choose 1-15. (Type N if none match; type S to save your curr
 cat("Answer: 1")
 cat("Eskisehir has been selected and will replace Eskişehir Municipality in the database.")
 # Export dataset to be used for updating key dict
-.actor_updates <- rbind(.actor_updates, data.frame(ind = name_ind[5],
-                                                   name_wrong = cdp$name[name_ind[5]]))
-name_ind <- name_ind[-5]
+.actor_updates <- data.frame(ind = name_ind[1],
+                             name_wrong = cdp$name[name_ind[1]])
+name_ind <- name_ind[-1]
 cdp$name[grep("Eskişehir Municipality", cdp$name)] <- "Eskisehir"
 ```
-If we wanted to include a custom name that was not listed as an option, we could also do so. 
+
+The second example considers an actor which is currently not in the key dict, with which the user opts to enter a custom name for. 
 ```{r, echo = F, comment = ""}
-cat("The original name is Prefeitura de Canoas with iso code BRA and entity type Region
+cat("Currently cleaning actor 2 of 60 (1.7%) completed.
+The original name is Alcaldia de Pereira with iso code COL and entity type City
 Here are some possible matches we found: 
-1:  Pernambuco; iso: BRA and entity type: Region
-2:  Rio de Janeiro (State); iso: BRA and entity type: Region
-3:  Minas Gerais; iso: BRA and entity type: Region
-4:  São Paulo State; iso: BRA and entity type: Region
-5:  Rio Grande do Sul; iso: BRA and entity type: Region
-6:  Ceara; iso: BRA and entity type: Region
-7:  Tocantins; iso: BRA and entity type: Region
-8:  Mato Grosso; iso: BRA and entity type: Region
-9:  Acre; iso: BRA and entity type: Region
-10: Amapa; iso: BRA and entity type: Region
-11: Rondônia; iso: BRA and entity type: Region
-12: Amazonas, Brazil; iso: BRA and entity type: Region
-Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name) ")
+1:  Palmira; iso: COL and entity type: City
+2:  Yopal; iso: COL and entity type: City
+3:  Barrancabermeja; iso: COL and entity type: City
+4:  Ibagué; iso: COL and entity type: City
+5:  Cartago; iso: COL and entity type: City
+6:  Sopó; iso: COL and entity type: City
+7:  Rionegro; iso: COL and entity type: City
+8:  Cartagena de Indias; iso: COL and entity type: City
+9:  Armenia; iso: COL and entity type: City
+10: Montería; iso: COL and entity type: City
+11: Tulua; iso: COL and entity type: City
+12: Leticia; iso: COL and entity type: City
+13: Sincelejo; iso: COL and entity type: City
+14: Tunja; iso: COL and entity type: City
+15: Villavicencio; iso: COL and entity type: City
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name)")
 cat("Answer: c")
-cat("Enter in custom name: Canoas")
-cat("The name (Canoas) will be kept in the dataset.
+cat("Enter in custom name: Pereira")
+cat("The name (Pereira) will be kept in the dataset.
 The name has not been added to the key dictionary yet but can be added with the update_key_dict function.
-The row number of the custom name has been added to a vector called custom_indices.")
-custom_indices <- name_ind[2]
-cdp$name[grep("Canoas", cdp$name)] <- "Canoas"
+The row number of the custom name has been added to a vector called custom_indices.\n")
+custom_indices <- name_ind[1]
+cdp$name[grep("Pereira", cdp$name)] <- "Pereira"
 .actor_updates <- rbind(.actor_updates, data.frame(ind = custom_indices,
                                                    name_wrong = cdp$name[custom_indices]))
+```
+If we wanted to keep a name as it is in the dataset without changing or picking any matching names, we could also do so. 
+
+```{r, echo = F, comment = ""}
+cat("Currently cleaning actor 3 of 60 (3.3%) completed.
+The original name is Prefeitura de Mairiporã with iso code BRA and entity type City
+Here are some possible matches we found: 
+1:  Pedreira; iso: BRA and entity type: City
+2:  Limeira; iso: BRA and entity type: City
+3:  Rio Verde; iso: BRA and entity type: City
+4:  Brumadinho; iso: BRA and entity type: City
+5:  Maceió; iso: BRA and entity type: City
+6:  Araraquara; iso: BRA and entity type: City
+7:  Cordeirópolis; iso: BRA and entity type: City
+8:  Fraiburgo; iso: BRA and entity type: City
+9:  Porto Velho; iso: BRA and entity type: City
+10: Tupã; iso: BRA and entity type: City
+11: Cajamar; iso: BRA and entity type: City
+12: Campina Grande; iso: BRA and entity type: City
+13: Cruzeiro; iso: BRA and entity type: City
+14: Pirenópolis; iso: BRA and entity type: City
+15: Presidente Prudente; iso: BRA and entity type: City
+Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name)")
+cat("Answer: n")
+cat("The previous name (Prefeitura de Mairiporã) will be kept.\n")
+unmatched_indices <- name_ind[2]
+.actor_updates <- rbind(.actor_updates, data.frame(ind = unmatched_indices,
+                                                   name_wrong = cdp$name[unmatched_indices]))
+
 
 ```
 The index of the entry will then be recorded for user's future inspection. 
 To stop the `phonetify_names()` function, we can simply input the letter s.
 ```{r, echo = F, comment = ""}
-cat("The original name is Município de Odemira with iso code PRT and entity type City
+cat("Currently cleaning actor 4 of 60 (5%) completed.
+The original name is Munícipio de Sintra with iso code PRT and entity type City
 Here are some possible matches we found: 
-1:  Odemira; iso: PRT and entity type: City
-2:  Santarém; iso: PRT and entity type: City
-3:  Moita; iso: PRT and entity type: City
-4:  Guimarães; iso: PRT and entity type: City
-5:  Mirandela; iso: PRT and entity type: City
-6:  Faro; iso: PRT and entity type: City
-7:  Ovar; iso: PRT and entity type: City
-8:  Câmara de Lobos; iso: PRT and entity type: City
-9:  Torres Vedras; iso: PRT and entity type: City
-10: Águeda; iso: PRT and entity type: City
-11: Portalegre; iso: PRT and entity type: City
-12: Braga; iso: PRT and entity type: City
-13: Coruche; iso: PRT and entity type: City
-14: Montalegre; iso: PRT and entity type: City
-15: Município da Batalha; iso: PRT and entity type: City
+1:  Santarém; iso: PRT and entity type: City
+2:  Odemira; iso: PRT and entity type: City
+3:  Mirandela; iso: PRT and entity type: City
+4:  Torres Vedras; iso: PRT and entity type: City
+5:  Faro; iso: PRT and entity type: City
+6:  Ovar; iso: PRT and entity type: City
+7:  Moita; iso: PRT and entity type: City
+8:  Guimarães; iso: PRT and entity type: City
+9:  Águeda; iso: PRT and entity type: City
+10: Montalegre; iso: PRT and entity type: City
+11: Câmara de Lobos; iso: PRT and entity type: City
+12: Portalegre; iso: PRT and entity type: City
+13: Braga; iso: PRT and entity type: City
+14: Coruche; iso: PRT and entity type: City
+15: Castelo Branco; iso: PRT and entity type: City
 Which name matches? Choose 1-15. (Type N if none match; type S to save your current progress; type C to enter a custom name)")
 cat("Answer: s")
 cat("Your current progress will be returned.

@@ -122,7 +122,7 @@ fill_type <- function(dataset) {
                            special|plastic|health|medical|maintain|concie|office|hotel|
                            food|center|charg|therap|pharma|device|harbor|harbour|mecan|
                            mecha|ltda|L\\.T\\.D\\.A\\.|ltda\\.|styli|style|casting|
-                           investm|ventur|textil|knit|appare|merchan|sourc|soup|computer|
+                           investm|venture|textil|knit|appare|merchan|sourc|soup|computer|
                            labora|farm|greenh|outdoor|access|custom|produc|rubber|brewing|
                            wood|lumber|bakery| baker| brand|dairy|confecti|interface|
                            corporate|contract|electric|telecom|recycl|waste|energy|
