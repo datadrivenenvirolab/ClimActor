@@ -8,12 +8,6 @@
 #' on the package's country dictionary and adds corresponding iso information to
 #' the dataset. For more information on `clean_enc`, see the vignette.
 #'
-#' @param dataset Dataset to clean the country names for
-#' @param country.dict Country dictionary to clean the dataset against
-#' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
-#' @param clean_enc Is the data read in with the correct encoding?
-#' If unknown, set as FALSE. Defaults to TRUE
-#'
 #' @details The `clean_enc` argument is used for users to denote whether the data is
 #' read in with the correct encoding. Use `clean_enc = T` if users are sure of the encoding
 #' that the data is in and is sure data is read in with the right encoding and
@@ -23,6 +17,12 @@
 #' If `clean_enc = F`, then the function will check the encoding of the country column in
 #' the user's dataset and tries to fix it if the data was read in with the wrong encoding
 #' (with `rvest::repair_encoding()`).
+#' @param dataset Dataset to clean the country names for
+#' @param country.dict Country dictionary to clean the dataset against
+#' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
+#' @param clean_enc Is the data read in with the correct encoding?
+#' If unknown, set as FALSE. Defaults to TRUE
+#'
 #' @return The original dataset with the country names cleaned
 #'
 #' @example \dontrun{clean_country_iso(df, country_dict, iso = 3, clean_enc = F)}
@@ -82,11 +82,12 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
 #' actor name
 #' @description Guesses the entity type for the actors within the dataset based on commonly
 #' used words for the respective entity types.
-#' @param dataset Dataset to fill in the entity type for
 #'
 #' @details The fill type function looks at the actor name and looks for common words
 #' for each entity type (such as "City", "Town" for cities and "Inc.", "Co." for companies)
 #' to guess the entity type for that actor.
+#' @param dataset Dataset to fill in the entity type for
+#'
 #' @return The original dataset with entity types filled for the actors
 #'
 #' @example \dontrun{fill_type(df)}
@@ -197,11 +198,12 @@ fill_type <- function(dataset) {
 #' names of actors to improve phonetic matching accuracy. See vignette
 #' for the full list of "extraneous" words.
 #'
-#' @param dataset Dataset containing actors' names
-#'
 #' @details It is recommended that you use this function after the `fill_type()` and
 #' `resolve_entity_types` functions, as those functions require the presence of these
 #' "extraneous" words to be fully effective.
+#'
+#' @param dataset Dataset containing actors' names
+#'
 #' @return Dataset with extraneous words removed from actors' names
 remove_extra <- function(dataset){
   # cleaning names by getting rid of extraneous words

@@ -310,8 +310,6 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
 #' and standardizes them according to the key dictionary. Users get to choose which name
 #' is correct based on a selection narrowed down by using phonetic matching. Users can
 #' choose to input custom names should the names not be in the key dictionary.
-#' @param dataset Dataset containing actors by user
-#' @param key.dict Key dictionary to clean actors' names against
 #'
 #' @details A combination of 5 different phonetic representations (Metaphone, Nysiis modified,
 #' Onca modified refined, Phonex, Roger Root) is used in tandem with a variety of string
@@ -319,6 +317,10 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
 #' cosine distance (between q-gram profiles), Jaccard distance between (q-gram profiles),
 #' and Jaro-Winker distance) to get an accurate match of the actor's name within the
 #' supplied key dictionary.
+#'
+#' @param dataset Dataset containing actors by user
+#' @param key.dict Key dictionary to clean actors' names against
+#'
 #' @return Cleaned dataset with actors names standardized against the key dictionary.
 #' @return A few vectors of indices will also be created to store the indices of those names
 #' that needs to be matched. The first is a vector of indices of all actors that
