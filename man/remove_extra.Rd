@@ -19,7 +19,7 @@ names of actors to improve phonetic matching accuracy. See vignette
 for the full list of "extraneous" words.
 }
 \details{
-It is recommended that you use this function after the `fill_type()` and
-`resolve_entity_types` functions, as those functions require the presence of these
+It is recommended that you use this function after the \code{fill_type()} and
+\code{resolve_entity_types()} functions, as those functions require the presence of these
 "extraneous" words to be fully effective.
 }

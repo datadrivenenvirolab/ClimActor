@@ -23,16 +23,16 @@ The original dataset with the country names cleaned
 \description{
 Cleans the dataset actors' countries using exact matches based
 on the package's country dictionary and adds corresponding iso information to
-the dataset. For more information on `clean_enc`, see the vignette.
+the dataset. For more information on \code{clean_enc}, see the vignette.
 }
 \details{
-The `clean_enc` argument is used for users to denote whether the data is
-read in with the correct encoding. Use `clean_enc = T` if users are sure of the encoding
+The \code{clean_enc} argument is used for users to denote whether the data is
+read in with the correct encoding. Use \code{clean_enc = T} if users are sure of the encoding
 that the data is in and is sure data is read in with the right encoding and
-`clean_enc = F` if users are unsure of data's encoding or if unsure if data is read in
+\code{clean_enc = F} if users are unsure of data's encoding or if unsure if data is read in
 with the correct encoding.
 
-If `clean_enc = F`, then the function will check the encoding of the country column in
+If \code{clean_enc = F}, then the function will check the encoding of the country column in
 the user's dataset and tries to fix it if the data was read in with the wrong encoding
-(with `rvest::repair_encoding()`).
+(with \code{rvest::repair_encoding()}).
 }

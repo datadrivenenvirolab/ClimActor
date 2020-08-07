@@ -22,7 +22,7 @@ denoting countries for which custom actor names are given by the user, and will 
 used to update the country dictionary.
 }
 \description{
-\code{fuzzify_country} cleans the "country" column in the user's dataset
+\code{fuzzify_country()} cleans the "country" column in the user's dataset
 for those names that did not find an exact match in the existing country_dictionary.
 Given the small size of the country dictionary and the relatively fewer number of
 countries (as compared to climate actors), a fuzzy string matching algorithm using

@@ -22,7 +22,7 @@ denoting names for which custom actor names are given by the user, and will be
 used to update the key dictionary.
 }
 \description{
-\code{phonetify_names} searches for actors' names which are not standardized
+\code{phonetify_names()} searches for actors' names which are not standardized
 and standardizes them according to the key dictionary. Users get to choose which name
 is correct based on a selection narrowed down by using phonetic matching. Users can
 choose to input custom names should the names not be in the key dictionary.
