@@ -16,6 +16,10 @@ The original dataset with entity types filled for the actors
 }
 \description{
 Guesses the entity type for the actors within the dataset based on commonly
-used words for the respective entity types. See vignette for a more detailed
-explanation on how the function works.
+used words for the respective entity types.
+}
+\details{
+The fill type function looks at the actor name and looks for common words
+for each entity type (such as "City", "Town" for cities and "Inc.", "Co." for companies)
+to guess the entity type for that actor.
 }

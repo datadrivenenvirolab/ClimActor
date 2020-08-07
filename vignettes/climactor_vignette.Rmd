@@ -539,7 +539,7 @@ head(cdp_merged[, c("name", "iso", "entity_type", "initiatives_committed",
 Examples of plots made using data from the contextuals database:
 ```{r, echo = F, out.width="100%", figures-side, fig.show = "hold"}
 knitr::include_graphics("l3_barplot.png")
-knitr::include_graphics("l3_map_plot_withactors_img.png")
+knitr::include_graphics("l3_map_plot_V2.png")
 
 ```
 

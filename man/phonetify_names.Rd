@@ -27,3 +27,11 @@ and standardizes them according to the key dictionary. Users get to choose which
 is correct based on a selection narrowed down by using phonetic matching. Users can
 choose to input custom names should the names not be in the key dictionary.
 }
+\details{
+A combination of 5 different phonetic representations (Metaphone, Nysiis modified,
+Onca modified refined, Phonex, Roger Root) is used in tandem with a variety of string
+distance metrics (Full Damerau-Levenshtein distance, q-gram distance,
+cosine distance (between q-gram profiles), Jaccard distance between (q-gram profiles),
+and Jaro-Winker distance) to get an accurate match of the actor's name within the
+supplied key dictionary.
+}
