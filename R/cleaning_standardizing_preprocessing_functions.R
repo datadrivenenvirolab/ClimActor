@@ -143,7 +143,7 @@ fill_type <- function(dataset) {
   # with "regions" (as coded in the key dictionary)
   # reasoning for having this entity type filled after companies is the same as
   # why the filling of cities came after companies
-  dataset$entity_type[grep("Prov[e|i]nce|Region|State|Pref",
+  dataset$entity_type[grep("Prov[e|i]nce|Region|State|Prefect",
                            dataset$name, ignore.case = TRUE)] <- "Region"
 
   # alert the user to fill any NAs in the entity_type column, if they exist
