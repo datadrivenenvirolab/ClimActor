@@ -7,7 +7,8 @@
 \format{
 contextuals is a dataframe with contextuals information for 10462 unique actors
 (rows) and 15 variables (columns)
-#' @format \describe{
+
+\describe{
     \item{\code{name}}{char Name of the subnational actor}
     \item{\code{iso}}{char 3 letter ISO codes for the country of actor}
     \item{\code{country}}{char Country in which actor resides in}
