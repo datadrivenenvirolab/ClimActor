@@ -483,8 +483,6 @@ Please check the vector to be sure that:
     # for all names in key.dict$wrong
 
     ind <- ind.short[i]
-    cat(paste0("Currently cleaning actor ", ind, " of ", ind.short, " (",
-               round((ind-1)/ind.short * 100, 1), "%) completed"))
 
     ## filtering out only the rows of the key dictionary that have a matching
     ## iso and entity type as the actor that is currently being fuzzy matched
@@ -575,6 +573,8 @@ Please check the vector to be sure that:
 
     # keeping track of the original name so that all of the same raw names can be changed simultaneously
     origname <- dataset$name[ind]
+    cat(paste0("Currently cleaning actor ", i, " of ", length(ind.short), " (",
+               round((i-1)/length(ind.short) * 100, 1), "%) completed.\n"))
 
     # Check if there were any matches
     if (nrow(kd.filtered) == 0){
