@@ -219,7 +219,7 @@ remove_extra <- function(dataset){
              "Gemeente", "Comune", "Kommune", "Republic",
              "city of", "municipality of", "town of", "province of",
              "comune di", "municipalidad de", "prefeitura de" ,
-             "munic[\u00ed]pio de")
+             "munic[\u00ed]pio de", "company", "pte", "inc", "group")
   words_rm <- paste0(c(paste("\\s", trimws(words), "\\s", sep = ""),
                        paste("\\s", trimws(words), "$", sep = ""),
                        paste("^", trimws(words), "\\s", sep = "")),

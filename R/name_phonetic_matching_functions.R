@@ -483,6 +483,8 @@ Please check the vector to be sure that:
     # for all names in key.dict$wrong
 
     ind <- ind.short[i]
+    cat(paste0("Currently cleaning actor ", ind, " of ", ind.short, " ("
+               round((ind-1)/ind.short * 100, 1), "%) completed"))
 
     ## filtering out only the rows of the key dictionary that have a matching
     ## iso and entity type as the actor that is currently being fuzzy matched
