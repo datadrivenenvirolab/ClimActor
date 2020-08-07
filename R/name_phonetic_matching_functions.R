@@ -312,6 +312,7 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
 #' choose to input custom names should the names not be in the key dictionary.
 #' @param dataset Dataset containing actors by user
 #' @param key.dict Key dictionary to clean actors' names against
+#'
 #' @details A combination of 5 different phonetic representations (Metaphone, Nysiis modified,
 #' Onca modified refined, Phonex, Roger Root) is used in tandem with a variety of string
 #' distance metrics (Full Damerau-Levenshtein distance, q-gram distance,

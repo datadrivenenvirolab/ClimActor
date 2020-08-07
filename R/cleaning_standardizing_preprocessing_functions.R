@@ -13,6 +13,7 @@
 #' @param iso Input either 2 or 3 to select for 2 or 3 letter ISO code. Defaults to ISO3
 #' @param clean_enc Is the data read in with the correct encoding?
 #' If unknown, set as FALSE. Defaults to TRUE
+#'
 #' @details The `clean_enc` argument is used for users to denote whether the data is
 #' read in with the correct encoding. Use `clean_enc = T` if users are sure of the encoding
 #' that the data is in and is sure data is read in with the right encoding and
@@ -82,6 +83,7 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
 #' @description Guesses the entity type for the actors within the dataset based on commonly
 #' used words for the respective entity types.
 #' @param dataset Dataset to fill in the entity type for
+#'
 #' @details The fill type function looks at the actor name and looks for common words
 #' for each entity type (such as "City", "Town" for cities and "Inc.", "Co." for companies)
 #' to guess the entity type for that actor.
@@ -196,6 +198,7 @@ fill_type <- function(dataset) {
 #' for the full list of "extraneous" words.
 #'
 #' @param dataset Dataset containing actors' names
+#'
 #' @details It is recommended that you use this function after the `fill_type()` and
 #' `resolve_entity_types` functions, as those functions require the presence of these
 #' "extraneous" words to be fully effective.
