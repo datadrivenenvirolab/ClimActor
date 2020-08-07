@@ -158,7 +158,7 @@ It seems like there are two countries where there were no exact matches (Taiwan 
 These names will be matched in a later function, as detailed below. 
 
 ### Fill in entity types for your data using `fill_type()`
-Since the `add_entity_type()` function only allow users to input only one entity type for the entire dataset, the `fill_type()` function will allow users to update the entity type for users with datasets that contain more than one entity type. The function looks at the actor name and identifies common words within the actor's name to guess the entity type for that actor. 
+Since the `add_entity_type()` function only allow users to input only one entity type for the entire dataset, the `fill_type()` function will allow users to update the entity type for users with datasets that contain more than one entity type. The function looks at the actor name and identifies common words within the actor's name (such as Co., Inc., City, Province, etc.) to guess the entity type for that actor. 
 ```{r}
 table(cdp$entity_type)
 cdp <- fill_type(cdp)
