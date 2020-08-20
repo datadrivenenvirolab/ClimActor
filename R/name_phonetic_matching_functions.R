@@ -134,7 +134,7 @@ fuzzify_country <- function(dataset, country_keydict){
     ## if one of the listed matches is correct (and not NA), the standardized
     ## version of the matched name will be replaced into the dataset
     # Use grepl to prevent warnings
-    if (grepl("^[0-9*]$", ans1)){
+    if (grepl("^[0-9]{1,2}$", ans1)){
       if (!is.na(ans1) &
           (as.numeric(ans1) %in% 1:15) &
           (!is.na(tmp[as.numeric(ans1)]))) {
