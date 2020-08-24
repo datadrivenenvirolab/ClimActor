@@ -523,6 +523,7 @@ The `ClimActor` package also includes a contextual database (named `contextuals`
 - `population`: Population of actor
 - `population_year`: Year of recorded population 
 - `state`: State/Province which actor is in 
+- `admin_1`: Higher administrative jurisdiction one level above the actor 
 
 The user can specify which of the contextuals information you would like merged into your own database using the `context` argument. 
 
