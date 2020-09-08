@@ -18,7 +18,7 @@ country_dict <- country_dict[, -grep("code", names(country_dict))]
 usethis::use_data(country_dict, overwrite = T)
 
 # Export contextuals database to RDA
-contextuals <- read.csv("Aug2020_subnationals_contextuals_database_final.csv",
+contextuals <- read.csv("subnational_contextuals_database_Sept2020.csv",
                         encoding = "UTF-8", stringsAsFactors = F)
 # names(contextuals)
 #contextuals <- contextuals[, -grep("gdp", names(contextuals))]
