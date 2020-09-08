@@ -15,7 +15,7 @@ The `ClimActor` package can be installed from github using the `install_github` 
 # Install devtools as necessary
 # install.packages("devtools")
 
-devtools::install_github("datadrivenyale/ClimActor", build_vignettes = T)
+devtools::install_github("datadrivenenvirolab/ClimActor", build_vignettes = T)
 library(ClimActor)
 ```
 
