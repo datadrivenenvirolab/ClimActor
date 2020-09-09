@@ -922,7 +922,7 @@ Báscara,ESP,City,Spain,Europe,17.5,EUCovenantofMayors2019;GlobalCovenantofMayor
 Basciano,ITA,City,Italy,Europe,18.85,GlobalCovenantofMayors2019;EUCovenantofMayors2019;NAZCA,3,42.594401,13.7396474,2449,,Province of Teramo,Teramo
 Basel,CHE,City,Switzerland,Europe,23.85,CDPCities2018;GlobalCovenantofMayors2019;NAZCA,3,47.5619,7.5928,198988,2017,Basel-Stadt,""
 Basel-Landschaft,CHE,Region,Switzerland,Europe,517.67,Under2Coalition2019;NAZCA,2,47.11666667,7.733333333,286923,2016,Basel-Landschaft,""
-Basel-Stadt,CHE,Region,Switzerland,Europe,36.95,CompactofStatesRegions2018;Under2Coalition2019;NAZCA,3,7.5885761,47.5595986,198563,2017,Basel-Stadt,""
+Basel-Stadt,CHE,Region,Switzerland,Europe,36.95,CompactofStatesRegions2018;Under2Coalition2019;NAZCA,3,47.559599,7.588576,198563,2017,Basel-Stadt,""
 Baselga di Piné,ITA,City,Italy,Europe,41.07,GlobalCovenantofMayors2019;EUCovenantofMayors2019;NAZCA,3,46.1331207,11.2459281,5018,,Trentino-Alto Adige/Südtirol,Trentino
 Baselice,ITA,City,Italy,Europe,47.82,GlobalCovenantofMayors2019;NAZCA,2,41.392054,14.97323,2497,,Benevento,""
 Bashtanka,UKR,City,Ukraine,Eastern Europe and Central Asia,1706,GlobalCovenantofMayors2019;NAZCA,2,47.39776,32.44812,12696,2015,Mykolaiv Oblast,Ukraine
@@ -6267,7 +6267,7 @@ New York State,USA,Region,United States of America,North America,,Under2Coalitio
 "Newburyport, MA",USA,City,United States of America,North America,21.75592,ClimateMayors;NAZCA,2,42.8125,-70.877778,17987,2010,Massachusetts,"Essex County, MA"
 Newcastle,AUS,City,Australia,East Asia and the Pacific,261.8,GlobalCovenantofMayors2019;EUCovenantofMayors2019;Carbonn2019;NAZCA,4,-32.9283,151.7817,160919,2016,Hunter,Northumberland
 Newcastle,GBR,City,United Kingdom,Europe,113.9596,GlobalCovenantofMayors2019;EUCovenantofMayors2019;Carbonn2019;NAZCA,4,54.96666667,-1.6,284300,,Tyne and Wear,
-Newfoundland and Labrador,CAN,Region,Canada,North America,373872,CompactofStatesRegions2018;NAZCA,2,53.14,60.22,528817,2017,Newfoundland and Labrador,""
+Newfoundland and Labrador,CAN,Region,Canada,North America,373872,CompactofStatesRegions2018;NAZCA,2,53.14,-59.999167,528817,2017,Newfoundland and Labrador,""
 "Newport News, VA",USA,City,United States of America,North America,179.0201,ClimateMayors,1,37.070833,-76.484444,179388,2010,Virginia,
 "Newton, IA",USA,City,United States of America,North America,28.98199,Carbonn2019,1,41.69861111,-93.04694444,15254,2010,Iowa,"Jasper County, IA"
 "Newton, MA",USA,City,United States of America,North America,46.87882,ClimateMayors;WeAreStillIn2019;WeAreStillIn2019,2,42.336944,-71.209722,89045,,Massachusetts,"Middlesex County, MA"
@@ -10208,9 +10208,9 @@ Wachtebeke,BEL,City,Belgium,Europe,34.53,GlobalCovenantofMayors2019;NAZCA,2,51.1
 Waimes,BEL,City,Belgium,Europe,96.93,GlobalCovenantofMayors2019;NAZCA,2,50.41491,6.111754,7463,,Liège,Verviers
 Wakayama Prefecture,JPN,Region,Japan,East Asia and the Pacific,4726,Carbonn2019,1,34.05,135.35,979354,2017,Wakayama Prefecture,""
 Waldviertler Kernland,AUT,City,Austria,Europe,,GlobalCovenantofMayors2019;EUCovenantofMayors2019,2,48.4237,15.21207,13500,,Lower Austria,""
-Wales,GBR,Region,United Kingdom,Europe,20779,CompactofStatesRegions2018;Under2Coalition2019;Carbonn2019;NAZCA,4,52.13,3.78,3100000,2017,Wales,""
+Wales,GBR,Region,United Kingdom,Europe,20779,CompactofStatesRegions2018;Under2Coalition2019;Carbonn2019;NAZCA,4,52.3,-3.6,3100000,2017,Wales,""
 Walldorf,DEU,City,Germany,Europe,19.91,GlobalCovenantofMayors2019;NAZCA,2,49.30637,8.642769,14824,,Baden-Württemberg,Rhein-Neckar-Kreis
-Wallonia,BEL,Region,Belgium,Europe,16844,CompactofStatesRegions2018;Under2Coalition2019;NAZCA,3,4.4,50.38,3614473,2017,Wallonia,""
+Wallonia,BEL,Region,Belgium,Europe,16844,CompactofStatesRegions2018;Under2Coalition2019;NAZCA,3,50.38,4.4,3614473,2017,Wallonia,""
 Wallonie picarde Energie Positive,BEL,City,Belgium,Europe,,GlobalCovenantofMayors2019;EUCovenantofMayors2019,2,50.61352,3.386764,161008,,"",""
 Walvis Bay,NAM,City,Namibia,Sub-Saharan Africa,1124,GlobalCovenantofMayors2019;NAZCA,2,-22.95433,14.50748,85000,2011,Erongo Region,Erongo
 Wanging'ombe,TZA,City,Tanzania,Sub-Saharan Africa,3440,Carbonn2019,1,-8.852778,34.63222,161816,2002,Wanging'ombe District,Wanging'ombe
@@ -10444,3 +10444,268 @@ Zwalm,BEL,City,Belgium,Europe,33.82,GlobalCovenantofMayors2019;NAZCA,2,50.87898,
 Zwijndrecht,BEL,City,Belgium,Europe,17.82,GlobalCovenantofMayors2019;EUCovenantofMayors2019;NAZCA,3,51.23062,4.318869,18941,,Antwerp Province,Antwerp
 Zymne,UKR,City,Ukraine,Eastern Europe and Central Asia,,GlobalCovenantofMayors2019;NAZCA,2,50.78777,24.33658,6400,,Volyn,Volyn Oblast
 Zyraków,POL,City,Poland,Europe,,EUCovenantofMayors2019;GlobalCovenantofMayors2019;NAZCA,3,50.08333,21.4,13684,,Subcarpathia,Zyraków
+25 De Mayo,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,,,5953,,"",""
+Abiko,JPN,City,Japan,"",43.19,JapanMOEZeroCarbonCities,1,35.866667,140.033333,132999,2012,Kantō,Chiba Prefecture
+Alba Posse,ARG,City,Argentina,"",405,Race to Zero;NAZCA2020,2,-27.55,-54.7,481,,Misiones Province,25 De Mayo
+Ale,SWE,City,Sweden,Europe,332.1359,Sveriges Ekokommuner,1,57.925833,12.083611,31402,2019,Västergötland,Västra Götaland County
+Alleroed,DNK,City,Denmark,"",67.44,Race to Zero;NAZCA2020,2,55.866667,12.366667,24201,,Capital Region,Zealand
+Almafuerte,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-32.192227,-64.254416,1276000,,Córdoba,Tercero Arriba
+Arequito,ARG,City,Argentina,"",503,Race to Zero;NAZCA2020,2,-33.15,-61.466667,1391298,2010,Santa Fe,Caseros
+Aso,JPN,City,Japan,"",376.25,JapanMOEZeroCarbonCities,1,32.948333,131.123889,27039,2017,Kyushu,Kumamoto Prefecture
+Assens,DNK,City,Denmark,"",4.7,Race to Zero;NAZCA2020,2,55.266667,9.9,6016,,Southern Denmark,Assens
+Avellaneda,ARG,City,Argentina,"",937,Race to Zero;NAZCA2020,2,-34.6625,-58.367778,342677,2010,Buenos Aires,Avellaneda
+Awashimaura,JPN,City,Japan,"",9.78,JapanMOEZeroCarbonCities,1,38.468306,139.254389,353,2019,Chūbu,Niigata
+Bando,JPN,City,Japan,"",442,JapanMOEZeroCarbonCities,1,36.048417,139.888722,54349,2015,Kantō,Ibaraki Prefecture
+BCP Council,GBR,City,UK,"",,WWF’s One Planet City Challenge 2019;ICLEI - Local Governments for Sustainability;WWF;GCoMCDP2020;CDPCities2018-2019;CDPCities2019,6,,,463400,,"",""
+Bonpland,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-29.8175,-57.427778,1063,,Corrientes,Paso de los Libres
+Caa Yarí,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-27.483333,-55.316667,135,2001,Corrientes,Paso de los Libres
+Campo RamóN,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-27.466667,-55,1477,2001,Misiones Province,""
+Capioví,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-26.930556,-55.059167,3335,,Misiones Province,Libertador General San Martín
+Centenario,ARG,City,Argentina,"",274,Race to Zero;NAZCA2020,2,-38.8,-68.133333,32928,,Neuquén,""
+Cerrito,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-31.583333,-60.066667,10729,2010,Entre Ríos Province,""
+Chichibu,JPN,City,Japan,"",577.83,Race to Zero;NAZCA2020;JapanMOEZeroCarbonCities,3,35.991778,139.085472,63357,,Kantō,Saitama Prefecture
+Chikusei,JPN,City,Japan,"",205.3,JapanMOEZeroCarbonCities,1,36.307083,139.983139,104136,2015,Kantō,Ibaraki Prefecture
+Chovet,ARG,City,Argentina,"",363,Race to Zero;NAZCA2020,2,-33.6,-61.6,2383,2010,Santa Fe,General López
+Cipolletti,ARG,City,Argentina,"",52547.8,Race to Zero;NAZCA2020,2,-38.933333,-67.983333,87492,2010,Río Negro Province,General Roca
+City of Basel-Stadt,CHE,City,Switzerland,"",23.85,C40;ICLEI - Local Governments for Sustainability;GCoMCDP2020;CDPCities2018-2019;CDPCities2019,5,47.554722,7.590556,177595,,Basel-Stadt,""
+Colonia Alberdi,ARG,City,Argentina,"",145,Race to Zero;NAZCA2020,2,-27.359722,-55.2325,526,2001,Misiones Province,Oberá
+Colonia Wanda,ARG,City,Argentina,"",481,Race to Zero;NAZCA2020,2,-25.969301,-54.569692,15529,2010,Misiones Province,Iguazú
+Comandante Andresito,ARG,City,Argentina,"",903,Race to Zero;NAZCA2020,2,-25.670289,-54.042746,11482,2010,Misiones Province,General Manuel Belgrano
+Commune de Paliseul,BEL,City,Belgium,Europe,,EUCovenantofMayors2020,1,49.89349616527,5.1358629601561,5388,,Luxembourg,""
+Community of Madrid,ESP,Region,Spain,"",,Race to Zero;NAZCA2020,2,40.5,-3.666667,6661949,,"",""
+Comunidade Inter do Tâmega e Sousa,PRT,Region,Portugal,Europe,,CDPStates&Regions2018-19,1,41.304,-8.276,417268,,"",""
+Concepcion,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-27.333333,-65.583333,49782,2010,Tucumán,Chicligasta
+Corpus,ARG,City,Argentina,"",88,Race to Zero;NAZCA2020,2,-27.129473,-55.510847,2101,2001,Misiones Province,San Ignacio
+Dalarnas County,SWE,Region,Sweden,Europe,28188.8,"",1,60.678559,15.600586,287350,2019,"",""
+Danderyd,SWE,City,Sweden,Europe,32.67,"",1,59.4,18.083333,32857,2019,Stockholm County,Stockholm
+Diamante,ARG,City,Argentina,"",104,Race to Zero;NAZCA2020,2,-32.066667,-60.65,19142,2010,Entre Ríos,Diamante
+Eilat ISRAEL,ISR,City,Israel,Middle East and North Africa,,EUCovenantofMayors2020,1,29.329999923706,34.569999694824,52299,2019,"",""
+El Dorado,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-26.4,-54.633333,57323,2010,Misiones Province,Eldorado
+El Soberbio,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-27.29549,-54.196343,5065,2010,Misiones Province,Guaraní
+Elortondo,ARG,City,Argentina,"",455,Race to Zero;NAZCA2020,2,-33.7,-61.6167,9000,,Santa Fe,General López
+Empedrado,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-27.954262,-58.808912,9258,2010,Corrientes,Empedrado
+eThekweni,ZAF,City,South Africa,Africa,,C40;ICLEI - Local Governments for Sustainability;WWF;CDPCities2018-2019;CDPCities2019,5,-29.8587,31.0218,38201740,,"",""
+Fachinal,ARG,City,Argentina,"",349,Race to Zero;NAZCA2020,2,-27.629691,-55.705721,990,2001,Misiones Province,Capital
+Flen,SWE,City,Sweden,Europe,4.45,"",1,59.05,16.583333,16585,2019,Södermanland,Södermanland County
+Fredericia,DNK,City,Denmark,"",27.1,Race to Zero;NAZCA2020,2,55.566667,9.75,40981,,Southern Denmark,Fredericia
+Frederiksberg,DNK,City,Denmark,"",8.7,Race to Zero;NAZCA2020,2,55.666667,12.533333,103192,,Capital Region,Frederiksberg
+Freetown,SLE,City,Sierra Leone,"",81.48,Race to Zero;NAZCA2020,2,8.484444,-13.234444,1055964,,Western Area,Western Area Urban District
+Fudai,JPN,City,Japan,"",69.66,JapanMOEZeroCarbonCities,1,40.005222,141.885944,2607,2020,Tōhoku,Iwate Prefecture
+Fuefuki,JPN,City,Japan,"",201.92,JapanMOEZeroCarbonCities,1,35.647306,138.639722,69463,2019,Chūbu,Yamanashi Prefecture
+Fujikawa,JPN,City,Japan,"",30.92,JapanMOEZeroCarbonCities,1,35.15,138.616667,16359,2005,Chūbu,Shizuoka Prefecture
+Fujioka,JPN,City,Japan,"",180.29,JapanMOEZeroCarbonCities,1,36.258694,139.074556,66165,2015,Kantō,Gunma Prefecture
+Furubira,JPN,City,Japan,"",188.41,JapanMOEZeroCarbonCities,1,43.266667,140.633333,3265,2016,Hokkaido,Hokkaido Prefecture
+Galicia,ESP,Region,Spain,"",29574.4,Race to Zero;NAZCA2020,2,42.5,-8.1,2701743,,"",""
+Garuhapé,ARG,City,Argentina,"",583.4,Race to Zero;NAZCA2020,2,-26.82,-54.958333,4095,2001,Misiones Province,Libertador General San Martín
+Gävleborgs County,SWE,Region,Sweden,Europe,18198.9,"",1,60.780619,16.655273,286774,2019,"",""
+General Alvarado,ARG,City,Argentina,"",1599,Race to Zero;NAZCA2020,2,-38.155833,-58.028333,30100,,Buenos Aires,""
+General Arenales,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-34.283333,-61.283333,3973,2001,Buenos Aires,General Arenales
+General Urquiza,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-34.566667,-58.483333,247,,Misiones Province,""
+General Villegas,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-35.033333,-63.016667,16270,,Buenos Aires,General Villegas
+Gobernador LóPez,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-27.666667,-55.25,714,2001,Misiones Province,Leandro N. Alem
+Gobernador Roca,ARG,City,Argentina,"",256,Race to Zero;NAZCA2020,2,-27.190172,-55.469098,2450,2001,Misiones Province,San Ignacio
+Goka,JPN,City,Japan,"",23.11,JapanMOEZeroCarbonCities,1,36.114444,139.745139,8512,2020,Kanto,Ibaraki Prefecture
+Gotemba,JPN,City,Japan,"",194.9,JapanMOEZeroCarbonCities,1,35.308694,138.934611,88370,2019,Chūbu,Shizuoka Prefecture
+Guelph,CAN,City,Canada,North America,,CDP Matchmaker;WWF's One Planet city Challenge 2019 - Unconfirmed countries;ICLEI - Local Governments for Sustainability;WWF;Race to Zero;GCoMCDP2020;CDPCities2018-2019;CDPCities2019;NAZCA2020,9,43.55,80.25,131794,2016,"",""
+Gyokuto,JPN,City,Japan,"",24.4,JapanMOEZeroCarbonCities,1,32.9,130.616667,5363,2017,Kyushu,Kumamoto Prefecture
+Hachimantai,JPN,City,Japan,"",862.3,JapanMOEZeroCarbonCities,1,39.956111,141.071111,25076,2020,Tōhoku,Iwate Prefecture
+Hakuba,JPN,City,Japan,"",189.36,JapanMOEZeroCarbonCities,1,36.698056,137.861917,9007,2019,Chūbu,Nagano Prefecture
+Halifax,CAN,City,Canada,North America,,ICLEI - Local Governments for Sustainability;Race to Zero;GCoMCDP2020;CDPCities2018-2019;CDPCities2019;NAZCA2020,6,44.6475,-63.590556,316701,,Nova Scotia,""
+Hamamatsu,JPN,City,Japan,"",1558.06,Race to Zero;NAZCA2020;JapanMOEZeroCarbonCities,3,34.710833,137.7275,791707,,Chūbu,Shizuoka Prefecture
+Handa,JPN,City,Japan,"",47.42,JapanMOEZeroCarbonCities,1,34.891944,136.938056,118259,2019,Chūbu,Aichi Prefecture
+Haparanda,SWE,City,Sweden,Europe,4.43,"",1,65.833333,24.133333,9685,2019,Norrbotten,Norrbotten County
+Härnösand,SWE,City,Sweden,Europe,10.89,"",1,62.636111,17.941111,25183,2019,Ångermanland,Västernorrland County
+Hernandarias,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-31.2167,-59.9833,5770,2010,Entre Ríos,Paraná
+Higashine,JPN,City,Japan,"",2017.17,JapanMOEZeroCarbonCities,1,38.431306,140.391083,47910,2020,Tōhoku,Yamagata Prefecture
+Higashiosaka,JPN,City,Japan,"",61.78,JapanMOEZeroCarbonCities,1,34.679444,135.600833,495011,2019,Kansai,Osaka Prefecture
+Hirado,JPN,City,Japan,"",235.63,JapanMOEZeroCarbonCities,1,33.366667,129.55,31192,2017,Kyushu,Nagasaki Prefecture
+Hirono,JPN,City,Japan,"",58.69,Race to Zero;NAZCA2020;JapanMOEZeroCarbonCities,3,37.214444,140.994722,15398,,Tōhoku,Fukushima Prefecture
+Hitachiomiya,JPN,City,Japan,"",348.45,JapanMOEZeroCarbonCities,1,36.542528,140.410889,42438,2015,Kantō,Ibaraki Prefecture
+Hokkaido,JPN,City,Japan,"",83423.84,Race to Zero;NAZCA2020,2,43,142,1970277,,Hokkaido,""
+Hokuei,JPN,City,Japan,"",56.94,JapanMOEZeroCarbonCities,1,35.483333,133.766667,14718,2016,"Chūgoku, San'in",Tottori Prefecture
+Hudiksvall,SWE,City,Sweden,Europe,,"",1,61.733333,17.116667,37607,2019,Hälsingland,Gävleborg County
+Hurlingham,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-34.588333,-58.639167,60000,,Buenos Aires,Hurlingham
+Ibaraki,JPN,City,Japan,"",6097.19,JapanMOEZeroCarbonCities,1,36.233333,140.283333,32924,2015,Kantō,Honshu
+Ichikawamisato,JPN,City,Japan,"",75.18,JapanMOEZeroCarbonCities,1,35.565167,138.502389,15799,2019,"Chūbu, Tōkai",Yamanashi Prefecture
+Ichinohe,JPN,City,Japan,"",300.03,Race to Zero;NAZCA2020;JapanMOEZeroCarbonCities,3,40.212889,141.295444,12053,,Tōhoku,Iwate Prefecture
+Ikeda,JPN,City,Japan,"",22.09,JapanMOEZeroCarbonCities,1,34.816667,135.433333,103028,2017,Kansai,Osaka Prefecture
+Ikoma,JPN,City,Japan,"",53.18,Race to Zero;NAZCA2020;JapanMOEZeroCarbonCities,3,34.7,135.7,120741,,Nara Prefecture,Kansai
+Itako,JPN,City,Japan,"",71.4,JapanMOEZeroCarbonCities,1,35.947139,140.555361,29047,2015,Kantō,Ibaraki Prefecture
+Iwate,JPN,City,Japan,"",360.46,Race to Zero;NAZCA2020,2,39.972778,141.212167,13111,,Tōhoku,Iwate Prefecture
+Iwate Prefecture,JPN,Region,Japan,"",15275.01,JapanMOEZeroCarbonCities,1,39.703611,141.1525,1229432,2019,"",""
+Izegem,BEL,City,Belgium,Europe,,EUCovenantofMayors2020,1,50.917672615132,3.2134424276896,27729,2018,"",""
+Izumiotsu,JPN,City,Japan,"",13.36,JapanMOEZeroCarbonCities,1,34.5,135.4,75398,2017,Kansai,Osaka Prefecture
+Jönköpings County,SWE,Region,Sweden,Europe,10495.1,"",1,57.75,14.2,361759,2019,"",""
+Joso,JPN,City,Japan,"",123.64,JapanMOEZeroCarbonCities,1,36.023556,139.993833,62686,2015,Kantō,Ibaraki Prefecture
+JuníN,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-34.583333,-60.95,85420,,"",""
+Justiniano Posse,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-32.883333,-62.666667,100247,,"",""
+Kagoshima,JPN,City,Japan,"",547.58,Race to Zero;NAZCA2020;JapanMOEZeroCarbonCities,3,31.6,30.55,595049,,Kyushu,Kagoshima Prefecture
+Kai,JPN,City,Japan,"",71.95,JapanMOEZeroCarbonCities,1,35.660806,138.515778,75000,,Chūbu,Yamanashi Prefecture
+Kaisei,JPN,City,Japan,"",6.56,JapanMOEZeroCarbonCities,1,35.333333,139.133333,16567,2012,Kantō,Kanagawa Prefecture
+Kamakura,JPN,City,Japan,"",39.53,JapanMOEZeroCarbonCities,1,35.319722,139.5525,174314,2016,Kantō,Kanagawa Prefecture
+Kanazawa,JPN,City,Japan,"",468.64,JapanMOEZeroCarbonCities,1,36.561056,136.656417,466029,2018,Chūbu,Ishikawa Prefecture
+Kanna,JPN,City,Japan,"",114.6,JapanMOEZeroCarbonCities,1,36.115917,138.919722,2007,2015,Kantō,Gunma Prefecture
+Karuizawa,JPN,City,Japan,"",156.03,JapanMOEZeroCarbonCities,1,36.348472,138.597028,20323,2016,Chūbu,Nagano
+Karumai,JPN,City,Japan,"",245.82,Race to Zero;NAZCA2020;JapanMOEZeroCarbonCities,3,40.32675,141.460472,8895,,Tōhoku,Iwate Prefecture
+Kashima,JPN,City,Japan,"",106.02,JapanMOEZeroCarbonCities,1,35.965639,140.644833,67560,,Kantō,Ibaraki Prefecture
+Katsushika,JPN,City,Japan,"",34.8,JapanMOEZeroCarbonCities,1,35.733333,139.85,444356,2015,Kantō,Tokyo
+Kikuchi,JPN,City,Japan,"",276.66,JapanMOEZeroCarbonCities,1,32.983333,130.816667,49455,2017,Kyushu,Kumamoto Prefecture
+Kikuyo,JPN,City,Japan,"",37.57,JapanMOEZeroCarbonCities,1,32.85,130.816667,41411,2016,Kyushu,Kumamoto Prefecture
+Kitaibaraki,JPN,City,Japan,"",186.8,JapanMOEZeroCarbonCities,1,36.801889,140.751028,43809,2015,Kantō,Ibaraki Prefecture
+Koga,JPN,City,Japan,"",123.58,JapanMOEZeroCarbonCities,1,36.17825,139.755444,140770,2015,Kantō,Ibaraki Prefecture
+Köping,SWE,City,Sweden,Europe,11.86,"",1,59.516667,15.983333,26214,2019,Västmanland,Västmanland County
+Kosa,JPN,City,Japan,"",57.87,JapanMOEZeroCarbonCities,1,32.65,130.816667,10924,2017,Kyushu,Kumamoto Prefecture
+Koshi,JPN,City,Japan,"",53.17,JapanMOEZeroCarbonCities,1,32.883333,130.783333,61022,2017,Kyushu,Kumamoto Prefecture
+Kuji,JPN,City,Japan,"",623.5,Race to Zero;NAZCA2020;JapanMOEZeroCarbonCities,3,40.190472,141.775667,34418,,Tōhoku,Iwate Prefecture
+Kumamoto Prefecture,JPN,Region,Japan,"",7409.48,JapanMOEZeroCarbonCities,1,32.716667,130.666667,1748134,2019,Kyushu,""
+Kunohe,JPN,City,Japan,"",134.02,JapanMOEZeroCarbonCities,1,40.211361,141.418972,5650,2020,Tōhoku,Iwate Prefecture
+Kuzumaki,JPN,City,Japan,"",434.99,Race to Zero;NAZCA2020;JapanMOEZeroCarbonCities,3,40.039833,141.4365,5632,,Tōhoku,Iwate Prefecture
+La Falda,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-31.083333,-64.5,36202,2012,Córdoba,Punilla
+Laborde,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-33.154722,-62.857222,5943,2010,Córdoba,Unión
+Lavalle,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-36.38333,-56.966667,1827,,Buenos Aires,General Lavalle
+Leandro N. Alem,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-27.6,-55.333333,25404,,Misiones Province,Leandro N. Alem
+Leksand,SWE,City,Sweden,Europe,7.79,"",1,60.733333,15,15807,2019,Dalarna,Dalarna County
+Lemvig,DNK,City,Denmark,"",4.89,Race to Zero;NAZCA2020,2,56.55,8.316667,6895,,Central Denmark,""
+Louisiana,USA,Region,USA of America,"",135382,"",1,31,-92,4648794,2019,"",""
+Macia,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-32.166667,-59.383333,6306,2010,Entre Ríos,Tala
+Maggiolo,ARG,City,Argentina,"",695,Race to Zero;NAZCA2020,2,-33.7333,-62.2833,2042,2010,Santa Fe,General López
+Maniwa,JPN,City,Japan,"",828.43,JapanMOEZeroCarbonCities,1,35.083333,133.683333,44265,2018,Chūgoku,Okayama Prefecture
+Marcos JuáRez,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-32.7,-62.1,27004,,Córdoba,Marcos Juárez
+Marcos Paz,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-34.766667,-58.833333,39151,,Buenos Aires,""
+Mashiki,JPN,City,Japan,"",65.67,JapanMOEZeroCarbonCities,1,32.783333,130.8,33001,2017,Kyushu,Kumamoto Prefecture
+Mátészalka Város Önkormányzata,HUN,City,Hungary,Europe,,EUCovenantofMayors2020,1,47.953820383715,22.320334911346,17347,,"",""
+"Medford, OR",USA,City,USA of America,"",66.79,Race to Zero;NAZCA2020,2,42.331944,-122.861944,83072,,Oregon,Jackson County
+Mifune,JPN,City,Japan,"",99,JapanMOEZeroCarbonCities,1,32.716667,130.8,17000,,Kyushu,Kumamoto Prefecture
+Minakami,JPN,City,Japan,"",781.08,JapanMOEZeroCarbonCities,1,36.678556,138.999139,19572,2015,Kantō,Gunma Prefecture
+Minami,JPN,City,Japan,"",264.14,JapanMOEZeroCarbonCities,1,35.608306,138.465028,71618,2019,Chūbu,Yamanashi Prefecture
+Minamiaso,JPN,City,Japan,"",137.3,JapanMOEZeroCarbonCities,1,32.816667,131.033333,11086,2016,Kyushu,Kumamoto Prefecture
+Minamiminowa,JPN,City,Japan,"",40.99,JapanMOEZeroCarbonCities,1,35.872861,137.975111,15463,2019,Chūbu,Nagano Prefecture
+Misato,JPN,City,Japan,"",30.13,JapanMOEZeroCarbonCities,1,35.830139,139.872333,136933,2016,Kantō,Saitama Prefecture
+Mississauga,CAN,City,Canada,North America,,ICLEI - Local Governments for Sustainability;CDPCities2018-2019;CDPCities2019,3,-79.6441,43.589,721599,,"",""
+Miura,JPN,City,Japan,"",32.05,JapanMOEZeroCarbonCities,1,35.15,139.616667,45000,,Kantō,Kanagawa Prefecture
+Miyagi Prefecture,JPN,City,Japan,"",7282.22,Race to Zero;NAZCA2020,2,38.35,140.966667,1091407,,"",""
+Miyazu,JPN,City,Japan,"",172.74,JapanMOEZeroCarbonCities,1,35.533333,135.2,17633,2017,Kansai,Kyoto Prefecture
+Monte MaíZ,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-33.204722,-62.600556,8752,2010,Córdoba,Unión
+Montecarlo,ARG,City,Argentina,"",958,Race to Zero;NAZCA2020,2,-26.5662,-54.757,18827,2010,Misiones Province,Montecarlo
+Moriya,JPN,City,Japan,"",35.71,JapanMOEZeroCarbonCities,1,35.951417,139.975417,64644,2015,Kantō,Ibaraki Prefecture
+Morón,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-34.65,-58.616667,92725,,Buenos Aires,""
+Myoko,JPN,City,Japan,"",445.63,JapanMOEZeroCarbonCities,1,37.025194,138.253528,31226,2019,Chūbu,Niigata Prefecture
+Nagano,JPN,City,Japan,"",834.81,Race to Zero;NAZCA2020,2,36.648611,138.194722,370632,,Chūbu,Nagano Prefecture
+Nagano Prefecture,JPN,Region,Japan,"",13561.56,JapanMOEZeroCarbonCities,1,36.25,138.1,2052493,2019,Chūbu,""
+Naka,JPN,City,Japan,"",97.82,JapanMOEZeroCarbonCities,1,36.457389,140.48675,54772,2019,Kantō,Ibaraki Prefecture
+Nakagawa,JPN,City,Japan,"",77.05,JapanMOEZeroCarbonCities,1,35.634528,137.945972,1585,2017,Chūbu,Nagano Prefecture
+Namie,JPN,City,Japan,"",223.14,JapanMOEZeroCarbonCities,1,37.494583,141.000722,1238,2020,Tōhoku,Fukushima Prefecture
+Nanbu,JPN,City,Japan,"",153.12,JapanMOEZeroCarbonCities,1,40.466944,141.381667,10888,2016,Tōhoku,Aomori Prefecture
+Nasu,JPN,City,Japan,"",372.34,JapanMOEZeroCarbonCities,1,37.01975,140.120972,24851,2020,Kantō,Tochigi Prefecture
+Nasu-Karasuyama,JPN,City,Japan,"",174.35,JapanMOEZeroCarbonCities,1,36.656889,140.151417,25000,,Kantō,Tochigi Prefecture
+Nasu-Shiobara,JPN,City,Japan,"",592.74,JapanMOEZeroCarbonCities,1,36.961722,140.046056,120000,,Kantō,Tochigi Prefecture
+Neuquen,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,,,224685,,"",""
+Ninohe,JPN,City,Japan,"",420.42,Race to Zero;NAZCA2020;JapanMOEZeroCarbonCities,3,40.27125,141.304778,26344,,Tōhoku,Iwate Prefecture
+Nishihara,JPN,City,Japan,"",15.84,JapanMOEZeroCarbonCities,1,26.216667,127.766667,34463,2016,Kyushi,Okinawa Prefecture
+Noda,JPN,City,Japan,"",103.54,JapanMOEZeroCarbonCities,1,35.95,139.866667,155644,,Kantō,Chiba Prefecture
+Noda Village,JPN,City,Japan,"",80.8,Race to Zero;NAZCA2020,2,40.110306,141.817694,4201,,Tōhoku,Iwate Prefecture
+Nord Trondelag,NOR,Region,Norway,Europe,,CDPStates&Regions2018-19,1,63,11,456186,,"",""
+Norrbotten,SWE,Region,Sweden,Europe,98244.8,"",1,67,19.7,250533,2019,"",""
+Northern Territory,AUS,Region,Australia,"",1420970,Race to Zero;NAZCA2020,2,-20,133,244761,,"",""
+Nyköping,SWE,City,Sweden,Europe,13.43,"Sveriges Ekokommuner,Fossilfritt Sverige",1,58.753056,17.008611,56591,2019,Södermanland,Södermanland County
+Oberá,ARG,City,Argentina,"",155,Race to Zero;NAZCA2020,2,-27.483333,-55.133333,63960,,Misiones Province,""
+Oizumi,JPN,City,Japan,"",18.03,JapanMOEZeroCarbonCities,1,36.247833,139.571583,39996,2015,Kantō,GunmaPrefecture
+Okayama Prefecture,JPN,Region,Japan,"",,JapanMOEZeroCarbonCities,1,34.7,133.85,1906464,2018,Chūgoku,""
+Oki,JPN,City,Japan,"",346.1,JapanMOEZeroCarbonCities,1,36.171139,133.144667,14314,2017,"",""
+Okuma,JPN,City,Japan,"",78.71,JapanMOEZeroCarbonCities,1,37.404472,140.983333,10287,2020,Tōhoku,Fukushima Prefecture
+Omitama,JPN,City,Japan,"",144.74,JapanMOEZeroCarbonCities,1,36.239278,140.352556,50941,2015,Kantō,Ibaraki Prefecture
+Örebro County,SWE,Region,Sweden,Europe,8545.6,Fossilfritt Sverige,1,59.266667,15.216667,303096,2019,"",""
+Östergötlands County,SWE,Region,Sweden,Europe,10602,Fossilfritt Sverige,1,58.528125,15.238037,462379,2019,"",""
+Otari,JPN,City,Japan,"",267.91,JapanMOEZeroCarbonCities,1,36.779056,137.90825,2914,2018,Chūbu,Nagano Prefecture
+Otawara,JPN,City,Japan,"",354.36,JapanMOEZeroCarbonCities,1,36.304472,140.015528,73189,2020,Kantō,Tochigi Prefecture
+Ottawa,CAN,City,Canada,North America,2790.3,CDP Cities;GCoMCDP2020,2,45.424722,-75.695,934243,2016,National Capital Region,""
+Ozu,JPN,City,Japan,"",432.24,JapanMOEZeroCarbonCities,1,33.5,132.55,42655,2020,Shikoku,Ehime Prefecture
+Panambí,ARG,City,Argentina,"",202,Race to Zero;NAZCA2020,2,-27.7223,-54.914895,1005,2001,Misiones Province,Oberá
+Paso De La Patria,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-27.3172,-58.5725,6013,2010,Corrientes,San Cosme
+Paso De Los Libres,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-29.716667,-57.083333,43251,2010,Corrientes,""
+Pellegrini,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-36.266667,-63.133333,5031,2001,Buenos Aires,""
+Peñarroya-Pueblonuevo,ESP,City,Spain,Europe,,EUCovenantofMayors2020,1,38.299822066898,-5.2685236930847,10870,2018,"",""
+Piedras Blancas,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-31.185,-59.95,1767,2010,Entre Ríos,La Paz
+"Plymouth, UK",GBR,City,UK,"",79.8,ICLEI - Local Governments for Sustainability;Carbonn;Race to Zero;CDPCities2018-2019;CDPCities2019;NAZCA2020,6,50.371389,-4.142222,262100,2019,"",""
+Profundidad,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-27.566667,-55.716667,,,Misiones Province,""
+Puerto Esperanza,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-26.016667,-54.65,,,Misiones Province,""
+Puerto Libertad,ARG,City,Argentina,"",336,Race to Zero;NAZCA2020,2,-25.916667,-54.6,6143,2001,Misiones Province,""
+Quemu Quemu,ARG,City,Argentina,"",950,Race to Zero;NAZCA2020,2,-36.05,-63.55,3714,2010,La Pampa,""
+Quilmes,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-34.716667,-58.266667,230810,,Buenas Aires,""
+Ramona,ARG,City,Argentina,"",98,Race to Zero;NAZCA2020,2,-31.091639,-61.902575,,,Santa Fe,""
+Randers,DNK,City,Denmark,"",32.3,Race to Zero;NAZCA2020,2,56.457,10.039,62482,,Central Denmark Region,""
+Reconquista,ARG,City,Argentina,"",537,Race to Zero;NAZCA2020,2,-29.233333,-59.933333,99288,,Santa Fe,General Obligado
+Roque Saenz PeñA,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-26.798934,-60.431775,89882,,"",Chaco
+Rosario de la Frontera,ARG,City,Argentina,"",5402,Race to Zero;NAZCA2020,2,-25.8,-64.966667,26174,,Salta,""
+RuíZ De Montoya,ARG,City,Argentina,"",130,Race to Zero;NAZCA2020,2,-26.969406,,3374,,Misiones Province,Libertador General San Martín
+Sado,JPN,City,Japan,"",855.26,JapanMOEZeroCarbonCities,1,38.07,138.3875,57000,,Chūbu,Niigata
+Sakuragawa,JPN,City,Japan,"",180.06,JapanMOEZeroCarbonCities,1,36.327306,140.090556,42484,2015,Kantō,Ibaraki Prefecture
+Sammu,JPN,City,Japan,"",146.38,JapanMOEZeroCarbonCities,1,35.6,140.416667,55054,2012,Kantō,Chiba Prefecture
+San Antonio De Apipe,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-27.5083,-56.7364,1508,2010,Corrientes,Ituzaingó
+San Benito,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-31.783333,-60.43333,9324,2010,Entre Ríos,Paraná
+San Carlos de Bariloche,ARG,City,Argentina,"",220.3,Race to Zero;NAZCA2020,2,-41.15,-71.3,108205,,Río Negro,""
+San Guillermo,ARG,City,Argentina,"",259,Race to Zero;NAZCA2020,2,-30.3612,-61.9156,109123,,Santa Fe,San Cristóbal
+San Nicolás de los Arroyos,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-33.333333,-60.216667,133602,,Buenos Aires,San Nicolás
+San Pedro Carchá,GTM,City,Guatemala,Latin America,1310,ICLEI - Local Governments for Sustainability;WWF;CDPCities2018-2019;CDPCities2019,4,15.477222,-90.310556,272300,,Alta Verapaz,""
+San Vicente,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-35.016667,-58.416667,270929,,state,""
+Santa Fé,ARG,City,Argentina,"",748,Race to Zero;NAZCA2020,2,-31.633333,-60.7,391164,2010,Sante Fe,La Capital
+Saskatoon,CAN,City,Canada,North America,,ICLEI - Local Governments for Sustainability;CDPCities2018-2019;CDPCities2019,3,52.1332,-106.67,272200,,"",""
+Shima,JPN,City,Japan,"",179.67,JapanMOEZeroCarbonCities,1,34.333333,136.833333,53056,2012,Kansai,Mie Prefecture
+Shirosato,JPN,City,Japan,"",161.81,JapanMOEZeroCarbonCities,1,36.479222,140.376222,19955,2015,Kantō,Ibaraki Prefecture
+Showa,JPN,City,Japan,"",9.08,JapanMOEZeroCarbonCities,1,35.633333,138.533333,21000,,Yamanashi,"Chūbu, Tōkai"
+Södermanlands County,SWE,Region,Sweden,Europe,5619.3,Sveriges Ekokommuner,1,58.771048,16.869507,295459,2019,"",""
+Solna,SWE,City,Sweden,Europe,21.66,"Sveriges Ekokommuner,EuroCities",1,59.35,18,82429,2019,Stockholm County,Stockholm
+"Somerset West and Taunton, UK",GBR,City,UK,Europe,1190.1,ICLEI - Local Governments for Sustainability;CDPCities2018-2019;CDPCities2019,3,51.1,-2.9,153866,,Somerset,""
+"St Catharines, ON",CAN,City,Canada,"",96.13,CDP Cities;GCoMCDP2020,2,43.183333,-79.233333,133113,,Ontario,""
+Stockholm County,SWE,Region,Sweden,Europe,6519.3,"",1,59.333333,18.166667,2352549,2019,"",""
+Sundsvall,SWE,City,Sweden,Europe,27.93,ICLEI,1,62.4,17.316667,99449,2019,Medelpad,Västernorrland County
+Takahagi,JPN,City,Japan,"",193.58,JapanMOEZeroCarbonCities,1,36.719167,140.716722,29144,2015,Kantō,Ibaraki Prefecture
+Takamori,JPN,City,Japan,"",174.9,JapanMOEZeroCarbonCities,1,32.816667,131.116667,6189,2016,Kyushu,Kumamoto Prefecture
+Takeo,JPN,City,Japan,"",195.44,JapanMOEZeroCarbonCities,1,33.2,130.016667,48845,2016,Kyushi,Saga Prefecture
+"Takeo City, Saga",JPN,City,Japan,"",,Race to Zero;NAZCA2020,2,,,48845,,"",""
+Tama,JPN,City,Japan,"",21.01,JapanMOEZeroCarbonCities,1,35.636944,139.446278,147953,2016,Kantō,Tokyo Prefecture
+Tandil,ARG,City,Argentina,"",52.34,Race to Zero;NAZCA2020,2,-37.316667,-59.133333,116916,,Buenos Aires,""
+Tateshina,JPN,City,Japan,"",66.87,JapanMOEZeroCarbonCities,1,36.272,138.315917,7147,2019,Chūbu,Nagano Prefecture
+Taunton,GBR,City,UK,"",,Carbonn;CDP Cities;Race to Zero;NAZCA2020,4,51.019,-3.1,60479,2011,Somerset,""
+Tilisarao,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-32.73333,-65.3,,,San Luis,Chacabuco
+Tokai,JPN,City,Japan,"",43.43,JapanMOEZeroCarbonCities,1,35.023056,136.902194,37855,2015,Chūbu,Aichi Prefecture
+Tokamachi,JPN,City,Japan,"",590.39,JapanMOEZeroCarbonCities,1,37.133333,138.75,53333,2019,Chūbu,Niigata
+Tokushima Prefecture,JPN,Region,Japan,"",4146.8,JapanMOEZeroCarbonCities,1,34.033333,134.433333,728633,2019,"",""
+Tokyo Prefecture,JPN,Region,Japan,"",2194.07,JapanMOEZeroCarbonCities,1,35.689722,139.692222,13520000,,Kantō,""
+Toride,JPN,City,Japan,"",69.94,JapanMOEZeroCarbonCities,1,35.9115,140.050361,106691,2015,Kantō,Ibaraki Prefecture
+Tornquist,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-38.1,-62.216667,11759,,Buenos Aires,""
+Toronto,CAN,City,Canada,North America,,C40;ICLEI - Local Governments for Sustainability;Net Zero Carbon Buildings Commitment;Carbon Neutral Cities Alliance;Race to Zero;CDPCities2018-2019;CDPCities2019;NAZCA2020,8,43.6532,-79.3832,2731571,2016,"",""
+Trelleborg,SWE,City,Sweden,Europe,13.66,"Covenant of Mayors,Union of Baltic States,NAZCA",1,55.366667,13.166667,45440,2019,Scania,Skåne County
+Tres Arroyos,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-38.366667,-60.266667,46867,,Buenos Aires,""
+Tres Capones,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,28,-55.6,1234,2001,Misiones Province,""
+Tsuchiura,JPN,City,Japan,"",122.89,JapanMOEZeroCarbonCities,1,36.066667,140.2,141181,2015,Kantō,Ibaraki Prefecture
+Tsukubamirai,JPN,City,Japan,"",79.16,JapanMOEZeroCarbonCities,1,35.963056,140.037028,48807,2015,Kantō,Ibaraki Prefecture
+Ubajay,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-31.783333,-58.3,,,Entre Ríos,Colón
+Uenohara,JPN,City,Japan,"",170.57,JapanMOEZeroCarbonCities,1,35.630194,139.111333,23000,,Chūbu,Yamanashi Prefecture
+Uki,JPN,City,Japan,"",188.56,JapanMOEZeroCarbonCities,1,32.645,130.686389,59928,2017,Kyushu,Kumamoto Prefecture
+Uozu,JPN,City,Japan,"",200.61,JapanMOEZeroCarbonCities,1,36.827306,137.409167,42224,2016,Chūbu,Toyama Prefecture
+Uppsala County,SWE,Region,Sweden,Europe,,"Klimatkommunerna,Covenant of Mayors,EuroCities,Fossilfritt Sverige, NAZCA",1,59.858333,17.65,378246,2019,"",""
+Urayasu,JPN,City,Japan,"",17.29,JapanMOEZeroCarbonCities,1,35.653944,139.902167,164258,2015,Kantō,Chiba Prefecture
+Ushiku,JPN,City,Japan,"",58.92,JapanMOEZeroCarbonCities,1,35.979361,140.149556,84285,2015,Kantō,Ibaraki Prefecture
+Uto,JPN,City,Japan,"",74.14,JapanMOEZeroCarbonCities,1,32.682778,130.666944,37442,2017,Kyushu,Kumamoto Prefecture
+Valle MaríA,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-31.990278,-60.590278,,,Entre Ríos Province,""
+Vallentuna,SWE,City,Sweden,Europe,15.96,"",1,59.533333,18.083333,34090,2019,Uppland,Stockholm County
+Värmdö,SWE,City,Sweden,Europe,2980.11,"Sveriges Ekokommuner,Klimatkommunerna",1,59.333333,18.383333,45000,2019,"",Stockholm County
+Västervik,SWE,City,Sweden,Europe,,ICLEI - Local Governments for Sustainability;Union of the Baltic Cities;Carbonn;Race to Zero;CDPCities2018-2019;CDPCities2019;NAZCA2020,7,57.9587,16.3484,21140,2010,Småland,Kalmar County
+Vaxholm,SWE,City,Sweden,Europe,1.64,"",1,59.416667,18.316667,12003,2019,Uppland,Stockholm County
+Vejle,DNK,City,Denmark,"",32.9,Race to Zero;NAZCA2020,2,55.716667,9.533333,57655,,Southern Denmark,""
+Villa Carlos Paz,ARG,City,Argentina,"",26.63,Race to Zero;NAZCA2020,2,-31.4,-64.516667,75315,,Córdoba,Punilla
+Villa Ciudad Parque,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-31.911944,-64.525,2891082,,Córdoba,Calamuchita
+Villa De Soto,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-30.85,-64.983333,52172,,Córdoba,Cruz del Eje
+Villa El ChocóN,ARG,City,Argentina,"",78.53,Race to Zero;NAZCA2020,2,-39.26,,1174,2010,Neuquén,Confluencia
+Villa Gessel,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-37.25,-56.983333,31730,2010,Buenos Aires,""
+Villa Larca,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-32.616667,-64.983333,,,San Luis Province,""
+Villa Quillinzo,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-32.233056,-64.511944,50000,,Córdoba,Calamuchita
+Villaguay,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-31.85,-59.016667,49445,,Entre Ríos,""
+Villarino,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-38.816667,-62.7,4689,,"",""
+Ville de Nivelles,BEL,City,Belgium,Europe,,EUCovenantofMayors2020,1,50.59789,4.323399,28535,,Walloon Brabant,""
+"Whitby, ON",CAN,City,Canada,North America,146.53,ICLEI - Local Governments for Sustainability;CDPCities2018-2019;CDPCities2019,3,43.883333,-78.941667,136235,,Ontario,Durham
+Yamato,JPN,City,Japan,"",27.09,JapanMOEZeroCarbonCities,1,35.483333,,234859,2017,Kanagawa Prefecture,Kantō
+Yerba Buena,ARG,City,Argentina,"",,Race to Zero;NAZCA2020,2,-26.816667,-65.316667,50057,,Tucumán,""
+Yotsukaido,JPN,City,Japan,"",34.52,JapanMOEZeroCarbonCities,1,35.669778,140.167944,89562,2015,Kantō,Chiba Prefecture
+Yuki,JPN,City,Japan,"",65.76,JapanMOEZeroCarbonCities,1,36.305472,139.876639,51429,2015,Kantō,Ibaraki Prefecture
