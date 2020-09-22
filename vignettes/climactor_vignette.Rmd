@@ -566,13 +566,13 @@ Similarly, if the user's dataset contains actor names that were not included in 
 Likewise, the `update_key_dict` function takes in two compulsory arguments and two optional arguments. The two compulsory arguments are the dataset and the key dictionary that was used to clean the dataset, and the two optional arguments are the `custom_indices` and `unmatched_indices` vectors. Actor names that were user's custom input and also unmatched actor names will automatically be added to the `wrong` column in the updated key dictionary. 
 
 ```{r}
-local_key_dict <- update_key_dict(cdp, key_dict, custom_indices, unmatched_indices)
+# local_key_dict <- update_key_dict(cdp, key_dict, custom_indices, unmatched_indices)
 ```
 
 New entries to the key dict will be appended at the end of the `key_dict`. From the previous `phonetify_names` function, we can expect there to be 3 new entries to the `key_dict` (1 matched, 1 unmatched, and 1 custom name). We check the tail of the dataframe. 
 
 ```{r}
-tail(local_key_dict)
+# tail(local_key_dict)
 ```
 
 
@@ -594,7 +594,7 @@ The appendix is structured in the following way:
 Let's start by reading in our key dictionaries. We do this using the `read.csv` function, and set 3 different encoding options (*Latin1*, *UTF-8*, and *default*). We set an argument `dict_path` which denotes the path where the `key_dict` csv is in. 
 
 ```{r, echo = F}
-dict_path <- system.file("extdata", "key_dict_new_June2020.csv", package = "ClimActor", mustWork = T)
+dict_path <- system.file("extdata", "key_dict_new_Sept2020.csv", package = "ClimActor", mustWork = T)
 ```
 
 ```{r}
