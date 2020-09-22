@@ -594,7 +594,7 @@ The appendix is structured in the following way:
 Let's start by reading in our key dictionaries. We do this using the `read.csv` function, and set 3 different encoding options (*Latin1*, *UTF-8*, and *default*). We set an argument `dict_path` which denotes the path where the `key_dict` csv is in. 
 
 ```{r, echo = F}
-dict_path <- system.file("extdata", "key_dict_new_Sept2020.csv", package = "ClimActor", mustWork = T)
+dict_path <- system.file("extdata", "key_dict_new_June2020.csv", package = "ClimActor", mustWork = T)
 ```
 
 ```{r}
