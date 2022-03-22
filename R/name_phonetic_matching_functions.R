@@ -353,7 +353,7 @@ phonetify_names <- function(dataset, key.dict) {
                                         key.dict$entity_type)))
 
   ## creating the vector of indices (in the dataset) of the names that need to be fuzzy matched
-  if (!exists("indices", where = globalenv())){
+  if (!exists("name_ind", where = globalenv())){
     if (length(all3_matching_rows) != 0) {
       name_ind <<- 1:nrow(dataset)
       name_ind <<- name_ind[-all3_matching_rows]
@@ -604,7 +604,7 @@ Please check the vector to be sure that:
 
         if (length(samename_inds) != 0) {
           dataset$name[samename_inds] <- ansn2
-          indices <<- indices[!(indices %in% samename_inds)]
+          name_ind <<- name_ind[!(name_ind %in% samename_inds)]
         }
         next
         ### if the user chooses not to enter a custom name, the original name
