@@ -315,6 +315,7 @@ resolve_entity_types <- function(dataset, key.dict, clean_enc = T){
     }
   } else {
     cat(paste0("There are no entries with conflicting entity types."))
+    return(dataset)
   }
   if (exists(paste0("namename"))){
     names(dataset)[grepl("^name$", names(dataset))] <- namename
