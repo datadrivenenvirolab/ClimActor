@@ -1,12 +1,13 @@
 # ClimActor
 
-Beta Version 0.0.1
+Beta Version 0.0.2
 
 `ClimActor` is an `R` package created by the Data-Driven Envirolab team for the cleaning and preparation of subnational climate actors' names for further analysis. 
 As more non-state (i.e., cities, regions, and companies) actors commit to climate action, new initiatives and databases recording such commitments have also become more 
 commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet appear across databases with slightly different names. This discrepancy 
 makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor’s climate commitments if not dealt with appropriately.
 
+Update on December 16 2022 - all accented and non-ASCII characters have been removed from actors' preferred names as well as in names within the `contextuals` database. This change is to reduce the instances of encoding issues when trying to merge names across datasets, especially when working on Windows OS (where UTF-8 in and UTF-8 out is often difficult to enforce).  
 
 ## Installation
 The `ClimActor` package can be installed from github using the `install_github` function from devtools. 
