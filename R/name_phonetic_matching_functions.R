@@ -183,7 +183,7 @@ fuzzify_country <- function(dataset, country_keydict){
 
         # replacing all instances in the dataset of the original (raw) name
         # with the new custom name
-        samecount_inds <- which(dataset$name == origname)
+        samecount_inds <- which(dataset$country == origname)
 
         if (length(samecount_inds) != 0) {
           dataset$country[samecount_inds] <- ans3
