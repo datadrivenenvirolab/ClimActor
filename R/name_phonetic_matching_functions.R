@@ -935,11 +935,7 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
 #' @return Dataset with contextuals merged
 #'
 #' @example \dontrun{contextualize_data(df, contextuals_df, c("population", "region", "lat", "lng"))}
-contextualize_data <- function(dataset, contextual_df, context = c("region", "population",
-                                                                   "population_year", "lat",
-                                                                   "lng", "area", "area_units",
-                                                                   "initiatives_committed",
-                                                                   "num_commit", "state")){
+contextualize_data <- function(dataset, contextual_df, context = names(contextual_df)){
   # Check for column naming using helper function
   dataset <- .col_check(dataset, "name", environment())
   dataset <- .col_check(dataset, "entity_type", environment())
