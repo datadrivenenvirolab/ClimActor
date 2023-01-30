@@ -949,7 +949,9 @@ contextualize_data <- function(dataset, contextual_df, context = names(contextua
     stop("The context argument needs to match the column names in the contextual
          dataframe. See ?contextualize_data for a list of applicable column names.")
   }
-  context <- c(context, "name", "iso", "entity_type")
+  if (context != names(contextual_df)){
+    context <- c(context, "name", "iso", "entity_type")
+  }
   # Merge and keep all of the original dataset's data
   merge_df <- dplyr::left_join(dataset, contextual_df[ , context],
                     by = c("name", "iso", "entity_type"))
