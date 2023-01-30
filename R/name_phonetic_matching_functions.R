@@ -952,8 +952,7 @@ contextualize_data <- function(dataset, contextual_df, context = names(contextua
   context <- c(context, "name", "iso", "entity_type")
   # Merge and keep all of the original dataset's data
   merge_df <- dplyr::left_join(dataset, contextual_df[ , context],
-                    by = c("name", "iso", "entity_type"),
-                    sort = FALSE)
+                    by = c("name", "iso", "entity_type"))
   if (exists(paste0("isoname"))){
     names(merge_df)[grepl("^iso$", names(merge_df))] <- isoname
   }
