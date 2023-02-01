@@ -949,7 +949,7 @@ contextualize_data <- function(dataset, contextual_df, context = names(contextua
     stop("The context argument needs to match the column names in the contextual
          dataframe. See ?contextualize_data for a list of applicable column names.")
   }
-  if (context != names(contextual_df)){
+  if (paste0(context, collapse = ";") != paste0(names(contextual_df), collapse = ";")){
     context <- c(context, "name", "iso", "entity_type")
   }
   # Merge and keep all of the original dataset's data
