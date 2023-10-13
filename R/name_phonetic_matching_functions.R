@@ -1,4 +1,4 @@
-# Data-Driven Lab
+# Data-Driven EnviroLab
 # Functions used for cleaning and fuzzy matching of actors' names
 # Need to import the pipe '%>%' function for use in one of our functions later on
 
