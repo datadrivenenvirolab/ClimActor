@@ -3,7 +3,7 @@
 # Need to import the pipe '%>%' function for use in one of our functions later on
 
 #' @importFrom dplyr %>%
-#' @importFrom tidyverse bind_rows
+#' @importFrom dplyr bind_rows
 #' @importFrom stats na.omit
 #' @importFrom utils adist
 
