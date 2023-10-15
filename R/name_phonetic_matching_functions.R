@@ -1,8 +1,9 @@
-# Data-Driven Lab
+# Data-Driven EnviroLab
 # Functions used for cleaning and fuzzy matching of actors' names
 # Need to import the pipe '%>%' function for use in one of our functions later on
 
 #' @importFrom dplyr %>%
+#' @importFrom tidyverse bind_rows
 #' @importFrom stats na.omit
 #' @importFrom utils adist
 
@@ -286,13 +287,13 @@ update_country_dict <- function(dataset, country.dict, custom_count, unmatched_c
                             Population = NA)
 
   if (exists("cust_df") & exists("unmatched_df")){
-    country.dict <- rbind(country.dict, update_dict, cust_df, unmatched_df)
+    country.dict <- bind_rows(country.dict, update_dict, cust_df, unmatched_df)
   } else if (exists("cust_df")) {
-    country.dict <- rbind(country.dict, update_dict, cust_df)
+    country.dict <- bind_rows(country.dict, update_dict, cust_df)
   } else if (exists("unmatched_df")){
-    country.dict <- rbind(country.dict, update_dict, unmatched_df)
+    country.dict <- bind_rows(country.dict, update_dict, unmatched_df)
   } else {
-    country.dict <- rbind(country.dict, update_dict)
+    country.dict <- bind_rows(country.dict, update_dict)
   }
   country.dict <- country.dict %>%
     dplyr::group_by(right) %>%
