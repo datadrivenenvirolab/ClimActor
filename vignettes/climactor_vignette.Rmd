@@ -553,10 +553,10 @@ If the user's dataset contains country names which were not included in the `cou
 The `update_country_dict` function takes in two compulsory arguments and two optional arguments. The two compulsory arguments are the dataset and the country dictionary that was used to clean the dataset, and the two optional arguments are the `custom_count` and `unmatched_count` vectors. Country names that were user's custom input and also unmatched country names will automatically be added to the `wrong` column in the updated country dictionary. 
 
 ```{r}
-local_country_dict <- update_country_dict(cdp, country_dict)
+# local_country_dict <- update_country_dict(cdp, country_dict)
 
 # Check for the newly added entries
-local_country_dict[!(local_country_dict$wrong %in% country_dict$wrong), ]
+# local_country_dict[!(local_country_dict$wrong %in% country_dict$wrong), ]
 ```
 
 ### Updating the key dictionary with `update_key_dict()` 
