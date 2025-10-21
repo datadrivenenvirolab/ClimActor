@@ -1,4 +1,5 @@
-# ClimActor
+# ClimActor 
+[![DOI](https://img.shields.io/badge/DOI-10.15139%2FS3%2FGGWVVQ-blue.svg)](https://doi.org/10.15139/S3/GGWVVQ)
 
 Release version: 2.0.0
 
@@ -14,7 +15,6 @@ using the new key_dict and function. Corporate matching can remain unchanged in 
 
 ## Citation and Data Access
 If you use the **Climactor 2.0** database in your work, please cite the official archived version.
-[![DOI](https://img.shields.io/badge/DOI-10.15139%2FS3%2FGGWVVQ-blue.svg)](https://doi.org/10.15139/S3/GGWVVQ)
 
 Manya, Diego; Burley Farr, Katherine; Brown, Elizabeth; Martin, Andrew; Hsu, Angel, 2025, "Climactor 2.0: A spatialized database of subnational climate pledges and emissions data", https://doi.org/10.15139/S3/GGWVVQ, UNC Dataverse, V2.
 
