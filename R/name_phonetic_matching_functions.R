@@ -18,8 +18,7 @@
 #' If unknown, set as FALSE. Defaults to TRUE.
 #' @return Returns a dataset with actors names' cleaned using exact string matching.
 #' Also creates a vector of indices of names that require cleaning.
-#'
-#' @example \dontrun{clean_name(df, key_dict, clean_enc = F)}
+
 clean_name <- function(dataset, key.dict, clean_enc = T) {
   if (!is.logical(clean_enc)){
     stop("clean_enc argument requires a logical (True/False) input.")
@@ -241,8 +240,6 @@ fuzzify_country <- function(dataset, country_keydict){
 #' @param unmatched_count Vector of numbers containing indices where countries were
 #' unmatched with the country dictionary
 #' @return Country dictionary with updated entries
-#'
-#' @example \dontrun{update_country_dict(df, country_dict, custom_count)}
 #'
 update_country_dict <- function(dataset, country.dict, custom_count, unmatched_count){
   # Do the usual checks for column name and indices
@@ -793,7 +790,6 @@ Please check the vector to be sure that:
 #' @return Key dictionary with updated entries, and their respective phonetic
 #' representations
 #'
-#' @example \dontrun{update_key_dict(df, key_dict, custom_indices)}
 update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices) {
   # Check for column naming using helper function
   dataset <- .col_check(dataset, "name", environment())
@@ -935,7 +931,6 @@ update_key_dict <- function(dataset, key.dict, custom_indices, unmatched_indices
 #' Defaults to taking all the contextual information.
 #' @return Dataset with contextuals merged
 #'
-#' @example \dontrun{contextualize_data(df, contextuals_df, c("population", "region", "lat", "lng"))}
 contextualize_data <- function(dataset, contextual_df, context = names(contextual_df)){
   # Check for column naming using helper function
   dataset <- .col_check(dataset, "name", environment())

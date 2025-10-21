@@ -24,8 +24,7 @@
 #' If unknown, set as FALSE. Defaults to TRUE
 #'
 #' @return The original dataset with the country names cleaned
-#'
-#' @example \dontrun{clean_country_iso(df, country_dict, iso = 3, clean_enc = F)}
+
 clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
   # If not sure if data is clean, check and convert to try and repair the encoding
   if (!is.logical(clean_enc)){
@@ -90,7 +89,6 @@ clean_country_iso <- function(dataset, country.dict, iso = 3, clean_enc = T) {
 #'
 #' @return The original dataset with entity types filled for the actors
 #'
-#' @example \dontrun{fill_type(df)}
 fill_type <- function(dataset) {
   # Check for column naming
   col <- "entity_type"

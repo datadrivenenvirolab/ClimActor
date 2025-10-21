@@ -17,7 +17,3 @@ Dataset with the 2 new columns
 \description{
 Adds both the entity_type and country columns to the dataset
 }
-\examples{
-\dontrun{add_country_entity_type(df, NA)}
-\dontrun{add_country_entity_type(df, "City")}
-}
