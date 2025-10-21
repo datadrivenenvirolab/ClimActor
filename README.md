@@ -1,13 +1,16 @@
 # ClimActor
 
-Beta Version 0.0.2
+Release version: 2.0.0
 
 `ClimActor` is an `R` package created by the Data-Driven Envirolab team for the cleaning and preparation of subnational climate actors' names for further analysis. 
 As more non-state (i.e., cities, regions, and companies) actors commit to climate action, new initiatives and databases recording such commitments have also become more 
 commonplace. Many actors commit to multiple initiatives and appear in more than one database, yet appear across databases with slightly different names. This discrepancy 
 makes data cleaning and wrangling more difficult than it should be and can result in over-counting of actor’s climate commitments if not dealt with appropriately.
 
-Update on December 16 2022 - all accented and non-ASCII characters have been removed from actors' preferred names as well as in names within the `contextuals` database. This change is to reduce the instances of encoding issues when trying to merge names across datasets, especially when working on Windows OS (where UTF-8 in and UTF-8 out is often difficult to enforce).  
+The more recent version of ClimActor spatializes the subnational government entities data based on a comprehensive geodatabase of administrative entities, allowing climate data 
+to be linked to other spatial datasets. Major revisions to package were implemented including new functions for matching under the spatialized logic and an extensive new key dictionary
+built from a complete administrative entities geodatase. Previous functions and data is kept for compatibility purposes but user are encouraged to update their subnational government matching
+using the new key_dict and function. Corporate matching can remain unchanged in this version but future updates will see an updated process for this as well.
 
 ## Installation
 The `ClimActor` package can be installed from github using the `install_github` function from devtools. 
@@ -16,19 +19,20 @@ The `ClimActor` package can be installed from github using the `install_github` 
 # Install devtools as necessary
 # install.packages("devtools")
 
-devtools::install_github("datadrivenenvirolab/ClimActor", build_vignettes = T)
+devtools::install_github("datadrivenenvirolab/ClimActor")
 library(ClimActor)
 ```
 
-It is recommended to build the package vignette during package installation. 
-
 ## Use 
 
-The vignette presents a recommended workflow for using the `ClimActor` package, and covers the usage and explanation of the different key functions. 
+The vignette in this repository presents a recommended workflow for using the `ClimActor` package, and covers the usage and explanation of the different key functions. 
 
-```{r} 
-browseVignettes("ClimActor")
-```
+## Data
+Full cleaned datasets for subantional entities from relevant climate organizations are included in the following repo: https://dataverse.unc.edu/dataset.xhtml?persistentId=doi:10.15139/S3/GGWVVQ
+
+## Citation
+Full cleaned datasets for subantional entities from relevant climate organizations are included in the following repo: https://dataverse.unc.edu/dataset.xhtml?persistentId=doi:10.15139/S3/GGWVVQ
+
 ## Frequently Asked Questions
 
 - I got an error while trying to install the package 
