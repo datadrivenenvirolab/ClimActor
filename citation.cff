@@ -1,0 +1,26 @@
+cff-version: "1.2.0"
+message: "If you use this dataset or the accompanying code, please cite the published data repository using the metadata from this file."
+authors:
+- family-names: "Manya"
+  given-names: "Diego"
+- family-names: "Burley Farr"
+  given-names: "Katherine"
+- family-names: "Brown"
+  given-names: "Elizabeth"
+- family-names: "Martin"
+  given-names: "Andrew"
+- family-names: "Hsu"
+  given-names: "Angel"
+title: "Climactor 2.0: A spatialized database of subnational climate pledges and emissions data"
+version: "2.0"
+doi: "10.15139/S3/GGWVVQ" # The DOI for the archived dataset
+url: "https://github.com/datadrivenenvirolab/ClimActor" # The GitHub repo URL
+repository-code: "https://github.com/datadrivenenvirolab/ClimActor"
+date-released: 2025-10-21 
+abstract: "This database and R package provides detailed, spatially-referenced data on subnational climate pledges and corresponding emissions information."
+keywords:
+  - "climate"
+  - "database"
+  - "emissions"
+  - "pledges"
+  - "subnational"
