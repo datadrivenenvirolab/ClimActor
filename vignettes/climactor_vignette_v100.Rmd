@@ -1,5 +1,5 @@
 ---
-title: "The ClimActor guide"
+title: "The ClimActor guide (v1.0.0)"
 author: "Data-Driven EnviroLab"
 output: 
   rmarkdown::html_vignette:
