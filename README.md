@@ -30,8 +30,11 @@ The vignette in this repository presents a recommended workflow for using the `C
 ## Data
 Full cleaned datasets for subantional entities from relevant climate organizations are included in the following repo: https://dataverse.unc.edu/dataset.xhtml?persistentId=doi:10.15139/S3/GGWVVQ
 
-## Citation
-Full cleaned datasets for subantional entities from relevant climate organizations are included in the following repo: https://dataverse.unc.edu/dataset.xhtml?persistentId=doi:10.15139/S3/GGWVVQ
+## Citation and Data Access
+If you use the **Climactor 2.0** database in your work, please cite the official archived version.
+[![DOI](https://img.shields.io/badge/DOI-10.15139%2FS3%2FGGWVVQ-blue.svg)](https://doi.org/10.15139/S3/GGWVVQ)
+
+Manya, Diego; Burley Farr, Katherine; Brown, Elizabeth; Martin, Andrew; Hsu, Angel, 2025, "Climactor 2.0: A spatialized database of subnational climate pledges and emissions data", https://doi.org/10.15139/S3/GGWVVQ, UNC Dataverse, V2.
 
 ## Frequently Asked Questions
 
