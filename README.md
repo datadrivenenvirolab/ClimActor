@@ -12,6 +12,12 @@ to be linked to other spatial datasets. Major revisions to package were implemen
 built from a complete administrative entities geodatase. Previous functions and data is kept for compatibility purposes but user are encouraged to update their subnational government matching
 using the new key_dict and function. Corporate matching can remain unchanged in this version but future updates will see an updated process for this as well.
 
+## Citation and Data Access
+If you use the **Climactor 2.0** database in your work, please cite the official archived version.
+[![DOI](https://img.shields.io/badge/DOI-10.15139%2FS3%2FGGWVVQ-blue.svg)](https://doi.org/10.15139/S3/GGWVVQ)
+
+Manya, Diego; Burley Farr, Katherine; Brown, Elizabeth; Martin, Andrew; Hsu, Angel, 2025, "Climactor 2.0: A spatialized database of subnational climate pledges and emissions data", https://doi.org/10.15139/S3/GGWVVQ, UNC Dataverse, V2.
+
 ## Installation
 The `ClimActor` package can be installed from github using the `install_github` function from devtools. 
 
@@ -26,15 +32,6 @@ library(ClimActor)
 ## Use 
 
 The vignette in this repository presents a recommended workflow for using the `ClimActor` package, and covers the usage and explanation of the different key functions. 
-
-## Data
-Full cleaned datasets for subantional entities from relevant climate organizations are included in the following repo: https://dataverse.unc.edu/dataset.xhtml?persistentId=doi:10.15139/S3/GGWVVQ
-
-## Citation and Data Access
-If you use the **Climactor 2.0** database in your work, please cite the official archived version.
-[![DOI](https://img.shields.io/badge/DOI-10.15139%2FS3%2FGGWVVQ-blue.svg)](https://doi.org/10.15139/S3/GGWVVQ)
-
-Manya, Diego; Burley Farr, Katherine; Brown, Elizabeth; Martin, Andrew; Hsu, Angel, 2025, "Climactor 2.0: A spatialized database of subnational climate pledges and emissions data", https://doi.org/10.15139/S3/GGWVVQ, UNC Dataverse, V2.
 
 ## Frequently Asked Questions
 
